@@ -1008,7 +1008,7 @@ local conVars = {
     },
     {
         name = "fx_twoeyeaiming_min_alpha",
-        default = "0.376",
+        default = "0.8",
         client = true
     },
     {
