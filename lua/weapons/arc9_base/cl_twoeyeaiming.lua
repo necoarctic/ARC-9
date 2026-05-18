@@ -95,9 +95,12 @@ local function canFade(wep)
     refreshConVars()
 
     if !cvEnable or !cvEnable:GetBool() then return false end
+    if wep.GetInSights and !wep:GetInSights() then return false end
+    if wep.GetSightAmount and (wep:GetSightAmount() or 0) <= 0 then return false end
     if wep.Peeking then return false end
     if wep.GetCustomize and wep:GetCustomize() then return false end
     if wep.GetUBGL and wep:GetUBGL() then return false end
+    if !wep.GetSight then return false end
 
     local sight = wep:GetSight()
     if !istable(sight) or sight.BaseSight then return false end
@@ -118,12 +121,6 @@ local function modelMatchesSight(model, sight, slot)
 
     if mslot == slot then return true end
     if addr and istable(mslot) and mslot.Address == addr then return true end
-
-    local satt = sight.atttbl or {}
-    local matt = model.atttbl or {}
-
-    if slot.Installed and istable(mslot) and mslot.Installed == slot.Installed then return true end
-    if satt.ID and matt.ID == satt.ID then return true end
 
     return false
 end
@@ -168,6 +165,11 @@ function SWEP:UpdateTwoEyeAiming()
 end
 
 function SWEP:GetTwoEyeAimingAlpha(model)
+    if !validFadeModel(model) then return 1 end
+    if self.GetCustomize and self:GetCustomize() then return 1 end
+    if self.GetInSights and !self:GetInSights() then return 1 end
+    if self.GetSightAmount and (self:GetSightAmount() or 0) <= 0 then return 1 end
+
     self:UpdateTwoEyeAiming()
 
     local alpha = self.ARC9TwoEyeAimingAlpha or 1
