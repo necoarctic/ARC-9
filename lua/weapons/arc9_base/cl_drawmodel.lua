@@ -4,6 +4,18 @@ local drawprojlights = GetConVar("arc9_drawprojectedlights")
 local v0, a0 = Vector(0, 0, 0), Angle(0, 0, 0)
 local swepGetProcessedValue = SWEP.GetProcessedValue
 
+local function drawModelWithTwoEyeAiming(self, model, flags, depthPrepass)
+    local alpha = self.GetTwoEyeAimingAlpha and self:GetTwoEyeAimingAlpha(model) or 1
+
+    if alpha < 1 and self.DrawModelTwoEyeAiming then
+        self:DrawModelTwoEyeAiming(model, flags, alpha, depthPrepass)
+    else
+        model:DrawModel(flags)
+    end
+
+    return alpha
+end
+
 local function getscopebound(self, scopeent)
     local vm = self:GetVM()
     if !IsValid(scopeent) or !IsValid(vm) or !self:GetInSights() then return nil end
@@ -226,8 +238,21 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
 
             if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam and !onground and !isnpc) then
                 -- if !wm then model:SetRenderOrigin(self.ViewModelPos or (IsValid(self:GetVM()) and self:GetVM():GetPos() or self:GetPos())) end
-                model:DrawModel()
-                if !isDepthPass and (drawprojlights:GetBool() or rttenabled == false) then render.RenderFlashlights(function() model:DrawModel() end) end
+                if !wm and !isDepthPass then
+                    drawModelWithTwoEyeAiming(self, model, flags, true)
+                else
+                    model:DrawModel(flags)
+                end
+
+                if !isDepthPass and (drawprojlights:GetBool() or rttenabled == false) then
+                    render.RenderFlashlights(function()
+                        if !wm then
+                            drawModelWithTwoEyeAiming(self, model, flags, false)
+                        else
+                            model:DrawModel(flags)
+                        end
+                    end)
+                end
             end
 
             if self.RTScopeModel == model and !model.RTScopeLength then model.RTScopeLength = getscopebound(self, model) end
@@ -248,13 +273,13 @@ function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
                     if self.CustomizeDelta > 0 then cam.IgnoreZ(true) end
                     if updatebitch then render.UpdatePowerOfTwoTexture() updatebitch = false end
 
-                    model:DrawModel()
+                    drawModelWithTwoEyeAiming(self, model, nil, true)
                     
                     if model.translucentpassextramat then
                         render.MaterialOverride( model.translucentpassextramat )
                         render.SetBlend( model.translucentpassblend or 0.75 )
                         render.OverrideDepthEnable( true, true )
-                            model:DrawModel()
+                            drawModelWithTwoEyeAiming(self, model, nil, false)
                             render.OverrideDepthEnable( false, false )
                         render.SetBlend( 1 )
                         render.MaterialOverride()
