@@ -14,7 +14,7 @@ local swepGetProcessedValue = SWEP.GetProcessedValue
 
 function SWEP:CalcView(ply, pos, ang, fov)
     if self:GetOwner():ShouldDrawLocalPlayer() then return end
-    
+
     local swepDt = self.dt
     if !swepGetProcessedValue then swepGetProcessedValue = self.GetProcessedValue end
 
@@ -31,7 +31,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
         if !self:IsUsingRTScope() then
             local recam = math.min(swepDt.RecoilAmount, 15)
             SmoothRecoilAmount = Lerp(FrameTime() * 3, SmoothRecoilAmount, recam)
-            local thing = SmoothRecoilAmount * reckick * self:GetProcessedValue("Recoil")
+            local thing = SmoothRecoilAmount * (reckick * self:GetProcessedValue("RecoilKickPitchMult", true)) * self:GetProcessedValue("Recoil")
             ang.p = ang.p - 0.6 * thing
             self.VMZOffsetForCamera = -0.25 * thing
         end
@@ -87,9 +87,9 @@ function SWEP:GetSmoothedFOVMag()
         end
 
 		if !shotgun and fuckingreloadprocess < (reloadanim.PeekProgress or reloadanim.MinProgress or 0.9) then target = target * 0.95 end
-			
+
 		if shotgun and swepDt.Reloading then target = target * 0.95 end
-		
+
         local sightdelta2 = math.ease.InCirc(sightdelta_old)
         mag = Lerp(sightdelta, 1, Lerp(sightdelta2, target2, target))
 
@@ -115,7 +115,7 @@ function SWEP:GetCameraControl(wm)
     if !swepGetProcessedValue then swepGetProcessedValue = self.GetProcessedValue end
 
     local seqprox = swepDt.SequenceProxy
-	
+
 	if swepDt.Customize then return end
 
     local camstrength, rollstrength = 1, 1
@@ -162,7 +162,7 @@ function SWEP:GetCameraControl(wm)
         if !camqca then return end
 
         local vm = self:GetVM()
-        
+
         if !IsValid(vm) then return end
 
         local ang = (vm:GetAttachment(camqca) or {}).Ang
@@ -176,7 +176,7 @@ function SWEP:GetCameraControl(wm)
             local ft = FrameTime()
 
             self.ProceduralViewOffset:Normalize()
-            
+
             ang:Normalize()
             local delta = self.LastMuzzleAngle - ang
             delta:Normalize()

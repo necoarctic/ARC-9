@@ -219,8 +219,10 @@ end
 
 hook.Add("Think", "ARC9_Think_TryRandomize", ARC9.TryRandomize)
 
+local arc9_free_atts = GetConVar("arc9_free_atts")
+
 local function randomizaegun(wpn)
-    if !GetConVar("arc9_free_atts"):GetBool() then return end
+    if !arc9_free_atts:GetBool() then return end
     wpn:SetNoPresets(true)
 
     timer.Simple(0.1, function()
@@ -336,12 +338,39 @@ function ARC9.GiveAttsFromList(ply, tbl)
     if take then ARC9:PlayerSendAttInv(ply) end
 end
 
+-- When a player picks up a weapon they already own,
+-- transfer the ground weapon's attachments to the player's inventory.
+local function ExtractInstalledAtts(slots, result)
+    result = result or {}
+    for _, slot in pairs(slots or {}) do
+        if slot.Installed then
+            table.insert(result, slot.Installed)
+            if slot.SubAttachments then
+                ExtractInstalledAtts(slot.SubAttachments, result)
+            end
+        end
+    end
+    return result
+end
+
+hook.Add("PlayerCanPickupWeapon", "ARC9_PickupAttachmentTransfer", function(ply, wep)
+    if !wep.ARC9 then return end
+    if arc9_free_atts:GetBool() then return end
+    if !ply:HasWeapon(wep:GetClass()) then return end
+
+    local atts = ExtractInstalledAtts(wep.Attachments)
+
+    if #atts > 0 then
+        ARC9.GiveAttsFromList(ply, atts)
+    end
+end)
+
 function ARC9.SendPreset(ply, classname, preset)
     if !ply:IsPlayer() or !isstring(classname) or !isstring(preset) then return end
 	local swep = list.Get( "Weapon" )[classname]
 	if swep == nil then return end
 
-    if !GetConVar("arc9_free_atts"):GetBool() then
+    if !arc9_free_atts:GetBool() then
         local atts = ARC9.GetAttsFromPreset(preset)
         if !atts then return end
 

@@ -6,6 +6,7 @@ ENT.PrintName 			= "Base Grenade"
 
 ENT.Spawnable 			= false
 ENT.CollisionGroup = COLLISION_GROUP_PROJECTILE
+ENT.RenderGroup 	    = RENDERGROUP_OPAQUE
 
 ENT.Model = "models/weapons/w_npcnade.mdl"
 ENT.SmokeTrail = false
@@ -165,11 +166,7 @@ if SERVER then
         self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
     end
 else
-    function ENT:Draw()
-        self:DrawModel()
-    end
-
-    function ENT:DrawTranslucent(flags) -- doesn't draw wtf? or this is something with my addons
-        self:Draw(flags)    -- fix from wiki anyway
+    function ENT:Draw(flags)
+        self:DrawModel(flags)
     end
 end

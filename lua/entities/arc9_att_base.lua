@@ -119,8 +119,8 @@ else
         self:SetSubMaterial(1, "!" .. attname)
     end
 
-    function ENT:Draw()
-        self:DrawModel()
+    function ENT:Draw(flags)
+        self:DrawModel(flags)
     end
 
     local white = Color(255, 255, 255)

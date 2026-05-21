@@ -1265,9 +1265,9 @@ function SWEP:DoTPIK()
         wm:InvalidateBoneCache()
     end
 
-    if ! everythingfucked then self:DoRHIK(true) end
-
     self:SetFiremodePose(true)
+
+    if !everythingfucked then self:DoRHIK(true) end
 
     ply:SetupBones()
 

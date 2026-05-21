@@ -2,6 +2,7 @@ screenspace_general
 {
 	$pixshader "arc9lens_pixely5_ps30"
 	$texture1 "effects/arc9/pixelshadermask"
+	$vertexshader 	"arc9_pp_vs30"
 	$basetexture "_rt_FullFrameFB"
 	$ignorez 1
 	$vertextransform 1

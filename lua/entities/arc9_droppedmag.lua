@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 ENT.Type                     = "anim"
 ENT.Base                     = "base_entity"
-ENT.RenderGroup              = RENDERGROUP_TRANSLUCENT
+ENT.RenderGroup              = RENDERGROUP_OPAQUE
 
 ENT.PrintName                = "Dropped Magazine"
 ENT.Category                 = ""
@@ -79,10 +79,6 @@ function ENT:Think()
     end
 end
 
-function ENT:DrawTranslucent()
-    self:Draw()
-end
-
-function ENT:Draw()
-    self:DrawModel()
+function ENT:Draw(flags)
+    self:DrawModel(flags)
 end

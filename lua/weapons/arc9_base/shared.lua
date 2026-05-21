@@ -106,14 +106,14 @@ SWEP.WorldModelOffset = nil
 --     Ang = Angle(0, 0, 0),
 --     TPIKPos = Vector(0, 0, 0), -- arc9_tpik 1, you can make cool poses with it
 --     TPIKAng = Angle(0, 0, 0),
--- 
+--
 --     TPIKPosSightOffset = Vector(0, 0, 0), -- ironsights offset, disable NoTPIKVMPos
 --     TPIKPosReloadOffset = Vector(0, 0, 0), -- reload offset if arms stretching too much during reloads
 --     TPIKAngReloadOffset = Angle(0, 0, 0),
 --     TPIKHolsterOffset = Angle(0, 0, 0), -- for passive/normal holdtype
 
 --     TPIKPosAlternative = Vector(0, 0, 0) -- enabled with SWEP/ATT.TPIKAlternativePos = true
--- 
+--
 --     Scale = 1
 -- }
 SWEP.NoTPIK = false
@@ -372,7 +372,7 @@ SWEP.AutoReload = false -- When the gun is drawn, it will automatically reload.
 SWEP.ShouldDropMag = false
 SWEP.ShouldDropMagEmpty = true
 
-SWEP.DropMagazineModel = nil -- Set to a string or table to drop this magazine when reloading.  
+SWEP.DropMagazineModel = nil -- Set to a string or table to drop this magazine when reloading.
 SWEP.DropMagazineSounds = {} -- Table of sounds a dropped magazine should play.
 SWEP.DropMagazineAmount = 1 -- Amount of mags to drop.
 SWEP.DropMagazineSkin = 0 -- Model skin of mag.
@@ -540,7 +540,7 @@ SWEP.VisualRecoilDampingConst = nil -- How spring will be visual recoil, 120 is 
 SWEP.VisualRecoilSpringMagnitude = 1
 SWEP.VisualRecoilSpringPunchDamping = nil -- ehh another val for "eft" recoil, 6 is default
 
-SWEP.VisualRecoilThinkFunc = nil -- wawa, override DampingConst, SpringMagnitude, SpringPunchDamping here 
+SWEP.VisualRecoilThinkFunc = nil -- wawa, override DampingConst, SpringMagnitude, SpringPunchDamping here
 -- function(springconstant, VisualRecoilSpringMagnitude, PUNCH_DAMPING, recamount)
 --     if recamount > 3 then
 --         return springconstant * 100, VisualRecoilSpringMagnitude * 1, PUNCH_DAMPING * 1
@@ -548,7 +548,7 @@ SWEP.VisualRecoilThinkFunc = nil -- wawa, override DampingConst, SpringMagnitude
 --     return springconstant, VisualRecoilSpringMagnitude, PUNCH_DAMPING
 -- end
 
-SWEP.VisualRecoilDoingFunc = nil -- wawa, override Up, Side, Roll here 
+SWEP.VisualRecoilDoingFunc = nil -- wawa, override Up, Side, Roll here
 -- function(up, side, roll, punch, recamount)
 --     if recamount > 2 then
 --         return up * 5, side * 1.5, roll, punch * 0.9
@@ -559,6 +559,7 @@ SWEP.VisualRecoilDoingFunc = nil -- wawa, override Up, Side, Roll here
 SWEP.RecoilKick = 1 -- Camera recoil
 SWEP.RecoilKickDamping = 70.151 -- Camera recoil damping
 SWEP.RecoilKickAffectPitch = nil -- thing for eft, set to true if you want camera go up (only visually) as recoil increases, SWEP.Recoil * SWEP.RecoilKick = effect of this
+SWEP.RecoilKickPitchMult = 1 -- If recoil kick affects pitch, how much will the effect of the RecoilKick stat apply to the pitch
 
 -- Additional subtle visual recoil, in case your gun doesn't have animated fire. Acts like a second spring added on top with limited duration
 -- SWEP.SubtleVisualRecoil = 1 -- multiplier, set to something to enable this thing

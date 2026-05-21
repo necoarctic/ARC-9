@@ -466,10 +466,7 @@ function SWEP:EndReload()
 
             end_clipsize = end_clipsize + attempt_to_restore
 
-            local minprogress = (self:GetAnimationEntry(anim) or {}).MinProgress or 0.75
-            minprogress = math.min(minprogress, 0.99)
-
-            local t = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", nil, 1), true, true)
+            local t, minprogress = self:PlayAnimation(anim, self:GetProcessedValue("ReloadTime", nil, 1), true, true)
 
             local magswaptime = (self:GetAnimationEntry(anim) or {}).MagSwapTime or 0
 

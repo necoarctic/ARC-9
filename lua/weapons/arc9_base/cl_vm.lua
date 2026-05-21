@@ -24,6 +24,8 @@ local divisor = 2
 local lastblurtime = 0
 local lastcust = false
 
+local fuckopengl = system.IsLinux() or system.IsOSX()
+
 local rt_cheapblur = GetRenderTargetEx("arc9_halfblur", scrw / divisor, scrh / divisor, 
     RT_SIZE_LITERAL, 
     MATERIAL_RT_DEPTH_NONE, 
@@ -42,7 +44,7 @@ local mat_cheapblurresult = CreateMaterial("arc9_mat_halfblur", "UnlitGeneric", 
 
 
 local function DrawCheapBlur(intensity, self)
-    if intensity > 0 and system.HasFocus() then
+    if !fuckopengl and intensity > 0 and system.HasFocus() then
         lastblurtime = FrameNumber()
         lastcust = self:GetCustomize()
 
@@ -504,7 +506,7 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     if inrt then return end
 
     local sigt, sa, notactivemask
-    local activedof = arc9_fx_adsblur_new:GetBool()
+    local activedof = !fuckopengl and arc9_fx_adsblur_new:GetBool()
 
     if activedof then
         sigt = self:GetSight()

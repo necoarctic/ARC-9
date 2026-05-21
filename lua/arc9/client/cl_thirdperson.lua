@@ -35,7 +35,8 @@ function ARC9.CalcView( ply, pos, angles, fov )
     -- if wpn:BeingOvertaken() then return end
 
     if !cam_enabled then return end
-    if wpn:GetInSights() then return end
+    --if wpn:GetInSights() then return end
+	if wpn:GetInSights() and wpn.IronSights["ForceFP"] then return end -- (wpn.IronSights["Scope"] or !GetConVar("arc9_thirdperson_sights"))
     --if wpn:GetSightAmount() >= 0.1 then return end
 
     -- local targetfov = GetConVar("ARC9_fov"):GetFloat()
@@ -148,7 +149,7 @@ function ARC9.InputMouseApply( cmd, x, y, ang )
     local wpn = ply:GetActiveWeapon()
     local turnspeed = ARC9.TurningSpeed
 
-    if !IsValid(wpn) or !wpn.ARC9 or wpn:GetInSights() then--wpn:GetSightAmount() >= 0.1 then
+    if !IsValid(wpn) or !wpn.ARC9 or (wpn:GetInSights() and wpn.IronSights["ForceFP"]) then
         ARC9.RelativeCamAngles = EyeAngles()
         ARC9.RelativePlayerAngles = EyeAngles()
         ARC9.RealCamAng = EyeAngles()

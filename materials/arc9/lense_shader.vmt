@@ -3,6 +3,7 @@ screenspace_general
 	// $pixshader "arc9lens_20_ps30"
 	// $pixshader "arc9lens_experemental_10_ps30"
 	$pixshader "arc9lens_experemental_10_optimiz_ps30"
+	$vertexshader 	"arc9_pp_vs30"
 	$basetexture "_rt_FullFrameFB"
 	$ignorez 1
 	$vertextransform 1

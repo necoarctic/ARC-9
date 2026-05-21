@@ -157,7 +157,7 @@ function SWEP:DoFLIR(atttbl, cheap, force)
 
 
 
-        ARC9.DrawPhysBullets(true)
+        -- ARC9.DrawPhysBullets(true) -- you guys think this is a bug
 
         cam.Start3D()
             cam.IgnoreZ(true)

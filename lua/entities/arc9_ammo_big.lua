@@ -2,7 +2,6 @@ AddCSLuaFile()
 
 ENT.Type                     = "anim"
 ENT.Base                     = "arc9_ammo"
-ENT.RenderGroup              = RENDERGROUP_TRANSLUCENT
 
 ENT.PrintName                = "Ammo Crate"
 ENT.Category                 = "ARC9 - Ammo"

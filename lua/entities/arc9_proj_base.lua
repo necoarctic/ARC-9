@@ -387,11 +387,14 @@ function ENT:Defuse()
 end
 
 local flaremat = Material("effects/arc9_lensflare")
-function ENT:Draw()
+function ENT:Draw(flags)
     if self.Flare and !self.Defused then
+        local isDepthPass = ( bit.band( flags, STUDIO_SSAODEPTHTEXTURE ) != 0 || bit.band( flags, STUDIO_SHADOWDEPTHTEXTURE ) != 0 )
+        if isDepthPass then return end
+        
         render.SetMaterial(flaremat)
         render.DrawSprite(self:GetPos(), math.Rand(90, 110), math.Rand(90, 110), self.FlareColor)
     else
-        self:DrawModel()
+        self:DrawModel(flags)
     end
 end
