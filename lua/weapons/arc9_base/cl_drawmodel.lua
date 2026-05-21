@@ -4,16 +4,16 @@ local drawprojlights = GetConVar("arc9_drawprojectedlights")
 local v0, a0 = Vector(0, 0, 0), Angle(0, 0, 0)
 local swepGetProcessedValue = SWEP.GetProcessedValue
 
-local function drawModelWithTwoEyeAiming(self, model, flags, depthPrepass)
-    local alpha = self.GetTwoEyeAimingAlpha and self:GetTwoEyeAimingAlpha(model) or 1
+local function drawModelWithDeferredAlpha(self, model, flags)
+    local alpha = self.GetDeferredViewModelModelAlpha and self:GetDeferredViewModelModelAlpha(model) or 1
 
-    if alpha < 1 and self.DrawModelTwoEyeAiming then
-        if self.QueueTwoEyeAimingModel then
-            self:QueueTwoEyeAimingModel(model, flags, alpha)
+    if alpha < 1 and self.DrawDeferredViewModelModel then
+        if self.QueueDeferredViewModelModel then
+            self:QueueDeferredViewModelModel(model, flags, alpha)
             return alpha, true
         end
 
-        self:DrawModelTwoEyeAiming(model, flags, alpha, depthPrepass)
+        self:DrawDeferredViewModelModel(model, flags, alpha, true)
     else
         model:DrawModel(flags)
     end
@@ -21,33 +21,34 @@ local function drawModelWithTwoEyeAiming(self, model, flags, depthPrepass)
     return alpha, false
 end
 
-function SWEP:QueueTwoEyeAimingModel(model, flags, alpha)
+function SWEP:QueueDeferredViewModelModel(model, flags, alpha)
     local frame = FrameNumber()
 
-    if self.ARC9TwoEyeAimingQueueFrame != frame then
-        self.ARC9TwoEyeAimingQueueFrame = frame
-        self.ARC9TwoEyeAimingQueuedModels = {}
+    if self.ARC9DeferredViewModelQueueFrame != frame then
+        self.ARC9DeferredViewModelQueueFrame = frame
+        self.ARC9DeferredViewModelQueuedModels = {}
     end
 
-    table.insert(self.ARC9TwoEyeAimingQueuedModels, {
+    table.insert(self.ARC9DeferredViewModelQueuedModels, {
         Model = model,
         Flags = flags,
         Alpha = alpha
     })
 end
 
-function SWEP:DrawQueuedTwoEyeAimingModels(flags)
-    local queued = self.ARC9TwoEyeAimingQueuedModels
-    if !queued or self.ARC9TwoEyeAimingQueueFrame != FrameNumber() then return end
+function SWEP:DrawQueuedDeferredViewModelModels(flags)
+    local queued = self.ARC9DeferredViewModelQueuedModels
+    if !queued or self.ARC9DeferredViewModelQueueFrame != FrameNumber() then return end
 
-    self.ARC9TwoEyeAimingQueuedModels = nil
+    self.ARC9DeferredViewModelQueuedModels = nil
+    if !self.DrawDeferredViewModelModel then return end
 
     for _, queuedModel in ipairs(queued) do
         local model = queuedModel.Model
         if !IsValid(model) then continue end
         if model.NoDraw then continue end
 
-        self:DrawModelTwoEyeAiming(model, queuedModel.Flags or flags, queuedModel.Alpha or 1, true)
+        self:DrawDeferredViewModelModel(model, queuedModel.Flags or flags, queuedModel.Alpha or 1, true)
     end
 end
 
@@ -273,18 +274,18 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
 
             if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam and !onground and !isnpc) then
                 -- if !wm then model:SetRenderOrigin(self.ViewModelPos or (IsValid(self:GetVM()) and self:GetVM():GetPos() or self:GetPos())) end
-                local queuedTwoEyeModel = false
+                local queuedDeferredModel = false
 
                 if !wm and !isDepthPass then
-                    _, queuedTwoEyeModel = drawModelWithTwoEyeAiming(self, model, flags, true)
+                    _, queuedDeferredModel = drawModelWithDeferredAlpha(self, model, flags)
                 else
                     model:DrawModel(flags)
                 end
 
-                if !queuedTwoEyeModel and !isDepthPass and (drawprojlights:GetBool() or rttenabled == false) then
+                if !queuedDeferredModel and !isDepthPass and (drawprojlights:GetBool() or rttenabled == false) then
                     render.RenderFlashlights(function()
                         if !wm then
-                            drawModelWithTwoEyeAiming(self, model, flags, false)
+                            drawModelWithDeferredAlpha(self, model, flags)
                         else
                             model:DrawModel(flags)
                         end
@@ -310,14 +311,14 @@ function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
                     if self.CustomizeDelta > 0 then cam.IgnoreZ(true) end
                     if updatebitch then render.UpdatePowerOfTwoTexture() updatebitch = false end
 
-                    local _, queuedTwoEyeModel = drawModelWithTwoEyeAiming(self, model, nil, true)
-                    if queuedTwoEyeModel then continue end
+                    local _, queuedDeferredModel = drawModelWithDeferredAlpha(self, model, nil)
+                    if queuedDeferredModel then continue end
                     
                     if model.translucentpassextramat then
                         render.MaterialOverride( model.translucentpassextramat )
                         render.SetBlend( model.translucentpassblend or 0.75 )
                         render.OverrideDepthEnable( true, true )
-                            drawModelWithTwoEyeAiming(self, model, nil, false)
+                            drawModelWithDeferredAlpha(self, model, nil)
                             render.OverrideDepthEnable( false, false )
                         render.SetBlend( 1 )
                         render.MaterialOverride()
