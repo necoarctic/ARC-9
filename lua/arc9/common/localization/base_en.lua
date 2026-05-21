@@ -789,24 +789,6 @@ L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, len
 L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA in RT Scopes"
 L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on Render Target views.\n\nPorted by Evgeny Akabenko, used with permission."
 
-L["settings.gameplay.fx_twoeyeaiming.title"] = "Two-Eye Aiming"
-L["settings.gameplay.fx_twoeyeaiming.desc"] = "Fades the active optic housing while aiming down sights to approximate both-eyes-open aiming."
-
-L["settings.gameplay.fx_twoeyeaiming_max_alpha.title"] = "Start Opacity"
-L["settings.gameplay.fx_twoeyeaiming_max_alpha.desc"] = "Opacity for the active optic housing when two-eye aiming begins."
-
-L["settings.gameplay.fx_twoeyeaiming_min_alpha.title"] = "Full ADS Opacity"
-L["settings.gameplay.fx_twoeyeaiming_min_alpha.desc"] = "Minimum opacity for the active optic housing at full ADS."
-
-L["settings.gameplay.fx_twoeyeaiming_start.title"] = "Fade Start"
-L["settings.gameplay.fx_twoeyeaiming_start.desc"] = "How far into ADS the optic housing begins to fade."
-
-L["settings.gameplay.fx_twoeyeaiming_depth_prepass.title"] = "Depth Prepass"
-L["settings.gameplay.fx_twoeyeaiming_depth_prepass.desc"] = "Draws a depth-only pass before faded sights to reduce internal and back-surface artifacts."
-
-L["settings.gameplay.fx_twoeyeaiming_reload_fade_time.title"] = "Reload Fade Time"
-L["settings.gameplay.fx_twoeyeaiming_reload_fade_time.desc"] = "How quickly the optic housing returns to full opacity when entering or leaving reloads."
-
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "Gameplay"
 

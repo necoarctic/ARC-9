@@ -997,36 +997,6 @@ local conVars = {
         client = true
     },
     {
-        name = "fx_twoeyeaiming",
-        default = "1",
-        client = true
-    },
-    {
-        name = "fx_twoeyeaiming_max_alpha",
-        default = "1",
-        client = true
-    },
-    {
-        name = "fx_twoeyeaiming_min_alpha",
-        default = "0.8",
-        client = true
-    },
-    {
-        name = "fx_twoeyeaiming_start",
-        default = "0.2",
-        client = true
-    },
-    {
-        name = "fx_twoeyeaiming_depth_prepass",
-        default = "1",
-        client = true
-    },
-    {
-        name = "fx_twoeyeaiming_reload_fade_time",
-        default = "0.12",
-        client = true
-    },
-    {
         name = "fx_adsblur_new",
         default = "1",
         client = true
