@@ -4,6 +4,54 @@ local drawprojlights = GetConVar("arc9_drawprojectedlights")
 local v0, a0 = Vector(0, 0, 0), Angle(0, 0, 0)
 local swepGetProcessedValue = SWEP.GetProcessedValue
 
+local function drawModelWithDeferredAlpha(self, model, flags)
+    local alpha = self.GetDeferredViewModelModelAlpha and self:GetDeferredViewModelModelAlpha(model) or 1
+
+    if alpha < 1 and self.DrawDeferredViewModelModel then
+        if self.QueueDeferredViewModelModel then
+            self:QueueDeferredViewModelModel(model, flags, alpha)
+            return alpha, true
+        end
+
+        self:DrawDeferredViewModelModel(model, flags, alpha, true)
+    else
+        model:DrawModel(flags)
+    end
+
+    return alpha, false
+end
+
+function SWEP:QueueDeferredViewModelModel(model, flags, alpha)
+    local frame = FrameNumber()
+
+    if self.ARC9DeferredViewModelQueueFrame != frame then
+        self.ARC9DeferredViewModelQueueFrame = frame
+        self.ARC9DeferredViewModelQueuedModels = {}
+    end
+
+    table.insert(self.ARC9DeferredViewModelQueuedModels, {
+        Model = model,
+        Flags = flags,
+        Alpha = alpha
+    })
+end
+
+function SWEP:DrawQueuedDeferredViewModelModels(flags)
+    local queued = self.ARC9DeferredViewModelQueuedModels
+    if !queued or self.ARC9DeferredViewModelQueueFrame != FrameNumber() then return end
+
+    self.ARC9DeferredViewModelQueuedModels = nil
+    if !self.DrawDeferredViewModelModel then return end
+
+    for _, queuedModel in ipairs(queued) do
+        local model = queuedModel.Model
+        if !IsValid(model) then continue end
+        if model.NoDraw then continue end
+
+        self:DrawDeferredViewModelModel(model, queuedModel.Flags or flags, queuedModel.Alpha or 1, true)
+    end
+end
+
 local function getscopebound(self, scopeent)
     local vm = self:GetVM()
     if !IsValid(scopeent) or !IsValid(vm) or !self:GetInSights() then return nil end
@@ -226,8 +274,23 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
 
             if !model.NoDraw and !(model.istranslucent and !ARC9.PresetCam and !onground and !isnpc) then
                 -- if !wm then model:SetRenderOrigin(self.ViewModelPos or (IsValid(self:GetVM()) and self:GetVM():GetPos() or self:GetPos())) end
-                model:DrawModel()
-                if !isDepthPass and (drawprojlights:GetBool() or rttenabled == false) then render.RenderFlashlights(function() model:DrawModel() end) end
+                local queuedDeferredModel = false
+
+                if !wm and !isDepthPass then
+                    _, queuedDeferredModel = drawModelWithDeferredAlpha(self, model, flags)
+                else
+                    model:DrawModel(flags)
+                end
+
+                if !queuedDeferredModel and !isDepthPass and (drawprojlights:GetBool() or rttenabled == false) then
+                    render.RenderFlashlights(function()
+                        if !wm then
+                            drawModelWithDeferredAlpha(self, model, flags)
+                        else
+                            model:DrawModel(flags)
+                        end
+                    end)
+                end
             end
 
             if self.RTScopeModel == model and !model.RTScopeLength then model.RTScopeLength = getscopebound(self, model) end
@@ -248,13 +311,14 @@ function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
                     if self.CustomizeDelta > 0 then cam.IgnoreZ(true) end
                     if updatebitch then render.UpdatePowerOfTwoTexture() updatebitch = false end
 
-                    model:DrawModel()
+                    local _, queuedDeferredModel = drawModelWithDeferredAlpha(self, model, nil)
+                    if queuedDeferredModel then continue end
                     
                     if model.translucentpassextramat then
                         render.MaterialOverride( model.translucentpassextramat )
                         render.SetBlend( model.translucentpassblend or 0.75 )
                         render.OverrideDepthEnable( true, true )
-                            model:DrawModel()
+                            drawModelWithDeferredAlpha(self, model, nil)
                             render.OverrideDepthEnable( false, false )
                         render.SetBlend( 1 )
                         render.MaterialOverride()

@@ -541,3 +541,12 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
         end
     end
 end
+
+hook.Add("PostDrawPlayerHands", "ARC9_DeferredViewModelModels", function(hands, vm, ply, wep, flags)
+    if !IsValid(wep) or !wep.ARC9 then return end
+    if !wep.DrawQueuedDeferredViewModelModels then return end
+    flags = flags or STUDIO_RENDER
+    if bit.band(flags, STUDIO_SSAODEPTHTEXTURE) != 0 or bit.band(flags, STUDIO_SHADOWDEPTHTEXTURE) != 0 then return end
+
+    wep:DrawQueuedDeferredViewModelModels(flags)
+end)
