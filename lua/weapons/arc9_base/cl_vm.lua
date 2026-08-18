@@ -153,7 +153,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
     	    shouldrtblur = true
     	end
 
-        render.SetStencilEnable(false)
+        if ARC9.StencilFuckery then render.SetStencilEnable(false) end
 
     	if custdelta > 0 then
     	    if arc9_cust_blur:GetBool() then
@@ -181,7 +181,7 @@ function SWEP:PreDrawViewModel(vm, weapon, ply, flags)
         	DrawCheapBlur(bluramt, self)
     	end
 
-        render.SetStencilEnable(true)
+        if ARC9.StencilFuckery then render.SetStencilEnable(true) end
 
     	bluramt = math.Approach(bluramt, blurtarget, FrameTime() * 10)
 
@@ -342,7 +342,7 @@ function SWEP:ViewModelDrawn(ent, flags)
         end
     end
 
-    render.SetStencilEnable(false)
+    if ARC9.StencilFuckery then render.SetStencilEnable(false) end
 
     if !inrt then self.ActiveEffects = newfx end
 end

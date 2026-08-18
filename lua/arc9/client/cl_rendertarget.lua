@@ -19,14 +19,16 @@ hook.Add("PreDrawViewModels", "ARC9_PreDrawViewModels", function()
 
     if !wpn.ARC9 then return end
     
-    render.SetStencilEnable( true )
-    render.SetStencilWriteMask(64) 
-    render.SetStencilTestMask(64)
-    render.SetStencilReferenceValue(68)
-    render.SetStencilCompareFunction(STENCIL_ALWAYS)
-    render.SetStencilPassOperation(STENCIL_REPLACE)
-    render.SetStencilFailOperation(STENCIL_KEEP)
-    render.SetStencilZFailOperation(STENCIL_KEEP)
+    if ARC9.StencilFuckery then 
+        render.SetStencilEnable( true )
+        render.SetStencilWriteMask(64) 
+        render.SetStencilTestMask(64)
+        render.SetStencilReferenceValue(68)
+        render.SetStencilCompareFunction(STENCIL_ALWAYS)
+        -- render.SetStencilPassOperation(STENCIL_REPLACE)
+        render.SetStencilFailOperation(STENCIL_KEEP)
+        render.SetStencilZFailOperation(STENCIL_KEEP)
+    end
 
     if !wpn:IsCheapScope() then return end
 
