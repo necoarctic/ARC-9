@@ -30,13 +30,11 @@ function EFFECT:Init(data)
     local diff = hit - start
     self.Dir = diff:GetNormalized()
     local hitt = util.QuickTrace(hit, self.Dir)
+
+    self.EndPos = hitt.HitPos
     if hitt.HitSky then
-        local owner = wep:GetOwner()
-        if owner.GetAimVector then -- not on some npcs i guess
-            self.Dir = (owner:GetAimVector()):GetNormalized()
-            hit = start + self.Dir * 32768
-            hitt.HitPos = hit
-        end
+        hit = start + self.Dir * 32768
+        self.EndPos = hit
     end
 
     if speed > 0 then
@@ -48,7 +46,6 @@ function EFFECT:Init(data)
     self.DieTime = UnPredictedCurTime() + math.max(self.LifeTime, self.LifeTime2)
 
     self.StartPos = start
-    self.EndPos = hitt.HitPos
 
     self.Weapon = wep
 
