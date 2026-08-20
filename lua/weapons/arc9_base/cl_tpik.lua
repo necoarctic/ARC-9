@@ -1243,6 +1243,11 @@ function SWEP:DoTPIK(isdepth)
         override = tpikOverride
     })
 
+    ply:SetRenderMode(RENDERMODE_TRANSALPHA) -- crutch to fix CERTAIN playermodels not following wm bones in time
+    -- i still have no idea what causes that, but i noticed tpik working correctly the moment i set glasses bodygroup on player
+    -- so having player rendergroup be not opaque makes it ok
+    -- still a source engin mystery
+
     if shouldfulltpik or self:StillWaiting() then
         wm:SetupBones()
 
