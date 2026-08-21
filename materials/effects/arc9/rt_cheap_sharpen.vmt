@@ -1,7 +1,0 @@
-"g_sharpen"
-{
-	"$ignorez" "1"
-	"$fbtexture" "_rt_FullFrameFB"
-	"$contrast" "1"
-	"$distance" "0.00011"
-}

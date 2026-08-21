@@ -1,9 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "effects/fas_debris_add_b"
-	"$vertexcolor" 1
-	"$vertexalpha" 1
-	"$translucent" 1
-	"$additive" 1
-	"$overbrightfactor" 5
-}

@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "arc9/tracer"
-	"$vertexcolor" 1
-	"$vertexalpha" 1
-	"$translucent" 1
-	"$additive" 1
-}

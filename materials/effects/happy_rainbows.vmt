@@ -1,9 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "effects\happy_rainbows"
-	$vertexcolor 1
-	$vertexalpha 1
-	$translucent 1
-	$additive 1
-	//$ignorez 1
-}

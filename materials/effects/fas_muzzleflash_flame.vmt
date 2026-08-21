@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "effects/fas_muzzleflash_flame"
-	"$additive" "1"
-	"$vertexcolor" 1
-	"$vertexalpha" "1"
-}

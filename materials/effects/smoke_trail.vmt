@@ -1,8 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "effects/smoke_trail"
-	"$vertexcolor" 1
-	"$vertexalpha" 1
-	"$translucent" 1
-	"$additive" 1
-}

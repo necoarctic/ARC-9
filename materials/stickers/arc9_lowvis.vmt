@@ -1,8 +1,0 @@
-"vertexlitgeneric"
-{
-	"$basetexture"	"stickers\arc9_lowvis"
-     // "$bumpmap" 	"stickers\a9k"
-     // "$phong" "1"
-     "$alphatest"	"1"
-     "$decal"		"1"
-}

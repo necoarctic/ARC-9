@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "effects/fas_muzzle_break_test"
-	"$additive" "1"
-	"$vertexcolor" 1
-	"$vertexalpha" "1"
-}

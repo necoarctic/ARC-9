@@ -1,6 +1,0 @@
-"vertexlitgeneric"
-{
-	"$basetexture"	"vgui\logos\spray"
-     "$alphatest"	"1"
-     "$decal"		"1"
-}

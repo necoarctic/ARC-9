@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "particle/ins_smoketrail"
-	"$vertexcolor" "1"
-	"$vertexalpha" "1"
-	"$translucent" "1"	
-}

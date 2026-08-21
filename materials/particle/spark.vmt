@@ -1,9 +1,0 @@
-SpriteCard
-{
-	$basetexture "particle/spark"
-	"$vertexcolor" "1"
-	"$vertexalpha" "1"
-	"$translucent" "1"
-	"$additive" 1	
-	$overbrightfactor 2
-}
