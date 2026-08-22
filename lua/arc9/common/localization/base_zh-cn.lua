@@ -370,6 +370,20 @@ L["blacklist.all"] = "所有"
 L["blacklist.id"] = "ID"
 L["blacklist.name"] = "名称"
 L["blacklist.filter"] = "筛选"
+L["blacklist.npc.title"] = "ARC9 武器替换管理器"
+L["blacklist.npc.deselect"] = "取消全选"
+L["blacklist.npc.select"] = "全选"
+L["blacklist.npc.reset"] = "重置"
+L["blacklist.npc.notfornpc"] = "（不适用于NPC）"
+L["blacklist.npc.pistol"] = "手枪"
+L["blacklist.npc.smg"] = "冲锋枪"
+L["blacklist.npc.ar"] = "突击步枪"
+L["blacklist.npc.shotgun"] = "霰弹枪"
+L["blacklist.npc.sniper"] = "狙击枪"
+L["blacklist.npc.rpg"] = "爆炸物"
+L["blacklist.npc.frag"] = "手榴弹"
+L["blacklist.npc.melee"] = "近战"
+L["blacklist.npc.misc"] = "其他"
 
 ////////////////////// Incompatible addons
 L["incompatible.title"] = "ARC9: 不兼容的模组"
@@ -837,7 +851,10 @@ L["settings.gameplay.autoreload.title"] = "自动装弹"
 L["settings.gameplay.autoreload.desc"] = "武器空弹时自动重新装弹."
 
 L["settings.server.gameplay.recoilshake.title"] = "启用后坐力 FOV 抖动"
-L["settings.server.gameplay.recoilshake.desc"] = "开火时捕捉视野."
+L["settings.server.gameplay.recoilshake.desc"] = "射击时固定视野。"
+
+L["settings.server.gameplay.recoilcamshake.title"] = "启用后坐力镜头抖动"
+L["settings.server.gameplay.recoilcamshake.desc"] = "射击时摇晃相机滚动角度。"
 
 ////////// Functionality
 L["settings.tabname.features"] = "功能"
@@ -1005,6 +1022,9 @@ L["settings.server.custmenu.atts_generateentities.desc"] = "生成可通过生�
 ////////// NPC Settings
 L["settings.tabname.npc"] = "NPC 设置"
 L["settings.tabname.npc.desc"] = "调整与 NPC 互动的设置."
+
+L["settings.server.npc.blacklist.title"] = "武器替换管理器"
+L["settings.server.npc.blacklist.desc"] = "打开一个菜单，可以单独为每种 HL2 武器排除或包含特定武器到替换池里。"
 
 L["settings.server.npc.npc_autoreplace.title"] = "替换 NPC 武器"
 L["settings.server.npc.npc_autoreplace.desc"] = "使用 HL2 武器生成的 NPC 将被替换为 ARC9 武器."
