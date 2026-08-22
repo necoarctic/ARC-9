@@ -24,18 +24,6 @@ function SWEP:TranslateAnimation(seq)
             seq = seq .. "_sights"
         end
 
-        -- if self:GetBlindFire() and self:GetBlindFireDirection() < 0 and self:HasAnimation(seq .. "_blindfire_left") then
-        --     seq = seq .. "_blindfire_left"
-        -- end
-
-        -- if self:GetBlindFire() and self:GetBlindFireDirection() < 0 and self:HasAnimation(seq .. "_blindfire_right") then
-        --     seq = seq .. "_blindfire_right"
-        -- end
-
-        -- if self:GetBlindFire() and self:HasAnimation(seq .. "_blindfire") then
-        --     seq = seq .. "_blindfire"
-        -- end
-
         if self:GetBipod() then
             if !self.SightIsAlsoBipodAnims and self:HasAnimation(seq .. "_bipod") then
                 seq = seq .. "_bipod"

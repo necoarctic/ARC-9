@@ -280,10 +280,6 @@ ARC9.SettingsTable = {
 
         { sv = true, type = "bool", text = "settings.server.gameplay.manualbolt.title", desc = "settings.server.gameplay.manualbolt.desc", convar = "manualbolt" },
 
-        -- { sv = true, type = "bool", text = "settings.server.gameplay.lean.title", desc = "settings.server.gameplay.lean.desc", convar = "lean" },
-        -- { type = "bool", text = "settings.gameplay.autolean.title", desc = "settings.gameplay.autolean.desc", convar = "autolean", parentconvar = "lean" },
-        -- { type = "bool", text = "settings.gameplay.togglelean.title", desc = "settings.gameplay.togglelean.desc", convar = "togglelean", parentconvar = "lean" },
-
         { sv = true, type = "bool", text = "settings.server.gameplay.mod_freeaim.title", desc = "settings.server.gameplay.mod_freeaim.desc", convar = "mod_freeaim" },
         -- { sv = true, type = "bool", text = "settings.server.gameplay.mod_overheat.title", desc = "settings.server.gameplay.mod_overheat.desc", convar = "mod_overheat" }, -- already in modifiers near jams
         { sv = true, type = "bool", text = "settings.server.gameplay.never_ready.title", desc = "settings.server.gameplay.never_ready.desc", convar = "never_ready" },

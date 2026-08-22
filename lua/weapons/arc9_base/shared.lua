@@ -25,7 +25,6 @@ SWEP.AdminOnly = false
 -- OddShot
 -- EvenReload
 -- OddReload
--- BlindFire
 -- Sights
 -- HipFire
 -- Hot (Scales with overheat)
@@ -578,7 +577,6 @@ SWEP.SpreadAddMove = nil -- Applied when speed is equal to walking speed.
 SWEP.SpreadAddMidAir = nil -- Applied when not touching the ground.
 SWEP.SpreadAddHipFire = nil -- Applied when not sighted.
 SWEP.SpreadAddSighted = nil -- Applied when sighted. Can be negative.
-SWEP.SpreadAddBlindFire = nil -- Applied when blind firing.
 SWEP.SpreadAddCrouch = nil -- Applied when crouching.
 
 SWEP.SpreadAddRecoil = nil -- Applied per unit of recoil.
@@ -621,7 +619,6 @@ SWEP.SpeedMultSights = 0.75
 SWEP.SpeedMultShooting = 0.9
 SWEP.SpeedMultMelee = 0.75
 SWEP.SpeedMultCrouch = 1
-SWEP.SpeedMultBlindFire = 1
 
 SWEP.NoInspect = nil -- Set to true if there are inspect animation present, but you do not want the ability to trigger them.
 
@@ -822,63 +819,6 @@ SWEP.MalfunctionMeanShotsToFail = 1000 -- The mean number of shots between malfu
 -- exitubgl
 -- lockon
 -- lockedon
-
--------------------------- LEAN
-
-SWEP.CanLean = true
-
--------------------------- BLIND FIRE
--- This feature has been removed pending rework, and these functions do not work.
-
-SWEP.CanBlindFire = true -- This weapon is capable of blind firing.
-SWEP.BlindFireLHIK = true -- Hide the left hand while blind firing forward.
-
-SWEP.BlindFireLeft = true
-SWEP.BlindFireRight = false -- This weapon can blind fire towards the right. Generally keep this off.
-
-SWEP.BlindFireOffset = Vector(0, 0, 32) -- The amount by which to offset the blind fire muzzle.
-SWEP.BlindFirePos = Vector(-6, -4, 12)
-SWEP.BlindFireAng = Angle(0, 0, -45)
-
-SWEP.BlindFireRightOffset = Vector(0, 24, 0) -- The amount by which to offset the blind fire muzzle.
-SWEP.BlindFireRightPos = Vector(-12, 12, 0)
-SWEP.BlindFireRightAng = Angle(-90, 0, 0)
-
-SWEP.BlindFireLeftOffset = Vector(0, 24, 0) -- The amount by which to offset the blind fire muzzle.
-SWEP.BlindFireLeftPos = Vector(12, 10, 0)
-SWEP.BlindFireLeftAng = Angle(90, 0, 0)
-
-SWEP.BlindFireBoneMods = {
-    ["ValveBiped.Bip01_R_UpperArm"] = {
-        ang = Angle(45, -90, 0),
-        pos = Vector(0, 0, 0)
-    },
-    ["ValveBiped.Bip01_R_Hand"] = {
-        ang = Angle(-90, 0, 0),
-        pos = Vector(0, 0, 0)
-    }
-}
-SWEP.BlindFireLeftBoneMods = {
-    ["ValveBiped.Bip01_R_UpperArm"] = {
-        ang = Angle(45, 0, 0),
-        pos = Vector(0, 0, 0)
-    },
-    ["ValveBiped.Bip01_R_Hand"] = {
-        ang = Angle(0, -75, 0),
-        pos = Vector(0, 0, 0)
-    }
-}
-
-SWEP.BlindFireRightBoneMods = {
-    ["ValveBiped.Bip01_R_UpperArm"] = {
-        ang = Angle(-45, 0, 0),
-        pos = Vector(0, 0, 0)
-    },
-    ["ValveBiped.Bip01_R_Hand"] = {
-        ang = Angle(0, 75, 0),
-        pos = Vector(0, 0, 0)
-    }
-}
 
 -------------------------- NPC
 
@@ -1180,7 +1120,6 @@ SWEP.HoldTypeSprint = "passive"
 SWEP.HoldTypeHolstered = nil
 SWEP.HoldTypeSights = "smg"
 SWEP.HoldTypeCustomize = "slam"
-SWEP.HoldTypeBlindfire = "pistol"
 SWEP.HoldTypeNPC = "ar2"
 
 SWEP.AnimShoot = ACT_HL2MP_GESTURE_RANGE_ATTACK_AR2
@@ -1406,9 +1345,6 @@ SWEP.Attachments = {
 -- _primed (Grenade primed)
 -- _iron (When sighted)
 -- _sights (Alternative to _iron)
--- _blindfire_left
--- _blindfire_right
--- _blindfire
 -- _bipod
 -- _sprint
 -- _walk
@@ -1584,7 +1520,6 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", "LastHolsterTime")
     self:NetworkVar("Float", "GrenadePrimedTime")
     self:NetworkVar("Float", "LockOnStartTime")
-    -- self:NetworkVar("Float", "LeanAmount")
     self:NetworkVar("Float", "NearWallAmount")
     self:NetworkVar("Float", "ReadyTime")
 
@@ -1597,7 +1532,6 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Int", "SequenceProxy")
     self:NetworkVar("Int", "HideBoneIndex")
     self:NetworkVar("Int", "SequenceIndex")
-    -- self:NetworkVar("Int", "LeanState")
     self:NetworkVar("Int", "LastLoadedRounds")
     self:NetworkVar("Int", "PoseParameterIndex")
     self:NetworkVar("Int", "RefillAmount")
@@ -1632,8 +1566,6 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Bool", "DoAFastDraw")
     self:NetworkVar("Bool", "NoPresets")
     self:NetworkVar("Bool", "IsStatue")
-    -- self:NetworkVar("Bool", "BlindFire")
-    -- self:NetworkVar("Bool", "TraversalSprint")
 
     self:NetworkVar("Angle", "FreeAimAngle")
     self:NetworkVar("Angle", "LastAimAngle")
@@ -1691,14 +1623,12 @@ function SWEP:SetupDataTables()
     self:SetIKTimeLineStart(0)
     self:SetIKTime(0)
     self:SetHolsterTime(0)
-    -- self:SetBlindFireCornerAmount(0)
     self:SetEnterBipodTime(0)
     self:SetSequenceCycle(0)
     self:SetSequenceSpeed(0)
     self:SetLastHolsterTime(0)
     self:SetGrenadePrimedTime(0)
     self:SetLockOnStartTime(0)
-    -- self:SetLeanAmount(0)
     self:SetNearWallAmount(0)
     self:SetReadyTime(0)
 end

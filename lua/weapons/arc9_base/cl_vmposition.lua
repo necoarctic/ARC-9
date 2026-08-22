@@ -176,11 +176,8 @@ function SWEP:GetViewModelPosition(pos, ang)
 
     local curTime = UnPredictedCurTime()
 
-    -- pos, ang = self:DoCameraLean(pos, ang)
     oldpos:Set(pos)
     oldang:Set(ang)
-    -- pos = Vector(0, 0, 0)
-    -- ang = Angle(0, 0, 0)
     local cor_val = self:GetCorVal()
     extra_offsetpos:Zero()
     extra_offsetang:Zero()
@@ -257,21 +254,6 @@ function SWEP:GetViewModelPosition(pos, ang)
         offsetang:Add(self.VManipOffsetAng * vmanipmult)
     end
 
-    -- local blindfiredelta = self:GetBlindFireAmount()
-    -- local blindfirecornerdelta = self:GetBlindFireCornerAmount()
-    -- local curvedblindfiredelta = self:Curve(blindfiredelta)
-    -- local curvedblindfirecornerdelta = self:Curve(math.abs(blindfirecornerdelta))
-    -- if blindfiredelta > 0 then
-    --     offsetpos = LerpVector(curvedblindfiredelta, offsetpos, self:GetValue("BlindFirePos"))
-    --     offsetang = LerpAngle(curvedblindfiredelta, offsetang, self:GetValue("BlindFireAng"))
-    --     if blindfirecornerdelta > 0 then
-    --         offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireRightPos"))
-    --         offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireRightAng"))
-    --     elseif blindfirecornerdelta < 0 then
-    --         offsetpos = LerpVector(curvedblindfirecornerdelta, offsetpos, self:GetValue("BlindFireLeftPos"))
-    --         offsetang = LerpAngle(curvedblindfirecornerdelta, offsetang, self:GetValue("BlindFireLeftAng"))
-    --     end
-    -- end
     if reloading then
         local reloadpos = swepGetProcessedValue(self, "ReloadPos", true)
         local reloadang = swepGetProcessedValue(self, "ReloadAng", true)

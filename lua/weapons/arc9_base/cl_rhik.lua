@@ -18,7 +18,6 @@ function SWEP:DoRHIK(wm)
     vm:SetupBones()
     local lh_delta = 1
     local rh_delta = 1
-    -- local lhik_bf_d = self:GetBlindFireAmount() - (math.abs(self:GetBlindFireCornerAmount()))
     local hasonehandsprint = self:GetValue("OneHandedSprint")
     local hide_lh_d = 0
     local hide_rh_d = 0

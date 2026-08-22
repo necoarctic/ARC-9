@@ -539,10 +539,6 @@ do
                 stat = getValue(self, val, stat, "Bipod")
             end
 
-            -- if self:GetBlindFire() then
-            --     stat = getValue(self, val, stat, "BlindFire")
-            -- end
-
             local hasNoAffectors = self.HasNoAffectors
             local sightedbruh = hasNoAffectors[val .. "Sighted"] -- what the fuck is Sighted when correct condition is Sights
 

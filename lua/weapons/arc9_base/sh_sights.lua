@@ -18,7 +18,6 @@ function SWEP:EnterSights()
         if self.SetNextAiming > CurTime() then return end
     end
 
-    -- self:ToggleBlindFire(false)
     self:SetInSights(true)
     if IsFirstTimePredicted() then
         local soundtab1 = {

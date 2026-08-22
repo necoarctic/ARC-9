@@ -42,53 +42,6 @@ local function rollallhits(self, range_3, range_1)
     end
 end
 
--- local recoil_hits = {}
-
--- function SWEP:RollRecoilHit(shot, lastx, lasty)
---     local dir = self:GetRecoilPatternDirection(shot)
-
---     dir = math.rad(dir)
-
---     recoilup = math.sin(dir)
---     recoilside = math.cos(dir)
-
---     local randomrecoilup = math.Rand(-1, 0)
---     local randomrecoilside = math.Rand(-1, 1)
-
---     recoilup = recoilup * self:GetProcessedValue("RecoilUp")
---     recoilside = recoilside * self:GetProcessedValue("RecoilSide")
-
---     randomrecoilup = randomrecoilup * self:GetProcessedValue("RecoilRandomUp")
---     randomrecoilside = randomrecoilside * self:GetProcessedValue("RecoilRandomSide")
-
---     recoilup = recoilup + randomrecoilup
---     recoilside = recoilside + randomrecoilside
-
---     recoilup = recoilup * self:GetProcessedValue("Recoil")
---     recoilside = recoilside * self:GetProcessedValue("Recoil")
-
---     recoil_hits[shot] = {
---         x = recoilup + randomrecoilup + lastx,
---         y = recoilside + randomrecoilside + lasty
---     }
--- end
-
--- function SWEP:RollRecoil()
---     recoil_hits = {}
-
---     recoil_hits[1] = {
---         x = 0,
---         y = 0,
---     }
-
---     for i = 2, math.min(self:GetMaxClip1(), 100) do
---         local lastx = recoil_hits[i - 1].x
---         local lasty = recoil_hits[i - 1].y
-
---         self:RollRecoilHit(i, lastx, lasty)
---     end
--- end
-
 local bullseye = Material("arc9/bullseye.png", "mips smooth")
 local target_ipsc = Material("arc9/target_ipsc.png", "mips smooth")
 local mat_hit = Material("arc9/hit.png", "mips smooth")

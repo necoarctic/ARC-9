@@ -25,15 +25,7 @@ function SWEP:Deploy()
     self:SetCycleFinishTime(0)
     self:SetRequestReload(false)
     self:SetEmptyReload(false)
-    -- self:SetLeanState(0)
-
     owner:SetCanZoom(false)
-    -- self:SetTraversalSprint(false)
-    -- self:SetLastPressedWTime(0)
-
-    -- self:SetBlindFire(false)
-    -- self:SetBlindFireDirection(0)
-
     self:SetHolster_Entity(NULL)
     self:SetHolsterTime(0)
 
@@ -53,20 +45,14 @@ function SWEP:Deploy()
     self:SetLoadedRounds(self:Clip1())
     self:SetGrenadeRecovering(false)
     self:SetUBGL(false)
-    -- self:SetLeanAmount(0)
     
     self.StartedFixingJam = nil
 
     self:SetGrenadePrimed(false)
-
     self:SetBipod(false)
-
     self:SetTriggerDown(owner:KeyDown(IN_ATTACK))
-
     local holsteredtime = CurTime() - self:GetLastHolsterTime()
-
     self:ThinkHeat(holsteredtime)
-
     self:DoDeployAnimation()
 
     if self:GetValue("AnimDraw") then
@@ -202,9 +188,7 @@ function SWEP:Holster(wep)
         if SERVER and self:GetProcessedValue("Disposable", true) and self:Clip1() == 0 and self:Ammo1() == 0 and !IsValid(self:GetDetonatorEntity()) then
             self:Remove()
         end
-
         self:SetLastHolsterTime(CurTime())
-        -- self:DoPlayerModelLean(true)
 
         return true 
     end
@@ -243,8 +227,6 @@ function SWEP:Holster(wep)
 
         self:SetLastHolsterTime(CurTime())
 
-        -- self:DoPlayerModelLean(true)
-
         return true
     else
         -- Prepare the holster and set up the timer
@@ -273,7 +255,6 @@ function SWEP:Holster(wep)
             self:DoPlayerAnimationEvent(animdrwa)
         end
 
-        -- self:ToggleBlindFire(false)
         self:SetInSights(false)
         self:ToggleUBGL(false)
         self:SetCycleFinishTime(0)

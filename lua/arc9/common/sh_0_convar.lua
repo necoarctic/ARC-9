@@ -656,22 +656,6 @@ local conVars = {
         client = true,
         userinfo = true
     },
-    -- {
-    --     name = "autolean",
-    --     default = "1",
-    --     client = true,
-    -- },
-    -- {
-    --     name = "lean",
-    --     default = "1",
-    --     replicated = true
-    -- },
-    -- {
-    --     name = "togglelean",
-    --     default = "0",
-    --     client = true,
-    --     userinfo = true
-    -- },
     {
         name = "togglepeek",
         default = "0",
@@ -1403,7 +1387,6 @@ c1 = {
     ["BulletGuidanceAmount"] = true,
     ["ExplosionDamage"] = true,
     ["ExplosionRadius"] = true,
-    -- ["CanLean"] = true,
     ["HoldBreathTime"] = true,
     ["RestoreBreathTime"] = true,
     ["SlamFire"] = true,

@@ -257,7 +257,6 @@ ARC9.AutoStatsConditions = {
     ["Shooting"] = "While Shooting",
     ["Recoil"] = "With Each Shot",
     ["Move"] = "While Moving",
-    ["BlindFire"] = "While Blind Firing",
     ["UBGL"] = "In UBGL",
     ["Bipod"] = "On Bipod",
     ["Sprint"] = "when Sprinting",
