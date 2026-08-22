@@ -49,8 +49,8 @@ L["ammo.slam"] = "SLAM"
 L["ammo.alyxgun"] = "爱莉克斯的枪支弹药"
 
 /////////////////////////////////////// HUD
-L["hud.version"] = "ARCTIC SYSTEMS HUD v"
-L["hud.jammed"] = "卡弹！"
+L["hud.version"] = "北极HUD系统版本号:"
+L["hud.jammed"] = "卡弹!"
 L["hud.therm_deco"] = "枪管温度"
 
 L["hud.firemode.single"] = "单发"
@@ -64,19 +64,19 @@ L["hud.hint.breath"] = "屏气"
 L["hud.hint.customize"] = "自定义"
 L["hud.hint.cycle"] = "上膛"
 L["hud.hint.firemode"] = "切换开火模式"
-L["hud.hint.inspect"] = "检查"
+L["hud.hint.inspect"] = "检现"
 L["hud.hint.lean"] = "侧身"
 L["hud.hint.peek"] = "窥视"
-L["hud.hint.reload"] = "重载"
+L["hud.hint.reload"] = "换弹"
 L["hud.hint.safe"] = "切换保险"
-L["hud.hint.switchsights"] = "切换瞄具"
-L["hud.hint.toggleatts"] = "切换配件"
+L["hud.hint.switchsights"] = "开关瞄准镜"
+L["hud.hint.toggleatts"] = "切换手电"
 L["hud.hint.togglecamos"] = "切换迷彩"
-L["hud.hint.ubgl"] = "切换 %s" -- Fix?
+L["hud.hint.ubgl"] = "切换"
 L["hud.hint.unjam"] = "解除卡弹"
 L["hud.hint.zoom"] = "瞄具缩放"
 L["hud.hint.quicknade"] = "快速投掷 \"%s\""
--- L["hud.hint.quickreload"] = "Quick Reload"
+L["hud.hint.quickreload"] = "快速换弹"
 
 L["hud.hint.lowammo"] = "少弹药"
 L["hud.hint.noammo"] = "无弹药"
@@ -91,9 +91,9 @@ L["hud.error.missingbind_invprev"] = "在游戏设置里绑定 \"上一个武器
 
 /////////////////////////////////////// Customization menu
 L["customize.panel.customize"] = "自定义"
-L["customize.panel.personalize"] = "客制化"
-L["customize.panel.stats"] = "数据和弹道"
-L["customize.panel.trivia"] = "介绍"
+L["customize.panel.personalize"] = "个性化"
+L["customize.panel.stats"] = "数据与弹道"
+L["customize.panel.trivia"] = "小知识"
 L["customize.panel.inspect"] = "检视"
 L["customize.panel.presets"] = "预设"
 
@@ -107,6 +107,7 @@ L["customize.stats.explosive"] = "爆炸伤害"
 L["customize.stats.firemodes"] = "开火模式"
 L["customize.stats.firepower"] = "火力"
 L["customize.stats.freeaim"] = "自由腰射角度"
+--L["customize.stats.muzzlevelocity"] = "出膛速度"
 L["customize.stats.shootentforce"] = "出膛速度"
 L["customize.stats.noise"] = "开火响度"
 L["customize.stats.penetration"] = "穿透力"
@@ -119,10 +120,10 @@ L["customize.stats.sprinttofire"] = "冲刺恢复速度"
 L["customize.stats.supplylimit"] = "补给上限"
 L["customize.stats.sway"] = "偏移"
 L["customize.stats.triggerdelay"] = "扳机延迟"
--- L["customize.stats.fusetimer"] = "Fuse Timer"
+L["customize.stats.fusetimer"] = "引信计时器"
 
-L["customize.hint.attach"] = "安装"
-L["customize.hint.controller"] = "开启手柄模式。"
+L["customize.hint.attach"] = "附加"
+L["customize.hint.controller"] = "开启手柄模式"
 L["customize.hint.cursor"] = "光标"
 L["customize.hint.cycle"] = "切换槽位"
 L["customize.hint.delete"] = "删除"
@@ -156,6 +157,7 @@ L["customize.stats.explain.cyclic"] = "武器的循环射速。忽略连发延�
 L["customize.stats.explain.capacity"] = "枪械弹匣 + 弹膛可容纳的弹药数量。"
 L["customize.stats.explain.range"] = "枪械造成最小伤害的射程。"
 L["customize.stats.explain.precision"] = "武器的精度。以精确度分钟(MOA)为单位。"
+--L["customize.stats.explain.muzzlevelocity"] = "这把枪开火子弹的枪口速度。"
 L["customize.stats.explain.shootentforce"] = "这把枪开火子弹的枪口速度。"
 L["customize.stats.explain.ammo"] = "这把枪使用的弹药类型。"
 L["customize.stats.explain.penetration"] = "这把枪可以穿透的物质数量。"
@@ -172,7 +174,7 @@ L["customize.stats.explain.noise"] = "枪声的响度。"
 L["customize.stats.explain.sway"] = "枪支的摇摆幅度"
 L["customize.stats.explain.freeaim"] = "最大自由瞄准角度。越小越好。"
 L["customize.stats.explain.supplylimit"] = "枪械可从 ARC9 弹药源获得的弹药数量"
--- L["customize.stats.explain.fusetimer"] = "Time delay before the projectile detonates. The timer may start from pin pull or from release depending on the throwable."
+L["customize.stats.explain.fusetimer"] = "投射物引爆前的延迟时间。根据投掷物的不同，计时器可能从引脚拉高时开始，也可能从释放时开始。"
 
 L["customize.bench.dummy"] = "假人伤害测试"
 L["customize.bench.effect"] = "测试距离"
@@ -180,13 +182,13 @@ L["customize.bench.ballistics"] = "弹道射程测试记录"
 L["customize.bench.precision"] = "机械准度测试"
 
  -- not many space for those strings, be careful
--- L["customize.bench.ttk"] = "TTK: " -- TTK, Time to kill
--- L["customize.bench.ttk.instant"] = "Instant"
--- L["customize.bench.ttk.shots"] = "Shots TK: " -- STK, Shots to kill, you can use just shots in your language
--- L["customize.bench.ttk.withoneheadshot"] = "W/ 1 head:" -- TTK With One Headshot
+L["customize.bench.ttk"] = "TTK: " -- TTK, Time to kill
+L["customize.bench.ttk.instant"] = "即时"
+L["customize.bench.ttk.shots"] = "子弹数: " -- STK, Shots to kill, you can use just shots in your language
+L["customize.bench.ttk.withoneheadshot"] = "单发爆头:" -- TTK With One Headshot
 
 L["customize.camoslot"] = "迷彩槽 %s"
--- L["customize.camoslot.none"] = "No Camo"
+L["customize.camoslot.none"] = "无迷彩"
 L["customize.camoslot.canpaint"] = "\n\n此配件可以 <color=255,224,86>单独装配为</color>."
 L["customize.camoslot.nosupport"] = "\n\n此配件可以 <color=255,224,86>单独装配为</color>, 但武器 <color=255,106,0>缺乏对它的支持</color>."
 L["customize.camoslot.eftextra"] = "\n使用来自 <color=255,106,0>EFT Extras</color> 的配件来应用 <color=114,255,86>迷彩支持</color>."
@@ -195,6 +197,29 @@ L["folder.back"] = "返回"
 L["folder.deselect"] = "取消选择"
 L["folder.favorites"] = "收藏夹"
 L["folder.select"] = "选择"
+
+////////////////////// Numerical
+L["number.1"] = "1"
+L["number.2"] = "2"
+L["number.3"] = "3"
+L["number.4"] = "4"
+L["number.5"] = "5"
+L["number.6"] = "6"
+L["number.7"] = "7"
+L["number.8"] = "8"
+L["number.9"] = "9"
+L["number.10"] = "10"
+
+L["number.alt.1"] = "一"
+L["number.alt.2"] = "二"
+L["number.alt.3"] = "三"
+L["number.alt.4"] = "四"
+L["number.alt.5"] = "五"
+L["number.alt.6"] = "六"
+L["number.alt.7"] = "七"
+L["number.alt.8"] = "八"
+L["number.alt.9"] = "九"
+L["number.alt.10"] = "十"
 
 ////////////////////// Automatic stats
 L["autostat.enable.pre"] = "启用"
@@ -230,7 +255,8 @@ L["autostat.damagemin"] = "远距离伤害"
 L["autostat.damagerand"] = "伤害随机性"
 L["autostat.deploytime"] = "部署耗时"
 L["autostat.distance"] = "子弹距离"
-L["autostat.shootentforce"] = "出膛速度"
+--L["autostat.entitymuzzlevelocity"] = "出膛速度"
+L["autostat.shootentforce"] = "弹丸出膛速度"
 L["autostat.explosiondamage"] = "爆炸伤害"
 L["autostat.explosionradius"] = "爆炸范围"
 L["autostat.fixtime"] = "卡弹修理耗时"
@@ -253,7 +279,7 @@ L["autostat.noflash"] = "无枪口火焰"
 L["autostat.num"] = "出膛弹量"
 L["autostat.overheat"] = "过热"
 L["autostat.overheattime"] = "过热修理耗时"
-L["autostat.dispersionspread"] = "弹丸散射"
+L["autostat.dispersionspread"] = "子弹散射"
 L["autostat.penetration"] = "穿透强度"
 L["autostat.penetrationdelta"] = "穿透后的伤害"
 L["autostat.physbulletdrag"] = "弹道阻力"
@@ -299,9 +325,10 @@ L["autostat.visualrecoilpunch"] = "可视后坐力击退"
 L["autostat.visualrecoilroll"] = "可视后坐力横滚"
 L["autostat.visualrecoilside"] = "水平可视后坐力"
 L["autostat.visualrecoilup"] = "垂直可视后坐力"
--- L["autostat.rtscopemagnification"] = "Scope Magnification"
--- L["autostat.rtscopenew_fpslock"] = "Display Framerate"
--- L["autostat.rtscopenew_pixelation"] = "Display Resolution"
+L["autostat.rtscopemagnification"] = "瞄准镜放大倍率"
+L["autostat.rtscopenew_fpslock"] = "显示帧率"
+L["autostat.rtscopenew_pixelation"] = "显示分辨率"
+
 
 --[[
 Secondary autostats are now controlled by string.format.
@@ -311,29 +338,29 @@ Alternatively, "On Bipod: %s" results in "On Bipod: Spread".
 ]]--
 
 L["autostat.secondary.bipod"] = "在双脚架上时%s"
-L["autostat.secondary.crouch"] = "蹲下%s"
-L["autostat.secondary.empty"] = "最后一发%s"
-L["autostat.secondary.evenreload"] = "偶数次装填%s"
-L["autostat.secondary.evenshot"] = "偶数发%s"
-L["autostat.secondary.first"] = "首发%s"
-L["autostat.secondary.firstshot"] = "首发%s"
+L["autostat.secondary.crouch"] = "蹲下时%s"
+L["autostat.secondary.empty"] = "最后一发子弹时%s"
+L["autostat.secondary.evenreload"] = "偶数次装填时%s"
+L["autostat.secondary.evenshot"] = "偶数发时%s"
+L["autostat.secondary.first"] = "首发时%s"
+L["autostat.secondary.firstshot"] = "首发时%s"
 L["autostat.secondary.heated"] = "加热时%s"
-L["autostat.secondary.hipfire"] = "腰射%s"
+L["autostat.secondary.hipfire"] = "腰射时%s"
 L["autostat.secondary.hot"] = "加热时%s"
-L["autostat.secondary.last"] = "最后一发%s"
-L["autostat.secondary.lastshot"] = "最后一发%s"
-L["autostat.secondary.midair"] = "空中%s"
-L["autostat.secondary.move"] = "移动%s"
-L["autostat.secondary.oddreload"] = "奇数次装填%s"
+L["autostat.secondary.last"] = "最后一发子弹时%s"
+L["autostat.secondary.lastshot"] = "最后一发子弹时%s"
+L["autostat.secondary.midair"] = "在空中时%s"
+L["autostat.secondary.move"] = "移动时%s"
+L["autostat.secondary.oddreload"] = "奇数次装填时%s"
 L["autostat.secondary.oddshot"] = "奇数发%s"
 L["autostat.secondary.recoil"] = "后坐力%s" --"With Each Shot"
-L["autostat.secondary.shooting"] = "开火%s"
-L["autostat.secondary.sighted"] = "瞄准%s"
-L["autostat.secondary.sights"] = "瞄准%s"
-L["autostat.secondary.silenced"] = "消音%s"
+L["autostat.secondary.shooting"] = "开火时%s"
+L["autostat.secondary.sighted"] = "瞄准时%s"
+L["autostat.secondary.sights"] = "瞄准时%s"
+L["autostat.secondary.silenced"] = "处于消音时%s"
 L["autostat.secondary.sprint"] = " 冲刺时%s"
 L["autostat.secondary.true"] = "真实名称开启时%s"
-L["autostat.secondary.ubgl"] = "下挂武器%s"
+L["autostat.secondary.ubgl"] = "下挂武器时%s"
 
 ////////////////////// Blacklist menu
 L["blacklist.title"] = "ARC9 配件黑名单"
@@ -343,6 +370,20 @@ L["blacklist.all"] = "所有"
 L["blacklist.id"] = "ID"
 L["blacklist.name"] = "名称"
 L["blacklist.filter"] = "筛选"
+L["blacklist.npc.title"] = "ARC9 武器替换管理器"
+L["blacklist.npc.deselect"] = "取消全选"
+L["blacklist.npc.select"] = "全选"
+L["blacklist.npc.reset"] = "重置"
+L["blacklist.npc.notfornpc"] = "（不适用于NPC）"
+L["blacklist.npc.pistol"] = "手枪"
+L["blacklist.npc.smg"] = "冲锋枪"
+L["blacklist.npc.ar"] = "突击步枪"
+L["blacklist.npc.shotgun"] = "霰弹枪"
+L["blacklist.npc.sniper"] = "狙击枪"
+L["blacklist.npc.rpg"] = "爆炸物"
+L["blacklist.npc.frag"] = "手榴弹"
+L["blacklist.npc.melee"] = "近战"
+L["blacklist.npc.misc"] = "其他"
 
 ////////////////////// Incompatible addons
 L["incompatible.title"] = "ARC9: 不兼容的模组"
@@ -401,7 +442,8 @@ L["badconf.multicore.desc"] = [[目前禁用了某些多核渲染设置。
 gmod_mcore_test 1
 mat_queue_mode 2
 cl_threaded_bone_setup 1
-r_threaded_client_shadow_manager 1
+r_threaded_client_shadow_
+manager 1
 r_threaded_renderables 1]]
 
 ////////////////////// Presets
@@ -410,10 +452,10 @@ L["customize.presets.back"] = "退回"
 L["customize.presets.cancel"] = "取消"
 L["customize.presets.code"] = "预设代码 (已复制到剪切板)"
 L["customize.presets.default"] = "默认"
-L["customize.presets.default.long"] = "出厂设置"
-L["customize.presets.dumb"] = "你倒是输点东西啊？"
+L["customize.presets.default.long"] = "默认设置"
+L["customize.presets.dumb"] = "你弱智吗？"
 L["customize.presets.import"] = "导入"
-L["customize.presets.invalid"] = "非法字符串！"
+L["customize.presets.invalid"] = "无效字符串！"
 L["customize.presets.new"] = "预设名"
 L["customize.presets.paste"] = "输入预设代码"
 L["customize.presets.random"] = "随机"
@@ -422,7 +464,7 @@ L["customize.presets.unnamed"] = "未命名"
 
 L["customize.presets.deldef"] = "你确定要删除\"{name}\"默认预设吗？"
 L["customize.presets.deldef2"] = "你必须在开发者设置中重置武器才能恢复。"
-L["customize.presets.yes"] = "是"
+L["customize.presets.yes"] = "确认"
 
 ////////////////////// Tips
 L["tips.arc-9"] = "这是ARC9, 不是ARC-9, 更不是Arc9."
@@ -443,7 +485,7 @@ L["tips.presets"] = "通过导出预设，与朋友分享你最喜欢的预设�
 L["tips.settings"] = "你可以在 ARC9 设置中关闭这些提示，还有更多。点击左上角的按键！"
 L["tips.tips"] = "提示有固定的顺序。继续阅读，你最后会看到所有提示。"
 L["tips.tolerance"] = "所有武器都能很好地配合使用。没有必要厚此薄彼。"
--- L["tips.togglehold"] = "If you have lots of lasers and flashlights, hold the toggle key to open a menu to adjust them all easily."
+L["tips.togglehold"] = "如果你拥有大量激光器和手电筒，按住切换键即可打开菜单，轻松调整所有设备."
 
 ////////////////////// Other
 L["atts.favourites"] = "收藏"
@@ -482,7 +524,7 @@ L["spawnmenu.supermod.selectspec"] = "特殊情况，如蹲下时"
 L["spawnmenu.supermod.selectval"] = "写入一个数值，或者 \"true\" / \"false\""
 L["spawnmenu.supermod.result"] = "结果显示在此处"
 L["spawnmenu.supermod.examples"] = [[
-示例:
+示例: 
 ∟ "Overheat" "true" 禁用过热功能
 ∟ "BottomlessClip" "true" 以启用无限弹药
 ∟ "RecoilMultCrouch" "0.1" 将蹲下时的后坐力降低到 10%
@@ -495,20 +537,20 @@ L["spawnmenu.supermod.examples"] = [[
 -- settings.convar.title = "Convar Title"
 -- settings.convar.desc = "Convar Description"
 
-L["settings.title"] = "ARC9 设定"
-L["settings.desc"] = "简介"
+L["settings.title"] = "ARC9 设置"
+L["settings.desc"] = "说明"
 
 L["settings.default_convar"] = "默认值"
-L["settings.convar_server"] = "服务器端参数"
-L["settings.convar_client"] = "客户端参数"
+L["settings.convar_server"] = "服务器变量"
+L["settings.convar_client"] = "客户端变量"
 
 L["settings.disabled"] = "(禁用) "
-L["settings.disabled.desc"] = "! 被服务器管理员禁用 !\n\n"
-L["settings.server"] = "\n\n这是服务器端参数。"
+L["settings.disabled.desc"] = "! 已被服务器管理员禁用 !\n\n"
+L["settings.server"] = "\n\n这是一个服务器变量."
 
 ////////////////////// Quick Access
-L["settings.tabname.quick"] = "快捷菜单"
-L["settings.tabname.quick.desc"] = "在这里调整特定重要的参数。"
+L["settings.tabname.quick"] = "快速访问"
+L["settings.tabname.quick.desc"] = "在这里快速访问更重要的设置."
 
 L["settings.quick.lang.title"] = "ARC9 语言"
 L["settings.quick.lang.desc"] = "更改 ARC9 的显示语言.\n\n注：并非所有武器包\n都支持所有语言!"
@@ -520,14 +562,14 @@ L["settings.tpik.desc2"] = "在 \"视觉效果\"中进行调整\n\n启用 TPIK(�
 L["settings.aimassist.enable.desc2"] = "在 \"游戏性\"中进行调整\n\n启用瞄准辅助功能，如果检测到十字准星附近有有效目标，会将视角移近有效目标."
 
 ////////////////////// Reset Settings
-L["settings.tabname.reset"] = "重置设定"
-L["settings.tabname.reset.desc"] = "按 \"重置\" 把所有参数设成默认值。"
+L["settings.tabname.reset"] = "重置设置"
+L["settings.tabname.reset.desc"] = "按 \"重置\" 按键可将 ARC9 设置完全重置为默认值."
 
-L["settings.client.reset.title"] = "重置客户端参数"
-L["settings.client.reset.desc"] = "将所有 ARC9 的客户端端参数设置成默认值。\n\n注意：这个操作不可逆。"
+L["settings.client.reset.title"] = "重置客户端设置"
+L["settings.client.reset.desc"] = "完全重置所有 ARC9 客户端设置.\n\n警告: 不可逆转."
 
-L["settings.server.reset.title"] = "重置服务器端参数"
-L["settings.server.reset.desc"] = "将所有 ARC9 的服务器端参数设置成默认值。\n\n注意：这个操作不可逆。"
+L["settings.server.reset.title"] = "重置服务器设置"
+L["settings.server.reset.desc"] = "完全重置所有 ARC9 服务器设置.\n\n警告: 不可逆转."
 
 L["settings.reset"] = "重置"
 
@@ -558,7 +600,7 @@ L["settings.hud_game.hints.on"] = "始终开启"
 L["settings.hud_game.killfeed_enable.title"] = "自动生成击杀菜单图标"
 L["settings.hud_game.killfeed_enable.desc"] = "在 ARC9 武器上自动生成击杀图标."
 L["settings.hud_game.killfeed_dynamic.title"] = "动态图标"
-L["settings.hud_game.killfeed_dynamic.desc"] = "获得击杀或更改配件时动态生成图标."
+L["settings.hud_game.killfeed_dynamic.desc"] = "获得击杀或更改配件时\n动态生成图标."
 L["settings.hud_game.killfeed_colour.title"] = "色彩显示"
 L["settings.hud_game.killfeed_colour.desc"] = "生成全彩而非黑白图标."
 
@@ -610,51 +652,51 @@ L["settings.tabname.visuals"] = "视觉效果"
 
 ////////// TPIK
 L["settings.tabname.tpik"] = "TPIK - 第三人称逆运动动画"
-L["settings.tabname.tpik.desc"] = "\"第三人称逆运动动画\" 是一个能将第一人称的手部动作\n表现在第三人称角色上的系统。"
+L["settings.tabname.tpik.desc"] = "\"第三人称逆运动动画\" 是一个允许大多数武器使用\n第一人称动画和位置\n以第三人称显示的系统."
 
 L["settings.tpik.title"] = "启用 TPIK"
-L["settings.tpik.desc"] = "启用 TPIK 系统（第三人称逆运动动画）。\n\n这个参数会影响性能。"
+L["settings.tpik.desc"] = "启用 TPIK (第三人称逆运动动画).\n\n影响性能."
 
 L["settings.tpik_others.title"] = "其他玩家的 TPIK"
-L["settings.tpik_others.desc"] = "在其他玩家上也启用 TPIK 系统。\n\n这个参数会影响性能。"
+L["settings.tpik_others.desc"] = "显示其他玩家的 TPIK.\n\n影响性能."
 
 L["settings.tpik_framerate.title"] = "TPIK 帧率"
--- L["settings.tpik_framerate.desc"] = "At which frame rate the TPIK calculations runs at anybody else on server.\n\nHigher values impact performance."
+L["settings.tpik_framerate.desc"] = "TPIK 运行的帧率.\n\n设置为 0 表示无限制.\n\n无限制或更高数值会影响性能."
 
--- L["settings.tpik_framerate_local.title"] = "Local player TPIK Frame Rate"
--- L["settings.tpik_framerate_local.desc"] = "At which frame rate the TPIK calculations runs at for you specifically.\n\nHigher values impact performance."
+L["settings.tpik_framerate_local.title"] = "本地玩家 TPIK 帧率"
+L["settings.tpik_framerate_local.desc"] = "TPIK 计算在你的设备上运行的具体帧率.\n\n数值越高，对性能的影响越大."
 
 ////////// Blur
-L["settings.tabname.blur"] = "模糊效果"
+L["settings.tabname.blur"] = "景深效果"
 L["settings.tabname.blur.desc"] = "满足特定条件时，应用模糊效果."
 
 L["settings.blur.cust_blur.title"] = "自定义菜单背景"
 L["settings.blur.cust_blur.desc"] = "自定义菜单背景进行模糊处理。"
 
-L["settings.blur.fx_reloadblur.title"] = "装填时模糊"
+L["settings.blur.fx_reloadblur.title"] = "装填时景深"
 L["settings.blur.fx_reloadblur.desc"] = "装填时模糊背景。"
 
-L["settings.blur.fx_animblur.title"] = "准备武器时模糊"
+L["settings.blur.fx_animblur.title"] = "准备武器时景深"
 L["settings.blur.fx_animblur.desc"] = "第一次掏出武器时模糊背景。"
 
-L["settings.blur.fx_inspectblur.title"] = "检现时模糊"
+L["settings.blur.fx_inspectblur.title"] = "检现时景深"
 L["settings.blur.fx_inspectblur.desc"] = "检现武器时模糊背景."
 
-L["settings.blur.fx_rtblur.title"] = "使用准镜时模糊"
+L["settings.blur.fx_rtblur.title"] = "使用准镜时景深"
 L["settings.blur.fx_rtblur.desc"] = "有倍率的准镜会模糊准镜外的视野。"
 
--- L["settings.blur.fx_adsblur.title"] = "Weapon DoF effect when aiming"
--- L["settings.blur.fx_adsblur.desc"] = "Applies a Depth of Field effect on top of viewmodel, blurring rear sights and scopes.\n\nUses Poisson disk blur from github.com/spite/Wagner, as well as luluco250's LightDoF shader."
+L["settings.blur.fx_adsblur.title"] = "瞄准时景深"
+L["settings.blur.fx_adsblur.desc"] = "瞄准时在背景应用模糊效果.\n\n并非所有武器都支持此功能."
 
--- L["settings.blur.fx_adsblur_always.title"] = "Weapon DoF always"
--- L["settings.blur.fx_adsblur_always.desc"] = "Same as option above, but outside of ADS too, making back of weapon look like its out of focus."
+L["settings.blur.fx_adsblur_always.title"] = "武器景深始终开启"
+L["settings.blur.fx_adsblur_always.desc"] = "与上述选项相同，\n但效果也适用于瞄准状态之外，\n使武器背面看起来像是失焦的。"
 
 ////////// Effects
 L["settings.tabname.effects"] = "效果"
 L["settings.tabname.effects.desc"] = "调整某些视觉效果."
 
 L["settings.effects.eject_fx.title"] = "弹壳弹射烟雾"
-L["settings.effects.eject_fx.desc"] = "为弹壳弹射增加额外效果(火花和烟雾).\n\n对性能的影响最小."
+L["settings.effects.eject_fx.desc"] = "为弹壳弹射增加额外效果\n(火花和烟雾).\n\n对性能的影响最小."
 
 L["settings.effects.eject_time.title"] = "弹壳弹出时间"
 L["settings.effects.eject_time.desc"] = "ARC9 弹射的弹壳应在地面上\n停留多长时间(以秒为单位).\n\n设为 -1 则禁用.\n\n根据值的不同，\n对性能的影响可能微乎其微."
@@ -669,23 +711,23 @@ L["settings.effects.allflash.title"] = "其他人的手电筒"
 L["settings.effects.allflash.desc"] = "渲染所有玩家的手电筒.\n\n影响性能."
 
 L["settings.effects.lod.title"] = "LOD (细节程度) 距离"
-L["settings.effects.lod.desc"] = "你需要离模型多远，它们才会在没有\n配件的情况下变为质量较低的变体.\n\n较低的数值会使模型在较低的距离上\n发生变化，从而提高性能.\n\n更高的值可能会影响性能，但可以在\n更远的距离上加载最高质量的模型.\n\nTPIK 的距离也会受到影响."
+L["settings.effects.lod.desc"] = "你需要离模型多远，它们才会在\n没有配件的情况下变为\n质量较低的变体.\n\n较低的数值会使模型在较低的\n距离上发生变化，从而提高性能.\n\n更高的值可能会影响性能，但可以\n在更远的距离上加载最高质量\n的模型.\n\nTPIK 的距离也会受到影响."
 
--- L["settings.effects.indoorsound.title"] = "Indoor Sound Quality"
--- L["settings.effects.indoorsound.desc"] = "How detailed the indoor sound check should be.\n\nLower quality improves performance, but may cause indoor sounds to be inaccurate."
+L["settings.effects.indoorsound.title"] = "室内音质"
+L["settings.effects.indoorsound.desc"] = "室内音效检查应该有多详细.\n\n较低质量可提高性能，\n但可能导致室内声音不准确."
 
--- L["settings.effects.drawprojectedlights.title"] = "Draw Projected Lights on Viewmodel"
--- L["settings.effects.drawprojectedlights.desc"] = "! EXPERIMENTAL !\n\nDraws projected lights/flashlights/cascade shadows on attachments and viewmodel.\n\nMay impact performance.\n\nAuto enabled with \"Real CSM\" mod."
+L["settings.effects.drawprojectedlights.title"] = "在第一人称模型上绘制投影灯光"
+L["settings.effects.drawprojectedlights.desc"] = "! 实验性 !\n\n在配件和第一人称模型上\n绘制投影灯光/手电筒光束/级联阴影.\n\n可能影响性能.\n\n当 \"Real CSM\" 模组已启用时自动开启."
 
 ////////// Viewmodel Settings
 L["settings.tabname.vm"] = "第一人称模型设置"
-L["settings.tabname.vm.desc"] = "更改与第一人称模型相关的各种设置."
+L["settings.tabname.vm.desc"] = "更改与第一人称模型相关的\n各种设置."
 
 L["settings.vm.vm_bobstyle.title"] = "晃动风格"
-L["settings.vm.vm_bobstyle.desc"] = "从ARC9团队(和Valve)慷慨提供的\n各种第一人称模型晃动风格中选择一种."
+L["settings.vm.vm_bobstyle.desc"] = "从ARC9团队(和Valve)慷慨提供的\n各种第一人称模型晃动风格中\n选择一种."
 
 L["settings.vm.fov.title"] = "添加 FOV"
-L["settings.vm.fov.desc"] = "将此值添加到第一人称模型的视场中.\n\n注意：如果设置过高或过低，\n可能会导致视觉错误."
+L["settings.vm.fov.desc"] = "将此值添加到第一人称模型的\n视角中.\n\n注意：如果设置过高或过低，\n可能会导致视觉错误."
 
 L["settings.vm.vm_addx.title"] = "第一人称模型 X 轴"
 L["settings.vm.vm_addx.desc"] = "左右移动的第一人称模型."
@@ -706,10 +748,13 @@ L["settings.vm.vm_cambobintensity.title"] = "力度"
 L["settings.vm.vm_cambobintensity.desc"] = "冲刺和步行晃动的力度应该有多大."
 
 L["settings.vm.vm_camstrength.title"] = "第一人称模型视角强度"
-L["settings.vm.vm_camstrength.desc"] = "改变武器动画(如装弹或检查时)\n使用的视角移动强度.\n\n有助于减少(或增加)晕车症状.\n\n注意：可能会破坏某些武器包的性能."
+L["settings.vm.vm_camstrength.desc"] = "改变武器动画(如装弹或检查时)\n使用的视角移动强度.\n\n有助于减少(或增加)晕车症状.\n\n注意：可能会破坏\n某些武器包的性能."
 
 L["settings.vm.vm_camrollstrength.title"] = "第一人称模型视角滚动强度"
-L["settings.vm.vm_camrollstrength.desc"] = "改变武器动画(如装弹或检查时)\n使用的视角滚动强度.\n\n有助于减少(或增加)晕车症状"
+L["settings.vm.vm_camrollstrength.desc"] = "改变武器动画(如装弹或检现时)\n使用的视角滚动强度.\n\n有助于减少(或增加)晕车症状"
+
+L["settings.vm.vm_camrollstrength.title"] = "第一人称模型相机摇摄强度"
+L["settings.vm.vm_camrollstrength.desc"] = "调整武器动画\n（例如重新装弹或检现武器时）\n所使用的相机摇摄动作强度.\n\n这有助于减轻（或加重）晕动症"
 
 ////////////////////// Crosshair & Scopes
 L["settings.tabname.crosshairscopes"] = "十字准星和瞄准镜"
@@ -726,7 +771,7 @@ L["settings.crosshair.crosshair_force.title"] = "强制启用十字准星"
 L["settings.crosshair.crosshair_force.desc"] = "即使在已禁用十字准星的武器上，\n也会强制启用十字准星."
 
 L["settings.crosshair.crosshair_static.title"] = "静态十字准星"
-L["settings.crosshair.crosshair_static.desc"] = "确保射击时十字准星不会移动.\n\n警告: 如果在十字准星不居中的武器上使用，\n会出现误差."
+L["settings.crosshair.crosshair_static.desc"] = "确保射击时十字准星不会移动.\n\n警告: 如果在十字准星不居中的\n武器上使用，\n会出现误差."
 
 L["settings.crosshair.crosshair_target.title"] = "目标上的红色十字准星"
 L["settings.crosshair.crosshair_target.desc"] = "悬停在玩家或 NPC 上时，将十字准星的颜色改为红色."
@@ -762,7 +807,7 @@ L["settings.tabname.optics.desc"] = "调整与瞄具及其功能相关的设置.
 L["settings.gameplay.toggleads.title"] = "切换 ADS"
 L["settings.gameplay.toggleads.desc"] = "按下瞄准按键可切换瞄准."
 
--- L["settings.gameplay.cheapscopes.title"] = "Performance RT Scopes"
+L["settings.gameplay.cheapscopes.title"] = "高性能准镜"
 L["settings.gameplay.cheapscopes.desc"] = "通过放大玩家视角来进行瞄具渲染，\n而不是渲染两次。\n在较大的地图上会显著提升性能.\n\n可根据地图大小提高性能.\n\n不兼容 \"通过 RT 渲染武器\"."
 
 L["settings.gameplay.fx_rtvm.title"] = "通过 RT 渲染武器"
@@ -778,19 +823,19 @@ L["settings.gameplay.gradualsens.title"] = "渐变 ADS 灵敏度"
 L["settings.gameplay.gradualsens.desc"] = "在进入或退出 ADS 时逐步调整瞄准灵敏度."
 
 L["settings.gameplay.color.reflex.title"] = "反光镜颜色"
-L["settings.gameplay.color.reflex.desc"] = "反射式瞄准镜或全息瞄准镜上使用的\n视网膜应是什么颜色.\n\n并非所有瞄具都支持此功能."
+L["settings.gameplay.color.reflex.desc"] = "反射式瞄准镜或全息瞄准镜上使用\n的视网膜应是什么颜色.\n\n并非所有瞄具都支持此功能."
 
 L["settings.gameplay.color.scope.title"] = "瞄准镜视网膜颜色"
-L["settings.gameplay.color.scope.desc"] = "RT瞄准镜上使用的视网膜应是什么颜色.\n\n并非所有瞄具都支持此功能."
+L["settings.gameplay.color.scope.desc"] = "RT瞄准镜上使用的视网膜\n应是什么颜色.\n\n并非所有瞄具都支持此功能."
 
--- L["settings.gameplay.fx_rt_alwaysdraw.title"] = "Render RT Scope Preview"
--- L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "Scope will draw preview image with reticle when it's directed to the center of screen, outside of ADS.\n\nDoesn't affect performance much, uses Cheap Scopes internally."
+L["settings.gameplay.fx_rt_alwaysdraw.title"] = "渲染 RT 瞄准镜预览"
+L["settings.gameplay.fx_rt_alwaysdraw.desc"] = "当瞄准镜朝向屏幕中心时，\n即使不在瞄准状态，\n也会绘制带准星的预览图像.\n\n对性能影响不大，\n内部使用了高性能瞄准镜."
 
--- L["settings.gameplay.fx_rt_shader.title"] = "Fancy Shader in RT Scopes"
--- L["settings.gameplay.fx_rt_shader.desc"] = "Draws cool chromatic aberration, lens distortion, and complex parallax effects inside RT scopes.\n\nNo idea if this actually affects performance, as it's a simple GPU shader.\n\nBased on shadertoy.com/view/WX2cRd by science6uru2."
+L["settings.gameplay.fx_rt_shader.title"] = "RT 瞄准镜中的炫酷着色"
+L["settings.gameplay.fx_rt_shader.desc"] = "在RT瞄准镜中绘制炫酷的色差、\n镜头畸变和复杂的视差效果.\n\n不确定是否会影响性能，\n因为它只是一个简单的 GPU 着色器.\n\n基于 shadertoy.com/view/WX2cRd，由 science6uru2 制作."
 
--- L["settings.gameplay.fx_rt_fxaa.title"] = "FXAA in RT Scopes"
--- L["settings.gameplay.fx_rt_fxaa.desc"] = "A simple Fast approximate anti-aliasing (FXAA) shader, to make scope view a bit softer, due to Source Engine's MSAA not working on Render Target views.\n\nPorted by Evgeny Akabenko, used with permission."
+L["settings.gameplay.fx_rt_fxaa.title"] = "RT 瞄准镜中的 FXAA"
+L["settings.gameplay.fx_rt_fxaa.desc"] = "一个简单的快速近似抗锯齿 (FXAA) 着色器，可以让瞄准镜画面更柔和，因为 Source 引擎的 MSAA 在渲染目标视图上不起作用.\n\n由 Evgeny Akabenko 移植，经授权使用."
 
 ////////////////////// Gameplay
 L["settings.tabname.gameplay"] = "游戏性"
@@ -806,26 +851,32 @@ L["settings.gameplay.autoreload.title"] = "自动装弹"
 L["settings.gameplay.autoreload.desc"] = "武器空弹时自动重新装弹."
 
 L["settings.server.gameplay.recoilshake.title"] = "启用后坐力 FOV 抖动"
-L["settings.server.gameplay.recoilshake.desc"] = "开火时捕捉视野."
+L["settings.server.gameplay.recoilshake.desc"] = "射击时固定视野。"
+
+L["settings.server.gameplay.recoilcamshake.title"] = "启用后坐力镜头抖动"
+L["settings.server.gameplay.recoilcamshake.desc"] = "射击时摇晃相机滚动角度。"
 
 ////////// Functionality
 L["settings.tabname.features"] = "功能"
 L["settings.tabname.features.desc"] = "调整与 ARC9 各种功能相关的设置."
 
 L["settings.server.gameplay.mod_sway.title"] = "启用武器摇摆"
-L["settings.server.gameplay.mod_sway.desc"] = "启用武器摇摆功能\n(如果武器支持该功能).\n\n武器会左右移动，导致第一人称模型\n和十字准星偏离屏幕中心."
+L["settings.server.gameplay.mod_sway.desc"] = "启用武器摇摆功能\n(如果武器支持该功能).\n\n武器会左右移动，\n导致第一人称模型\n和十字准星偏离屏幕中心."
 
 L["settings.server.gameplay.breath_slowmo.title"] = "屏住呼吸时启用慢动作(单人游戏)"
 L["settings.server.gameplay.breath_slowmo.desc"] = "! 仅限单人游戏 !\n屏住呼吸让时间变慢."
+
+L["settings.server.gameplay.breath_infinite.title"] = "无限屏息"
+L["settings.server.gameplay.breath_infinite.desc"] = "屏住呼吸不会消耗呼吸量."
 
 L["settings.gameplay.togglebreath.title"] = "切换屏气"
 L["settings.gameplay.togglebreath.desc"] = "按下冲刺按键可切换屏住呼吸."
 
 L["settings.centerhint.breath_hud.title"] = "屏住呼吸工具提示"
-L["settings.centerhint.breath_hud.desc"] = "屏住呼吸时，显示剩余呼吸量的条形图."
+L["settings.centerhint.breath_hud.desc"] = "屏住呼吸时，\n显示剩余呼吸量的条形图."
 
 L["settings.centerhint.breath_pp.title"] = "屏住呼吸的后期处理"
-L["settings.centerhint.breath_pp.desc"] = "憋气时还能应用后期处理效果.\n\n屏住呼吸时需要使用武器摇摆或慢动作."
+L["settings.centerhint.breath_pp.desc"] = "憋气时还能应用后期处理效果.\n\n屏住呼吸时需要使用\n武器摇摆或慢动作."
 
 L["settings.server.gameplay.mod_peek.title"] = "启用窥视"
 L["settings.server.gameplay.mod_peek.desc"] = "如果武器支持窥视功能，\n则启用窥视功能.\n\n允许用户在瞄准时降低武器，\n同时仍可获得瞄准效果."
@@ -840,15 +891,15 @@ L["settings.server.aimassist.enable.title"] = "允许瞄准辅助"
 L["settings.server.aimassist.enable.desc"] = "使用户能够利用瞄准辅助功能."
 
 L["settings.aimassist.enable.title"] = "启用瞄准辅助"
-L["settings.aimassist.enable.desc"] = "启用瞄准辅助功能，如果检测到十字准星附近有目标，可将视角移近有效目标."
+L["settings.aimassist.enable.desc"] = "启用瞄准辅助功能，如果检测到\n十字准星附近有目标，\n可将视角移近有效目标."
 
-L["settings.aimassist.sensmult.desc"] = "在瞄准有效目标时，如果检测到十字准星附近有目标，则将瞄准灵敏度乘以此值."
+L["settings.aimassist.sensmult.desc"] = "在瞄准有效目标时，如果检测到\n十字准星附近有目标，\n则将瞄准灵敏度乘以此值."
 
 L["settings.server.aimassist.intensity.title"] = "瞄准辅助强度"
 L["settings.server.aimassist.intensity.desc"] = "瞄准辅助的强度应该有多大."
 
 L["settings.server.aimassist.cone.title"] = "瞄准辅助锥面"
-L["settings.server.aimassist.cone.desc"] = "瞄准辅助应在多大范围内起作用。区域越大，有效目标的距离就越远."
+L["settings.server.aimassist.cone.desc"] = "瞄准辅助应在多大范围内起作用。\n区域越大，有效目标的距离就越远."
 
 L["settings.server.aimassist.heads.title"] = "锁定头部"
 L["settings.server.aimassist.heads.desc"] = "启用瞄准辅助是否应瞄准目标头部而非胸部."
@@ -866,7 +917,7 @@ L["settings.gameplay.togglelean.title"] = "切换侧身"
 L["settings.gameplay.togglelean.desc"] = "按下左侧或右侧按键可切换侧身角度."
 
 L["settings.server.gameplay.mod_freeaim.title"] = "启用自由瞄准"
-L["settings.server.gameplay.mod_freeaim.desc"] = "如果武器支持自由瞄准，则启用该功能.\n\n允许瞄准点与屏幕中心分离."
+L["settings.server.gameplay.mod_freeaim.desc"] = "如果武器支持自由瞄准，\n则启用该功能.\n\n允许瞄准点与屏幕中心分离."
 
 L["settings.server.gameplay.never_ready.title"] = "禁用准备动画"
 L["settings.server.gameplay.never_ready.desc"] = "启用或禁用首次拿出武器时\n的武器准备动画."
@@ -897,7 +948,7 @@ L["settings.custmenu.hud_color.title"] = "自定义菜单颜色"
 L["settings.custmenu.hud_color.desc"] = "更改自定义菜单的颜色."
 
 L["settings.custmenu.hud_lightmode.title"] = "浅色模式"
-L["settings.custmenu.hud_lightmode.desc"] = "将自定义菜单的配色方案更改为浅色.\n\n原版 ARC9 的配色方案."
+L["settings.custmenu.hud_lightmode.desc"] = "将自定义菜单的配色方案更改\n为浅色.\n\n原版 ARC9 的配色方案."
 
 L["settings.custmenu.hud_holiday.title"] = "节日模式"
 L["settings.custmenu.hud_holiday.desc"] = "更改自定义菜单的配色方案，使其\n与特定节日相匹配.\n\n覆盖 \"自定义菜单颜色\"."
@@ -915,16 +966,16 @@ L["settings.custmenu.cust_tips.title"] = "启用常规提示"
 L["settings.custmenu.cust_tips.desc"] = "在自定义菜单左下方显示一般提示."
 
 L["settings.custmenu.cust_exit_reset_sel.title"] = "关闭时重置活动插槽"
-L["settings.custmenu.cust_exit_reset_sel.desc"] = "如果启用，重新打开菜单时将重置活动\n的自定义槽."
+L["settings.custmenu.cust_exit_reset_sel.desc"] = "如果启用，重新打开菜单时将\n重置活动\n的自定义槽."
 
 L["settings.custmenu.autosave.title"] = "自动保存配件"
-L["settings.custmenu.autosave.desc"] = "退出自定义菜单时自动保存装备的配件。在武器重生时自动重新加载."
+L["settings.custmenu.autosave.desc"] = "退出自定义菜单时自动保存装备的\n配件。在武器重生时自动重新加载."
 
 L["settings.server.gameplay.truenames.title"] = "启用真实名称"
 L["settings.server.gameplay.truenames.desc"] = "允许使用真实名称的武器显示\n替代虚构名称.\n\n并非所有武器都支持此功能."
 
 L["settings.fancyspawnmenu.title"] = "启用花式生成菜单"
-L["settings.fancyspawnmenu.desc"] = "在所有 ARC9 武器类别中启用更新的花式再生菜单.\n\n需要重新加载生成菜单才能应用 (控制台命令: \"spawnmenu_reload\")"
+L["settings.fancyspawnmenu.desc"] = "在所有 ARC9 武器类别中启用更新的\n花式生成菜单.\n\n需要重新加载生成菜单才能应用 (控制台命令: \"spawnmenu_reload\")"
 
 L["settings.custmenu.units.title"] = "显示单位"
 L["settings.custmenu.units.desc"] = "在自定义菜单中选择显示\n公制或英制单位."
@@ -932,7 +983,7 @@ L["settings.custmenu.units.metric"] = "公制"
 L["settings.custmenu.units.imperial"] = "英制"
 
 L["settings.gameplay.font.title"] = "自定义字体"
-L["settings.gameplay.font.desc"] = "写入应在 ARC9 上使用的自定义字体.\n\n注 1：字体必须安装在你当前的计算机上.\n\n注 2：名称应是 TTF 文件中显示的字体名称，而不是 TTF 的文件名称."
+L["settings.gameplay.font.desc"] = "写入应在 ARC9 上使用的自定义字体.\n\n注 1：字体必须安装在你当前的\n计算机上.\n\n注 2：名称应是 TTF 文件中显示的字体名称，而不是 TTF 的文件名称."
 
 L["settings.gameplay.controller.title"] = "手柄模式"
 L["settings.gameplay.controller.desc"] = "启用自定义手柄友好元素."
@@ -944,33 +995,36 @@ L["settings.gameplay.controllerglyphs.desc"] = "打开一个单独的菜单，�
 L["settings.tabname.attachmentsnpcs"] = "配件和 NPC"
 
 ////////// Customization
-L["settings.tabname.customization.desc"] = "调整影响武器自定义的参数。"
+L["settings.tabname.customization.desc"] = "调整与武器定制相关的设置."
 
 L["settings.server.custmenu.atts_nocustomize.title"] = "禁用自定义"
-L["settings.server.custmenu.atts_nocustomize.desc"] = "玩家不可进行任何配件改动。"
+L["settings.server.custmenu.atts_nocustomize.desc"] = "禁用用户打开自定义菜单的功能.\n\n不影响管理员."
 
 L["settings.server.custmenu.blacklist.title"] = "黑名单菜单"
-L["settings.server.custmenu.blacklist.desc"] = "用这个界面可以禁用特定配件。"
-L["settings.server.custmenu.blacklist.open"] = "打开"
+L["settings.server.custmenu.blacklist.desc"] = "打开一个菜单，允许完全禁用\n某些配件."
+L["settings.server.custmenu.blacklist.open"] = "打开菜单"
 
-L["settings.server.custmenu.atts_max.title"] = "最大配件量"
-L["settings.server.custmenu.atts_max.desc"] = "武器最多能装的配件数量。"
+L["settings.server.custmenu.atts_max.title"] = "最大配件数"
+L["settings.server.custmenu.atts_max.desc"] = "用户可装备在武器上的配件\n(包括外观配件)的最大数量."
 
 L["settings.server.custmenu.free_atts.title"] = "免费配件"
-L["settings.server.custmenu.free_atts.desc"] = "不需要捡起配件实体也可以使用所有配件。"
+L["settings.server.custmenu.free_atts.desc"] = "无需先拾取即可使用配件."
 
-L["settings.server.custmenu.atts_lock.title"] = "捡起即解锁"
-L["settings.server.custmenu.atts_lock.desc"] = "捡起一个配件可以给多个武器配置而不消耗。"
+L["settings.server.custmenu.atts_lock.title"] = "无限配件单位"
+L["settings.server.custmenu.atts_lock.desc"] = "如果禁用，用户拥有一个配件并将其装备到武器上，则无法将其装备到其他武器上，除非拥有多个该配件."
 
-L["settings.server.custmenu.atts_loseondie.title"] = "死亡时掉落"
-L["settings.server.custmenu.atts_loseondie.desc"] = "死亡的时候配件会消失。"
+L["settings.server.custmenu.atts_loseondie.title"] = "因死亡而失去配件"
+L["settings.server.custmenu.atts_loseondie.desc"] = "如果用户死亡，他们将丢失所有配件."
 
-L["settings.server.custmenu.atts_generateentities.title"] = "生成实体"
-L["settings.server.custmenu.atts_generateentities.desc"] = "在菜单里为每个配件生成一个实体。\n\n会增加加载时间。"
+L["settings.server.custmenu.atts_generateentities.title"] = "生成配件实体"
+L["settings.server.custmenu.atts_generateentities.desc"] = "生成可通过生成菜单生成的实体, 以便在禁用 \"免费配件\" 时拾取配件.\n\n增加加载时间."
 
 ////////// NPC Settings
 L["settings.tabname.npc"] = "NPC 设置"
 L["settings.tabname.npc.desc"] = "调整与 NPC 互动的设置."
+
+L["settings.server.npc.blacklist.title"] = "武器替换管理器"
+L["settings.server.npc.blacklist.desc"] = "打开一个菜单，可以单独为每种 HL2 武器排除或包含特定武器到替换池里。"
 
 L["settings.server.npc.npc_autoreplace.title"] = "替换 NPC 武器"
 L["settings.server.npc.npc_autoreplace.desc"] = "使用 HL2 武器生成的 NPC 将被替换为 ARC9 武器."
@@ -1038,14 +1092,17 @@ L["settings.server.quickstat.mod_recoil.desc"] = "倍增武器的后坐力."
 L["settings.server.quickstat.mod_visualrecoil.desc"] = "乘以武器的视觉后坐力大小."
 L["settings.server.quickstat.mod_adstime.desc"] = "倍增武器进出 ADS 的速度."
 L["settings.server.quickstat.mod_sprinttime.desc"] = "倍增武器进入和退出冲刺的速度."
-L["settings.server.quickstat.mod_damagerand.desc"] = "倍增伤害差异，可随机增加或减少伤害."
+L["settings.server.quickstat.mod_damagerand.desc"] = "倍增伤害差异，\n可随机增加或减少伤害."
 L["settings.server.quickstat.mod_muzzlevelocity.desc"] = "倍增物理子弹的移动速度."
 L["settings.server.quickstat.mod_rpm.desc"] = "武器开火速度的倍数."
 L["settings.server.quickstat.mod_headshotdamage.desc"] = "倍增武器爆头时的伤害值."
 L["settings.server.quickstat.mod_malfunction.desc"] = "倍增武器发生故障的可能性."
 
 L["settings.server.gameplay.mod_overheat.title"] = "启用过热"
-L["settings.server.gameplay.mod_overheat.desc"] = "如果武器支持该功能，则在频繁开火时\n可能会过热，从而导致故障."
+L["settings.server.gameplay.mod_overheat.desc"] = "如果武器支持该功能，则在\n频繁开火时可能会过热，从而\n导致故障."
+
+L["settings.server.gameplay.mod_nearwall.title"] = "启用贴墙时收起武器功能"
+L["settings.server.gameplay.mod_nearwall.desc"] = "启用贴墙时收起武器功能"
 
 L["settings.server.gameplay.supermod.title"] = "超级修改器"
 L["settings.server.gameplay.supermod.desc"] = "打开一个单独的菜单，\n可在所有武器上应用任何修改.\n\n警告: 如果操作不当，\n可能导致武器无法继续使用."
@@ -1070,7 +1127,7 @@ L["settings.server.developer.dev_benchgun.title"] = "长枪"
 L["settings.server.developer.dev_benchgun.desc"] = "启用后，第一人称模型将保持原位，\n与你所处的位置无关."
 
 L["settings.server.developer.dev_crosshair.title"] = "开发人员十字准星"
-L["settings.server.developer.dev_crosshair.desc"] = "时髦的十字准星显示精确的瞄准点\n和一些有用的变量.\n\n只对管理员有效；不要试图用它作弊."
+L["settings.server.developer.dev_crosshair.desc"] = "时髦的十字准星显示精确的瞄准点\n和一些有用的变量.\n\n只对管理员有效；\n不要试图用它作弊."
 
 L["settings.server.developer.dev_show_affectors.title"] = "显示效果"
 L["settings.server.developer.dev_show_affectors.desc"] = "在 \"开发人员十字准星\"上，显示当前应用了哪些影响效果."
@@ -1079,12 +1136,12 @@ L["settings.server.developer.dev_show_shield.title"] = "显示盾牌"
 L["settings.server.developer.dev_show_shield.desc"] = "显示玩家盾牌的保护模型."
 
 L["settings.server.developer.dev_greenscreen.title"] = "绿幕"
-L["settings.server.developer.dev_greenscreen.desc"] = "在自定义菜单中应用绿幕背景.\n\n适用于截图.\n\n如果使用 HDR，不要忘记设置 \"mat_bloom_scalefactor_scalar\" 至 0!"
+L["settings.server.developer.dev_greenscreen.desc"] = "在自定义菜单中应用绿幕背景.\n\n适用于截图.\n\n如果使用 HDR，不要忘记设置 \"\nmat_bloom_scalefactor_scalar\" 至 0!"
 
 L["settings.server.developer.presets_clear.title"] = "清除武器数据"
 L["settings.server.developer.presets_clear.desc"] = "清除当前所持武器的预设、\n图标和默认预设.\n\n警告: 如果在未装备 ARC9 武器的情况下使用，它将清除所有 ARC9 武器的预设、图标和默认设置."
 
-L["settings.server.developer.reload"] = "重载"
+L["settings.server.developer.reload"] = "重新加载"
 L["settings.server.developer.clear"] = "清除"
 
 L["settings.developer.ignore_dx.title"] = "忽略 DirectX 警告"
@@ -1098,44 +1155,44 @@ L["settings.server.assetcache.precache_sounds_onfirsttake.title"] = "装备武�
 L["settings.server.assetcache.precache_sounds_onfirsttake.desc"] = "缓存装备的 ARC9 武器的射击音效.\n\n首次装备武器时\n可能会导致游戏小幅卡顿."
 
 L["settings.server.assetcache.precache_attsmodels_onfirsttake.title"] = "装备武器时: 预缓存配件"
-L["settings.server.assetcache.precache_attsmodels_onfirsttake.desc"] = "装备任意 ARC9 武器时，缓存所有 ARC9 配件模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有多少 ARC9 武器."
+L["settings.server.assetcache.precache_attsmodels_onfirsttake.desc"] = "装备任意 ARC9 武器时，缓存所有 ARC9 配件模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有\n多少 ARC9 武器."
 
 L["settings.server.assetcache.precache_wepmodels_onfirsttake.title"] = "装备武器时: 预缓存武器模型"
-L["settings.server.assetcache.precache_wepmodels_onfirsttake.desc"] = "装备任意 ARC9 武器时，缓存所有 ARC9 第一人称模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有多少 ARC9 武器."
+L["settings.server.assetcache.precache_wepmodels_onfirsttake.desc"] = "装备任意 ARC9 武器时，缓存所有 ARC9 第一人称模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有\n多少 ARC9 武器."
 
 L["settings.server.assetcache.precache_allsounds_onstartup.title"] = "游戏开始时: 预缓存音效"
 L["settings.server.assetcache.precache_allsounds_onstartup.desc"] = "服务器启动时，缓存所有 ARC9 武器的所有射击音效.\n\n可能导致游戏暂时卡顿."
 
 L["settings.server.assetcache.precache_attsmodels_onstartup.title"] = "游戏开始时: 预缓存配件"
-L["settings.server.assetcache.precache_attsmodels_onstartup.desc"] = "服务器启动时缓存所有 ARC9 配件模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有多少 ARC9 武器."
+L["settings.server.assetcache.precache_attsmodels_onstartup.desc"] = "服务器启动时缓存所有 ARC9 配件模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有\n多少 ARC9 武器."
 
 L["settings.server.assetcache.precache_wepmodels_onstartup.title"] = "游戏开始时: 预缓存武器模型"
-L["settings.server.assetcache.precache_wepmodels_onstartup.desc"] = "服务器启动时缓存所有 ARC9 第一人称模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有多少 ARC9 武器."
+L["settings.server.assetcache.precache_wepmodels_onstartup.desc"] = "服务器启动时缓存所有 ARC9 第一人称模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有\n多少 ARC9 武器."
 
 L["settings.server.assetcache.precache_allsounds.title"] = "预缓存所有音效"
 L["settings.server.assetcache.precache_allsounds.desc"] = "缓存所有 ARC9 武器的所有射击音效.\n\n可能导致游戏暂时卡顿."
 
 L["settings.server.assetcache.precache_attsmodels.title"] = "预缓存所有配件模型"
-L["settings.server.assetcache.precache_attsmodels.desc"] = "缓存所有 ARC9 配件模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有多少 ARC9 武器."
+L["settings.server.assetcache.precache_attsmodels.desc"] = "缓存所有 ARC9 配件模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有\n多少 ARC9 武器."
 
 L["settings.server.assetcache.precache_wepmodels.title"] = "预缓存所有武器模型"
-L["settings.server.assetcache.precache_wepmodels.desc"] = "缓存所有 ARC9 第一人称模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有多少 ARC9 武器."
+L["settings.server.assetcache.precache_wepmodels.desc"] = "缓存所有 ARC9 第一人称模型.\n\n可能会导致\n游戏长时间卡顿，这取决于你拥有\n多少 ARC9 武器."
 
 L["settings.server.assetcache"] = "缓存"
-L["settings.server.assetcache.all"] = "缓存所有"
+L["settings.server.assetcache.all"] = "缓存全部"
 
 ////////// Print to Console
 L["settings.tabname.printconsole"] = "打印到控制台"
 L["settings.tabname.printconsole.desc"] = "在其中任何一个内容上按 \"打印\" 它们就会将请求的内容\n打印到开发者控制台中."
 
 L["settings.server.printconsole.dev_listmyatts.title"] = "打印我的配件"
-L["settings.server.printconsole.dev_listmyatts.desc"] = "打印当前配备的所有配件的内部名称."
+L["settings.server.printconsole.dev_listmyatts.desc"] = "打印当前配备的所有配件的\n内部名称."
 
 L["settings.server.printconsole.dev_listanims.title"] = "打印动画列表"
 L["settings.server.printconsole.dev_listanims.desc"] = "打印完整的内部动画列表，\n包括动画长度."
 
 L["settings.server.printconsole.dev_listbones.title"] = "打印骨骼列表"
-L["settings.server.printconsole.dev_listbones.desc"] = "打印第一人称模型骨骼的全部骨骼列表."
+L["settings.server.printconsole.dev_listbones.desc"] = "打印第一人称模型骨骼的\n全部骨骼列表."
 
 L["settings.server.printconsole.dev_listbgs.title"] = "打印 Bodygroups"
 L["settings.server.printconsole.dev_listbgs.desc"] = "打印第一人称模型 bodygroups 的完整列表."
@@ -1144,10 +1201,10 @@ L["settings.server.printconsole.dev_listatts.title"] = "打印 QCAttachments"
 L["settings.server.printconsole.dev_listatts.desc"] = "打印第一人称模型的所有 QCAttachments."
 
 L["settings.server.printconsole.dev_listmats.title"] = "打印材质列表"
-L["settings.server.printconsole.dev_listmats.desc"] = "打印第一人称模型上使用的所有材质."
+L["settings.server.printconsole.dev_listmats.desc"] = "打印第一人称模型上使用的\n所有材质."
 
 L["settings.server.printconsole.dev_export.title"] = "打印导出代码"
-L["settings.server.printconsole.dev_export.desc"] = "打印武器当前装备配件的导出代码.\n\n可存储或与其他用户\n共享，以快速加载配件列表."
+L["settings.server.printconsole.dev_export.desc"] = "打印武器当前装备配件的\n导出代码.\n\n可存储或与其他用户\n共享，以快速加载配件列表."
 
 L["settings.server.printconsole.dev_getjson.title"] = "打印武器 JSON"
 L["settings.server.printconsole.dev_getjson.desc"] = "打印武器的 JSON 条目."
@@ -1215,31 +1272,31 @@ L["premium.payment.info"] = [[
 所有自定义选项，包括使用 ARC9 高级版制作的配件插槽、预设和彩色视网膜，都将保持可用，但你不能更改或添加任何其他选项.
 ]]
 
-L["premium.payment.free.title"] = "ARC9 高级版（免費試用）"
+L["premium.payment.free.title"] = "ARC9 高级版 (免费试用版)"
 L["premium.payment.free.desc"] = [[
-價格：<color=100,255,100>免費</color>
+价格: <color=100,255,100>免费</color>
 
-获得 ARC9 高级版 <color=255,106,0>3 天</color>。
+获得 ARC9 高级版, <color=255,106,0>3 Days</color>.
 ]]
 
-L["premium.payment.month.title"] = "ARC9 高级版（1 个月）"
+L["premium.payment.month.title"] = "ARC9 高级版 (1 个月)"
 L["premium.payment.month.desc"] = [[
-價格：<color=100,255,100>35 RMB</color>
+价格: <color=100,255,100>$5</color>
 
-获得 ARC9 高级版 <color=255,106,0>1 个月</color>。
+获得 ARC9 高级版, <color=255,106,0>1 个月</color>.
 ]]
 
-L["premium.payment.3mon.title"] = "ARC9 高级版（3 个月）"
+L["premium.payment.3mon.title"] = "ARC9 高级版 (3 个月)"
 L["premium.payment.3mon.desc"] = [[
-價格：<color=100,255,100>110 RMB</color>
+价格: <color=100,255,100>$15</color>
 
-获得 ARC9 高级版 <color=255,106,0>3 个月</color>。
+获得 ARC9 高级版, <color=255,106,0>3 个月</color>.
 ]]
 
-L["premium.payment.6mon.title"] = "ARC9 高级版（6+1 个月）"
+L["premium.payment.6mon.title"] = "ARC9 高级版 (6 + 1 个月)"
 L["premium.payment.6mon.desc"] = [[
-價格：<color=100,255,100>215 RMB</color> [ HOT! ]
+价格: <color=100,255,100>$30</color> [ 热门! ]
 
-获得 ARC9 高级版 <color=255,106,0>6 个月</color>。
-包括 <color=100,255,100>一个月免费</color>！
+获得 ARC9 高级版, <color=255,106,0>6 个月</color>.
+包括 <color=100,255,100>一个月的免费服务</color>!
 ]]
