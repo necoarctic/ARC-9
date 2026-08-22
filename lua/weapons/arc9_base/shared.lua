@@ -1567,7 +1567,7 @@ function SWEP:SetupDataTables()
     self:NetworkVar("Float", 6, "SprintAmount")
     self:NetworkVar("Float", 7, "LastMeleeTime")
     self:NetworkVar("Float", 8, "TriggerDelay")
-    self:NetworkVar("Float", 9, "ReloadTime")
+    self:NetworkVar("Float", 9, "RefillTime")
     self:NetworkVar("Float", 10, "ReloadFinishTime")
     self:NetworkVar("Float", 11, "SightAmount")
     self:NetworkVar("Float", 12, "HeatAmount")
@@ -1600,7 +1600,7 @@ function SWEP:SetupDataTables()
     -- self:NetworkVar("Int", 9, "LeanState")
     self:NetworkVar("Int", 10, "LastLoadedRounds")
     self:NetworkVar("Int", 11, "PoseParameterIndex")
-    self:NetworkVar("Int", 12, "ReloadAmount")
+    self:NetworkVar("Int", 12, "RefillAmount")
 
     self:NetworkVar("Bool", 0, "Customize")
     self:NetworkVar("Bool", 1, "Reloading")
@@ -1702,6 +1702,12 @@ function SWEP:SetupDataTables()
     self:SetNearWallAmount(0)
     self:SetReadyTime(0)
 end
+
+-- backwards compatibility
+SWEP.GetReloadTime = SWEP.GetRefillTime
+SWEP.GetReloadAmount = SWEP.GetRefillAmount
+SWEP.SetReloadTime = SWEP.SetRefillTime
+SWEP.SetReloadAmount = SWEP.SetRefillAmount
 
 function SWEP:SecondaryAttack()
     if self:GetValue("UBGL") and self:GetProcessedValue("UBGLInsteadOfSights", true) then

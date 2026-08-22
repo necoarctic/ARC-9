@@ -1,12 +1,12 @@
 
-function SWEP:SetReloadTimer( time, amount )
-    self:SetReloadTime( time )
-    self:SetReloadAmount( amount )
+function SWEP:Refill( time, amount )
+    self:SetRefillTime( time )
+    self:SetRefillAmount( amount )
 end
 
 function SWEP:KillReloadTimer()
-    self:SetReloadTime( 0 )
-    self:SetReloadAmount( 0 )
+    self:SetRefillTime( 0 )
+    self:SetRefillAmount( 0 )
 end
 
 function SWEP:Reload()
@@ -86,7 +86,9 @@ function SWEP:Reload()
         anim = "reload_ubgl"
     end
 
-    if self:GetShouldShotgunReload() then
+    local shouldshotgunreload = self:GetShouldShotgunReload()
+
+    if shouldshotgunreload then
         anim = "reload_start"
         dont_idle = true
 
@@ -117,11 +119,11 @@ function SWEP:Reload()
     local entry = self:GetAnimationEntry(self:TranslateAnimation(anim))
     local t = self:PlayAnimation(anim, reloadtimemult, true, dont_idle)
 
-    if !self:GetShouldShotgunReload() then
+    if !shouldshotgunreload then
         local minprogress = entry.RefillProgress or entry.MinProgress or 1
 
         if !entry.RestoreAmmo then
-            self:SetReloadTimer( CurTime() + (t * minprogress), math.Round(self:GetValue(getUBGL and "UBGLClipSize" or "ClipSize")) )
+            self:Refill( CurTime() + (t * minprogress), math.Round(self:GetValue(getUBGL and "UBGLClipSize" or "ClipSize")) )
         end
 
         local newcliptime = entry.MagSwapTime or 0.5
@@ -472,10 +474,7 @@ function SWEP:EndReload()
                 end)
             end
 
-            self:SetTimer(minprogress * t, function()
-                self:RestoreClip(attempt_to_restore)
-            end)
-
+            self:Refill(CurTime() + (t * minprogress), attempt_to_restore)
             self:SetReloadFinishTime(CurTime() + t)
         end
     else
@@ -495,11 +494,10 @@ function SWEP:EndReload()
 end
 
 function SWEP:ThinkReload()
-    if self:GetReloadTime() != 0 and self:GetReloadTime() <= CurTime() then
-        self:RestoreClip( self:GetReloadAmount() )
-        self:SetReloadTime( 0 )
-        self:SetReloadAmount( 0 )
-        self:SetReloading(false)
+    if self:GetRefillTime() != 0 and self:GetRefillTime() <= CurTime() then
+        self:RestoreClip( self:GetRefillAmount() )
+        self:SetRefillTime( 0 )
+        self:SetRefillAmount( 0 )
     end
     if self:GetReloading() and self:GetReloadFinishTime() <= CurTime() then
         self:EndReload()
@@ -592,18 +590,18 @@ function SWEP:Ammo2()
 end
 
 function SWEP:GetReloadingProgress()
-    local fuckingreloadprocessinfluence, fuckingreloadprocess = 0, 0
+    local influence, process = 0, 0
     if self:GetReloading() and !self:GetProcessedValue("ShotgunReload", true) then
-        fuckingreloadprocessinfluence = 1
-        fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
-        if fuckingreloadprocess <= 0.1 then
-            fuckingreloadprocessinfluence = fuckingreloadprocess * 10
-        elseif fuckingreloadprocess > 0.75 then
-            fuckingreloadprocessinfluence = math.max(0, 1 - ((fuckingreloadprocess - 0.75) * 8))
+        influence = 1
+        process = math.Clamp(1 - (self:GetReloadFinishTime() - CurTime()) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+        if process <= 0.1 then
+            influence = process * 10
+        elseif process > 0.75 then
+            influence = math.max(0, 1 - ((process - 0.75) * 8))
         end
         
-        fuckingreloadprocessinfluence = math.ease.InCirc(fuckingreloadprocessinfluence)
+        influence = math.ease.InCirc(influence)
     end
 
-    return fuckingreloadprocessinfluence, fuckingreloadprocess
+    return influence, process
 end
