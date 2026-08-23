@@ -1417,8 +1417,9 @@ SWEP.Animations = {
     --     },
     --     MagSwapTime = 0.5, -- in seconds, how long before the new magazine replaces the old one. For SWEP.BulletBones
     --     NoMagSwap = false, -- don't bother with above
-    --     MinProgress = 0.9, -- point in the reload where the gun is considered reloaded. where 0 is the start and 1 is the end. Value can be fractional like 30 / 65. Value must be between 0 and 1. Value above 1 will cause gun to be empty for longer than the animation plays.
-    --     FireASAP = false, -- works alongside min progress. controls when the gun can begin to fire during the reload animation. ie: Set to 45 / 65 to allow firing after 45 frames of a 65 frame animation. Value must be between 0 and 1. Value above 1 will behave the same as value being 1.
+    --     MinProgress = 0.9, -- Percentage where certain actions are considered completed. Reloads fill the clip, deploy/holsters finish earlier, etc.
+    --     MinProgressTime = 0.3, -- Like MinProgress, but uses seconds into the animation instead of percentage.
+    --     FireASAP = false, -- For animations that lock the weapon, if the weapon can fire as soon as the animation is considered completed. Uses MinProgress, but can also be a number value (percentage-based) to not be linked.
     --     RestoreAmmo = 0, -- Restores ammunition to clip
     --     DumpAmmo = false, -- Dump clip on reload
     --     NoStatAffectors = false, -- do not adjust animation length based on stats (sprint to fire time, aim down sights time)

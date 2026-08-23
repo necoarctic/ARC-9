@@ -27,7 +27,7 @@ SWEP.PV_Melee = 0
 
 SWEP.WantToInvalidateCache = false
 
-
+local cvarArc9Truenames = GetConVar("arc9_truenames")
 
 --[[ Variables ]]--
 
@@ -454,227 +454,222 @@ function SWEP:GetValue(val, base, condition, amount, donotcache)
     return getValue(self, val, base, condition, amount, donotcache)
 end
 
+function SWEP:GetProcessedValue(val, isstatic, base)
+    local swepDt = self.dt
 
-do
-    local cvarArc9Truenames = GetConVar("arc9_truenames")
+    if swepDt.Jammed and val == "Malfunction" then return true
+    elseif swepDt.HeatLockout and val == "Overheat" then return true
+    end
+    
+    local processedValueName = base and val .. tostring(base) or val
+    local ticks
 
-    function SWEP:GetProcessedValue(val, isstatic, base)
-        local swepDt = self.dt
+    if isstatic and not self.DynamicConditions[val] then
+        local cache = self.PV_CacheLong[processedValueName]
+        if cache ~= nil then return cache end
 
-        if swepDt.Jammed and val == "Malfunction" then return true
-        elseif swepDt.HeatLockout and val == "Overheat" then return true
-        end
+    else
+        ticks = engine.TickCount()
         
-        local processedValueName = base and val .. tostring(base) or val
-        local ticks
+        if self.PV_Tick >= ticks then
+            local tempcache = self.PV_Cache[processedValueName]
+            if tempcache ~= nil then return tempcache end
 
-        if isstatic and not self.DynamicConditions[val] then
-            local cache = self.PV_CacheLong[processedValueName]
-            if cache ~= nil then return cache end
+        elseif next(self.PV_Cache) ~= nil then
+            self.PV_Cache = {}
+        end
+    end
 
+    local stat = getValue(self, val, base)
+    -- if true then return stat end
+
+    local curTime = CurTime()
+    local owner = self:GetOwner()
+    local isOwnerValid = owner:IsValid()
+    local isOwnerNPC = owner:IsNPC()
+
+    if isOwnerNPC then
+        stat = getValue(self, val, stat, "NPC", nil, isstatic) -- isstatic to avoid caching unnecessary data, since the processed value will be cached itself
+    end
+
+    if cvarArc9Truenames:GetBool() then
+        stat = getValue(self, val, stat, "True", nil, isstatic)
+    end
+
+    if not swepDt.UBGL then
+        if getValue(self, "Silencer") then stat = getValue(self, val, stat, "Silenced", nil, isstatic) end
+    else
+        stat = getValue(self, val, stat, "UBGL", nil, isstatic)
+    end
+
+    if not isstatic and not isOwnerNPC then -- nobody is gonna fucking notice that npcs process these stats either way
+        if swepDt.BurstCount == 0 then
+            stat = getValue(self, val, stat, "FirstShot")
+        end
+
+        if swepDt.NthShot % 2 == 0 then
+            stat = getValue(self, val, stat, "EvenShot")
         else
-            ticks = engine.TickCount()
-            
-            if self.PV_Tick >= ticks then
-                local tempcache = self.PV_Cache[processedValueName]
-                if tempcache ~= nil then return tempcache end
-
-            elseif next(self.PV_Cache) ~= nil then
-                self.PV_Cache = {}
-            end
+            stat = getValue(self, val, stat, "OddShot")
         end
 
-        local stat = getValue(self, val, base)
-        -- if true then return stat end
-
-        local curTime = CurTime()
-        local owner = self:GetOwner()
-        local isOwnerValid = owner:IsValid()
-        local isOwnerNPC = owner:IsNPC()
-
-        if isOwnerNPC then
-            stat = getValue(self, val, stat, "NPC", nil, isstatic) -- isstatic to avoid caching unnecessary data, since the processed value will be cached itself
+        if self:Clip1() == 0 then
+            stat = getValue(self, val, stat, "Empty")
         end
 
-        if cvarArc9Truenames:GetBool() then
-            stat = getValue(self, val, stat, "True", nil, isstatic)
+        if swepDt.UBGL and self:Clip2() == 0 then
+            stat = getValue(self, val, stat, "EmptyUBGL")
         end
 
-        if not swepDt.UBGL then
-            if getValue(self, "Silencer") then stat = getValue(self, val, stat, "Silenced", nil, isstatic) end
+        if swepDt.Reloading then
+            stat = getValue(self, val, stat, "Reload")
+        end
+
+        if swepDt.NthReload % 2 == 0 then
+            stat = getValue(self, val, stat, "EvenReload")
         else
-            stat = getValue(self, val, stat, "UBGL", nil, isstatic)
+            stat = getValue(self, val, stat, "OddReload")
         end
 
-        if not isstatic and not isOwnerNPC then -- nobody is gonna fucking notice that npcs process these stats either way
-            if swepDt.BurstCount == 0 then
-                stat = getValue(self, val, stat, "FirstShot")
-            end
+        if swepDt.Bipod then
+            stat = getValue(self, val, stat, "Bipod")
+        end
 
-            if swepDt.NthShot % 2 == 0 then
-                stat = getValue(self, val, stat, "EvenShot")
+        local hasNoAffectors = self.HasNoAffectors
+        local sightedbruh = hasNoAffectors[val .. "Sighted"] -- what the fuck is Sighted when correct condition is Sights
+
+        if not hasNoAffectors[val .. "Sights"] or not hasNoAffectors[val .. "HipFire"] or !sightedbruh then
+            local sightAmount = swepDt.SightAmount
+
+            if type(stat) == 'number' then
+                if sightAmount >= 1 and sightedbruh then
+                    stat = getValue(self, val, stat, "Sighted")
+                else
+                    local hipfire = getValue(self, val, stat, "HipFire")
+                    local sights = getValue(self, val, stat, "Sights")
+
+                    if isnumber(hipfire) and isnumber(sights) then
+                        stat = Lerp(sightAmount, hipfire, sights)
+                    end
+                end
             else
-                stat = getValue(self, val, stat, "OddShot")
-            end
-
-            if self:Clip1() == 0 then
-                stat = getValue(self, val, stat, "Empty")
-            end
-
-            if swepDt.UBGL and self:Clip2() == 0 then
-                stat = getValue(self, val, stat, "EmptyUBGL")
-            end
-
-            if swepDt.Reloading then
-                stat = getValue(self, val, stat, "Reload")
-            end
-
-            if swepDt.NthReload % 2 == 0 then
-                stat = getValue(self, val, stat, "EvenReload")
-            else
-                stat = getValue(self, val, stat, "OddReload")
-            end
-
-            if swepDt.Bipod then
-                stat = getValue(self, val, stat, "Bipod")
-            end
-
-            local hasNoAffectors = self.HasNoAffectors
-            local sightedbruh = hasNoAffectors[val .. "Sighted"] -- what the fuck is Sighted when correct condition is Sights
-
-            if not hasNoAffectors[val .. "Sights"] or not hasNoAffectors[val .. "HipFire"] or !sightedbruh then
-                local sightAmount = swepDt.SightAmount
-
-                if type(stat) == 'number' then
-                    if sightAmount >= 1 and sightedbruh then
+                if sightAmount >= 1 then
+                    if !sightedbruh then
                         stat = getValue(self, val, stat, "Sighted")
                     else
-                        local hipfire = getValue(self, val, stat, "HipFire")
-                        local sights = getValue(self, val, stat, "Sights")
-
-                        if isnumber(hipfire) and isnumber(sights) then
-                            stat = Lerp(sightAmount, hipfire, sights)
-                        end
+                        stat = getValue(self, val, stat, "Sights")
                     end
                 else
-                    if sightAmount >= 1 then
-                        if !sightedbruh then
-                            stat = getValue(self, val, stat, "Sighted")
-                        else
-                            stat = getValue(self, val, stat, "Sights")
-                        end
-                    else
-                        stat = getValue(self, val, stat, "HipFire")
-                    end
+                    stat = getValue(self, val, stat, "HipFire")
                 end
             end
+        end
 
-            if not ARC9HeatCapacityGPVOverflow and (not hasNoAffectors[val .. "Hot"] or not hasNoAffectors[val .. "Heated"]) then
-                local heatAmount = swepDt.HeatAmount
-                local hasHeat = heatAmount > 0
+        if not ARC9HeatCapacityGPVOverflow and (not hasNoAffectors[val .. "Hot"] or not hasNoAffectors[val .. "Heated"]) then
+            local heatAmount = swepDt.HeatAmount
+            local hasHeat = heatAmount > 0
 
-                if hasHeat and base ~= "HeatCapacity" then
-                    ARC9HeatCapacityGPVOverflow = true
-                    local cap = self:GetProcessedValue("HeatCapacity")
-                    ARC9HeatCapacityGPVOverflow = false
-
-                    if type(stat) == 'number' then
-                        local hot = getValue(self, val, stat, "Hot")
-
-                        if heatAmount >= cap then
-                            local heated = getValue(self, val, stat, "Heated")
-                            stat = (heated == stat and hot ~= stat) and hot or heated
-                        elseif hasHeat then
-                            stat = Lerp(heatAmount / cap, stat, hot)
-                        end
-
-                    else
-                        if heatAmount >= cap then
-                            local heated = getValue(self, val, stat, "Heated")
-                            stat = (heated == stat and hot ~= stat) and hot or heated
-                        elseif hasHeat then
-                            stat = getValue(self, val, stat, "Hot")
-                        end
-                    end
-                end
-            end
-
-            local lastMeleeTime = swepDt.LastMeleeTime
-            if not hasNoAffectors[val .. "Melee"] and lastMeleeTime < curTime then
-                local pft = curTime - lastMeleeTime
-                local d = pft / (getValue(self, "PreBashTime") + getValue(self, "PostBashTime"))
-                d = 1 - math.Clamp(d, 0, 1)
+            if hasHeat and base ~= "HeatCapacity" then
+                ARC9HeatCapacityGPVOverflow = true
+                local cap = self:GetProcessedValue("HeatCapacity")
+                ARC9HeatCapacityGPVOverflow = false
 
                 if type(stat) == 'number' then
-                    stat = Lerp(d, stat, getValue(self, val, stat, "Melee"))
+                    local hot = getValue(self, val, stat, "Hot")
+
+                    if heatAmount >= cap then
+                        local heated = getValue(self, val, stat, "Heated")
+                        stat = (heated == stat and hot ~= stat) and hot or heated
+                    elseif hasHeat then
+                        stat = Lerp(heatAmount / cap, stat, hot)
+                    end
+
+                else
+                    if heatAmount >= cap then
+                        local heated = getValue(self, val, stat, "Heated")
+                        stat = (heated == stat and hot ~= stat) and hot or heated
+                    elseif hasHeat then
+                        stat = getValue(self, val, stat, "Hot")
+                    end
+                end
+            end
+        end
+
+        local lastMeleeTime = swepDt.LastMeleeTime
+        if not hasNoAffectors[val .. "Melee"] and lastMeleeTime < curTime then
+            local pft = curTime - lastMeleeTime
+            local d = pft / (getValue(self, "PreBashTime") + getValue(self, "PostBashTime"))
+            d = 1 - math.Clamp(d, 0, 1)
+
+            if type(stat) == 'number' then
+                stat = Lerp(d, stat, getValue(self, val, stat, "Melee"))
+            elseif d > 0 then
+                stat = getValue(self, val, stat, "Melee")
+            end
+        end
+
+        if not hasNoAffectors[val .. "Shooting"] then
+            local nextPrimaryFire = self:GetNextPrimaryFire()
+
+            if nextPrimaryFire + 0.1 > curTime then
+                local pft = (nextPrimaryFire + 0.1) - curTime
+                local d = math.Clamp(pft / 0.1, 0, 1)
+
+                if type(stat) == 'number' then
+                    stat = Lerp(d, stat, getValue(self, val, stat, "Shooting"))
                 elseif d > 0 then
-                    stat = getValue(self, val, stat, "Melee")
+                    stat = getValue(self, val, stat, "Shooting")
                 end
-            end
-
-            if not hasNoAffectors[val .. "Shooting"] then
-                local nextPrimaryFire = self:GetNextPrimaryFire()
-
-                if nextPrimaryFire + 0.1 > curTime then
-                    local pft = (nextPrimaryFire + 0.1) - curTime
-                    local d = math.Clamp(pft / 0.1, 0, 1)
-
-                    if type(stat) == 'number' then
-                        stat = Lerp(d, stat, getValue(self, val, stat, "Shooting"))
-                    elseif d > 0 then
-                        stat = getValue(self, val, stat, "Shooting")
-                    end
-                end
-            end
-
-            if val ~= "RecoilModifierCap" and not hasNoAffectors[val .. "Recoil"] then
-                local recoilAmount = math.min(self:GetProcessedValue("RecoilModifierCap"), swepDt.RecoilAmount)
-                if recoilAmount > 0 then stat = getValue(self, val, stat, "Recoil", recoilAmount) end
-            end
-
-            if --[[not isOwnerNPC and]] isOwnerValid then
-                if owner:OnGround() and owner:GetMoveType() ~= MOVETYPE_NOCLIP then
-                    if owner:IsSprinting() and !self:StillWaiting() then
-                        stat = getValue(self, val, stat, "Sprint")
-                    elseif owner:Crouching() then
-                        stat = getValue(self, val, stat, "Crouch")
-                    end
-                    
-                else
-                    stat = getValue(self, val, stat, "MidAir")
-                end
-            end
-
-            if not hasNoAffectors[val .. "Move"] and isOwnerValid then
-                local spd = self.PV_Move
-                local maxspd = owner:IsPlayer() and owner:GetWalkSpeed() or 250
-
-                --if singleplayer or CLIENT or self.PV_Tick ~= UnPredictedCurTime() then
-                    spd = math.min(owner:GetAbsVelocity():Length2D(), maxspd) / maxspd
-                    self.PV_Move = spd
-                --end
-
-                if type(stat) == 'number' then
-                    stat = Lerp(spd, stat, getValue(self, val, stat, "Move"))
-                else
-                    if spd > 0 then
-                        stat = getValue(self, val, stat, "Move")
-                    end
-                end
-            end
-
-            if swepDt.GrenadeTossing then
-                stat = getValue(self, val, stat, "Toss")
             end
         end
 
-        if isstatic and not self.DynamicConditions[val] then
-            self.PV_CacheLong[processedValueName] = stat
-        else
-            self.PV_Cache[processedValueName] = stat
-            if self.PV_Tick < ticks then self.PV_Tick = ticks + (isOwnerNPC and 16 or 0) end
+        if val ~= "RecoilModifierCap" and not hasNoAffectors[val .. "Recoil"] then
+            local recoilAmount = math.min(self:GetProcessedValue("RecoilModifierCap"), swepDt.RecoilAmount)
+            if recoilAmount > 0 then stat = getValue(self, val, stat, "Recoil", recoilAmount) end
         end
 
-        return stat
+        if --[[not isOwnerNPC and]] isOwnerValid then
+            if owner:OnGround() and owner:GetMoveType() ~= MOVETYPE_NOCLIP then
+                if owner:IsSprinting() and !self:StillWaiting() then
+                    stat = getValue(self, val, stat, "Sprint")
+                elseif owner:Crouching() then
+                    stat = getValue(self, val, stat, "Crouch")
+                end
+                
+            else
+                stat = getValue(self, val, stat, "MidAir")
+            end
+        end
+
+        if not hasNoAffectors[val .. "Move"] and isOwnerValid then
+            local spd = self.PV_Move
+            local maxspd = owner:IsPlayer() and owner:GetWalkSpeed() or 250
+
+            --if singleplayer or CLIENT or self.PV_Tick ~= UnPredictedCurTime() then
+                spd = math.min(owner:GetAbsVelocity():Length2D(), maxspd) / maxspd
+                self.PV_Move = spd
+            --end
+
+            if type(stat) == 'number' then
+                stat = Lerp(spd, stat, getValue(self, val, stat, "Move"))
+            else
+                if spd > 0 then
+                    stat = getValue(self, val, stat, "Move")
+                end
+            end
+        end
+
+        if swepDt.GrenadeTossing then
+            stat = getValue(self, val, stat, "Toss")
+        end
     end
+
+    if isstatic and not self.DynamicConditions[val] then
+        self.PV_CacheLong[processedValueName] = stat
+    else
+        self.PV_Cache[processedValueName] = stat
+        if self.PV_Tick < ticks then self.PV_Tick = ticks + (isOwnerNPC and 16 or 0) end
+    end
+
+    return stat
 end
