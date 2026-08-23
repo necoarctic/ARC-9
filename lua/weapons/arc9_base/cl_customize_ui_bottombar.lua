@@ -399,6 +399,8 @@ local function enterfolder(self, scroll, slottbl, fname)
 
                 self.CustomizeLastHovered = self2
             end
+            
+            if input.IsKeyDown(KEY_LSHIFT) then self2:SetTooltip(att.att) else self2:SetTooltip() end
         end
     end
 

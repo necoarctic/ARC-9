@@ -136,6 +136,9 @@ function SWEP:CreateHUD_Slots(scroll)
                 self.CustomizeHints["customize.hint.random"] = "customize.hint.randomize"
                 if self2.slot.Installed then
                     self.CustomizeHints["customize.hint.deselect"] = "customize.hint.unattach"
+
+                    if input.IsKeyDown(KEY_LSHIFT) then self2:SetTooltip(self2.slot.Installed) else self2:SetTooltip() end
+
 					-- if atttbl.ToggleStats then
 						-- self.CustomizeHints["customize.hint.toggleatts"] = "hud.hint.toggleatts"
 					-- end
