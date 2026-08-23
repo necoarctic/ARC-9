@@ -76,8 +76,7 @@ function SWEP:PlayAnimation(anim, mult, lock, no_idle, noproxy, notranslate)
         time = animation.Time or mdl:SequenceDuration(seq)
 
         local mp_t = animation.MinProgressTime -- New MinProgressTime, seconds-based
-        local mp_c = animation.MinProgress -- Classic MinProgress, percentage-based
-        minprogress = (mp_t and mp_t/time) or (mp_c and mp_c) or 1
+        minprogress = (mp_t and mp_t/time) or animation.MinProgress or 1
 
         mult = mult * (animation.Mult or 1)
 

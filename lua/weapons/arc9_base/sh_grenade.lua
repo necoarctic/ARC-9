@@ -68,12 +68,10 @@ function SWEP:ThinkGrenade()
         if self:GetAnimLockTime() > CurTime() then return end
 
         if self:GetGrenadeTossing() and (!owner:KeyDown(IN_ATTACK2) or self:GetProcessedValue("ThrowInstantly", true)) then
-            local t = self:PlayAnimation("toss", throwanimspeed, true)
-            local mp = self:GetAnimationEntry("toss").MinProgress or 0
+            local t, mp = self:PlayAnimation("toss", throwanimspeed, true)
             self:ThrowGrenade(ARC9.NADETHROWTYPE_TOSS, t * mp)
         elseif !self:GetGrenadeTossing() and (!(owner:KeyDown(IN_ATTACK) or QuicknadeBind) or self:GetProcessedValue("ThrowInstantly", true)) then
-            local t = self:PlayAnimation("throw", throwanimspeed, true)
-            local mp = self:GetAnimationEntry("throw").MinProgress or 0
+            local t, mp = self:PlayAnimation("throw", throwanimspeed, true)
             self:ThrowGrenade(ARC9.NADETHROWTYPE_NORMAL, t * mp)
         end
 

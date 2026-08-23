@@ -257,14 +257,14 @@ function SWEP:GetViewModelPosition(pos, ang)
     if reloading then
         local reloadpos = swepGetProcessedValue(self, "ReloadPos", true)
         local reloadang = swepGetProcessedValue(self, "ReloadAng", true)
-        local fuckingreloadprocessinfluence = self:GetReloadingProgress()
+        local progress = self:GetReloadingProgress()
 
         if reloadpos then
-            offsetpos:Sub(reloadpos * fuckingreloadprocessinfluence)
+            offsetpos:Sub(reloadpos * progress)
         end
 
         if reloadang then
-            offsetang:Sub(reloadang * fuckingreloadprocessinfluence)
+            offsetang:Sub(reloadang * progress)
         end
     end
 
@@ -297,11 +297,22 @@ function SWEP:GetViewModelPosition(pos, ang)
         local sight = self:GetSight()
         local eepos, eeang = self:GetExtraSightPositions()
 		local peekp, peeka = "PeekPos", "PeekAng"
-		local fuckingreloadprocess = math.Clamp(1 - (self:GetReloadFinishTime() - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
-		local reloadanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
+		local progress = math.Clamp(1 - (self:GetReloadFinishTime() - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+		local anim = self:TranslateAnimation("reload")
+		local time = self:GetAnimationTime(anim)
+		local entry = self:GetAnimationEntry(anim)
 		local shotgun = self:GetShouldShotgunReload()
+
+        -- Duplicated code for MinProgressTime :P
+        local minprogress
+        local mp_t = entry.MinProgressTime
+        if mp_t then
+            minprogress = mp_t / time
+        else
+            minprogress = entry.MinProgress
+        end
 		
-		if (!shotgun and fuckingreloadprocess < (reloadanim.PeekProgress or reloadanim.MinProgress or 0.9)) or (shotgun and self:GetReloading()) then
+		if (!shotgun and progress < (entry.PeekProgress or minprogress or 0.9)) or (shotgun and self:GetReloading()) then
 			if self.PeekPosReloading then peekp = "PeekPosReloading" end
 			if self.PeekAngReloading then peeka = "PeekAngReloading" end
 		end

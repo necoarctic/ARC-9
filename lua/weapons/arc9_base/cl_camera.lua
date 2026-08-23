@@ -70,22 +70,29 @@ function SWEP:GetSmoothedFOVMag()
         local sightdelta_old = swepDt.SightAmount
         local sightdelta = sightdelta_old
 		local curTime = UnPredictedCurTime()
-		local fuckingreloadprocess = math.Clamp(1 - (swepDt.ReloadFinishTime - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
-		local reloadanim = self:GetAnimationEntry(self:TranslateAnimation("reload"))
+		local progress = math.Clamp(1 - (swepDt.ReloadFinishTime - curTime) / (self.ReloadTime * self:GetAnimationTime("reload")), 0, 1)
+		local anim = self:TranslateAnimation("reload")
+		local time = self:GetAnimationTime(anim)
+		local entry = self:GetAnimationEntry(anim)
 		local shotgun = self:GetShouldShotgunReload()
 
-        -- if swepDt.InSights then
-            sightdelta = math.ease.OutQuart(sightdelta)
-        -- else
-        --     sightdelta = math.ease.InQuart(sightdelta)
-        -- end
+        sightdelta = math.ease.OutQuart(sightdelta)
         sightdelta = math.ease.InOutQuad(sightdelta)
 
         if self.Peeking and !self.PeekingIsSight then
             target = self.IronSights.Magnification * 0.95
         end
 
-		if !shotgun and fuckingreloadprocess < (reloadanim.PeekProgress or reloadanim.MinProgress or 0.9) then target = target * 0.95 end
+        -- Duplicated code for MinProgressTime :P
+        local minprogress
+        local mp_t = entry.MinProgressTime
+        if mp_t then
+            minprogress = mp_t / time
+        else
+            minprogress = entry.MinProgress
+        end
+
+		if !shotgun and progress < (entry.PeekProgress or minprogress or 0.9) then target = target * 0.95 end
 
 		if shotgun and swepDt.Reloading then target = target * 0.95 end
 

@@ -19,12 +19,17 @@ function SWEP:GetTrueRPM(base)
             end
 
             if self.ManualAction then
-                -- What is self.cycle .
-                local cyclelen = self:GetAnimationTime("cycle")
-                local cycleent = self:GetAnimationEntry("cycle")
-                cyclelen = cyclelen * (cycleent.Mult or 1)
-                cyclelen = cyclelen * (cycleent.MinProgress or 1)
-                delay = delay + (cyclelen * self.CycleTime)
+                local time = self:GetAnimationTime("cycle")
+                local entry = self:GetAnimationEntry("cycle")
+                -- Duplicated code for MinProgressTime :P
+                local mp_t = entry.MinProgressTime
+                if mp_t then
+                    time = mp_t
+                else
+                    time = time * (entry.MinProgress or 1)
+                end
+                time = time * (entry.Mult or 1)
+                delay = delay + (time * self.CycleTime)
             end
 
             if self:GetCurrentFiremode() > 1 then
@@ -58,11 +63,16 @@ function SWEP:GetTrueRPM(base)
             end
 
             if self:GetProcessedValue("ManualAction") then
-                local cyclelen = self:GetAnimationTime("cycle")
-                local cycleent = self:GetAnimationEntry("cycle")
-                cyclelen = cyclelen * (cycleent.Mult or 1)
-                cyclelen = cyclelen * (cycleent.MinProgress or 1)
-                delay = delay + (cyclelen * self:GetProcessedValue("CycleTime"))
+                local time = self:GetAnimationTime("cycle")
+                local entry = self:GetAnimationEntry("cycle")
+                local mp_t = entry.MinProgressTime
+                if mp_t then
+                    time = mp_t
+                else
+                    time = time * (entry.MinProgress or 1)
+                end
+                time = time * (entry.Mult or 1)
+                delay = delay + (time * self:GetProcessedValue("CycleTime"))
             end
 
             if self:GetCurrentFiremode() > 1 then

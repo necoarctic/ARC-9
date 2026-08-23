@@ -117,10 +117,10 @@ function SWEP:Reload()
     local reloadtimemult = self:GetProcessedValue("ReloadTime")
 
     local entry = self:GetAnimationEntry(self:TranslateAnimation(anim))
-    local t = self:PlayAnimation(anim, reloadtimemult, true, dont_idle)
+    local t, minprogress = self:PlayAnimation(anim, reloadtimemult, true, dont_idle)
 
     if !shouldshotgunreload then
-        local minprogress = entry.RefillProgress or entry.MinProgress or 1
+        local minprogress = entry.RefillProgress or minprogress or 1
 
         if !entry.RestoreAmmo then
             self:Refill( CurTime() + (t * minprogress), math.Round(self:GetValue(getUBGL and "UBGLClipSize" or "ClipSize")) )

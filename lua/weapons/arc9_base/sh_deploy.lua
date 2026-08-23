@@ -241,7 +241,7 @@ function SWEP:Holster(wep)
             local has_quickholster = self:HasAnimation("holster_quick")
             local holster_animation = self:RunHook("Hook_SelectHolsterAnimation") or (wep.QuickSwapTo and has_quickholster and "holster_quick") or "holster"
             if self:HasAnimation(holster_animation) then
-                local holster_mult = fastdraw and !has_quickholster and .75 or 1
+                local holster_mult = fastdraw and !has_quickholster and self.QuickHolsterMult or 1
                 local t, minprogress = self:PlayAnimation(holster_animation, self:GetProcessedValue("DeployTime", true, 1) * holster_mult, true, true)
                 self:SetHolsterTime(CurTime() + t * minprogress)
             else
@@ -304,7 +304,7 @@ function SWEP:DoDeployAnimation()
         if self:GetDoAFastDraw() then
             local has_fastdraw = self:HasAnimation("draw_quick")
             local draw_anim = has_fastdraw and "draw_quick" or "draw"
-            local draw_mult = has_fastdraw and 1 or .75
+            local draw_mult = has_fastdraw and 1 or self.QuickDrawMult
             self:PlayAnimation(draw_anim, self:GetProcessedValue("DeployTime", true, 1) * draw_mult, true)
         else
             self:PlayAnimation("draw", self:GetProcessedValue("DeployTime", true, 1), true)

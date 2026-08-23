@@ -33,9 +33,8 @@ function SWEP:ThinkCycle()
 
         local ejectdelay = swepGetProcessedValue(self, "EjectDelay", true)
 
-        local t = self:PlayAnimation("cycle", swepGetProcessedValue(self, "CycleTime", true), false)
-
-        t = t * ((self:GetAnimationEntry(self:TranslateAnimation("cycle")) or {}).MinProgress or 1)
+        local t, minprogress = self:PlayAnimation("cycle", swepGetProcessedValue(self, "CycleTime", true), false)
+        t = t * minprogress
 
         self:SetCycleFinishTime(ct + t)
 

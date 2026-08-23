@@ -612,6 +612,9 @@ SWEP.OverheatTime = 1
 
 SWEP.ShootWhileSprint = false
 
+SWEP.QuickHolsterMult = 0.75 -- Mult used to speed up a weapon switching to a quicknade. Not a stat. Only used if the weapon doesn't have a "holster_quick".
+SWEP.QuickDrawMult = 0.75 -- Mult used to speed up a weapon returning from a quicknade. Not a stat. Only used if the weapon doesn't have a "draw_quick".
+
 SWEP.Speed = 1
 
 SWEP.SpeedMult = 1
