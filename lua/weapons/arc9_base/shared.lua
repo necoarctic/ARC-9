@@ -1635,13 +1635,13 @@ function SWEP:SetupDataTables()
     self:SetLockOnStartTime(0)
     self:SetNearWallAmount(0)
     self:SetReadyTime(0)
-end
 
--- backwards compatibility
-SWEP.GetReloadTime = SWEP.GetRefillTime
-SWEP.GetReloadAmount = SWEP.GetRefillAmount
-SWEP.SetReloadTime = SWEP.SetRefillTime
-SWEP.SetReloadAmount = SWEP.SetRefillAmount
+    -- backwards compatibility
+    SWEP.GetReloadTime = SWEP.GetRefillTime
+    SWEP.GetReloadAmount = SWEP.GetRefillAmount
+    SWEP.SetReloadTime = SWEP.SetRefillTime
+    SWEP.SetReloadAmount = SWEP.SetRefillAmount
+end
 
 function SWEP:SecondaryAttack()
     if self:GetValue("UBGL") and self:GetProcessedValue("UBGLInsteadOfSights", true) then
