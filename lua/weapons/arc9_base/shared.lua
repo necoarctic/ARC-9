@@ -1637,10 +1637,10 @@ function SWEP:SetupDataTables()
     self:SetReadyTime(0)
 
     -- backwards compatibility
-    SWEP.GetReloadTime = SWEP.GetRefillTime
-    SWEP.GetReloadAmount = SWEP.GetRefillAmount
-    SWEP.SetReloadTime = SWEP.SetRefillTime
-    SWEP.SetReloadAmount = SWEP.SetRefillAmount
+    self.GetReloadTime = self.GetRefillTime
+    self.GetReloadAmount = self.GetRefillAmount
+    self.SetReloadTime = self.SetRefillTime
+    self.SetReloadAmount = self.SetRefillAmount
 end
 
 function SWEP:SecondaryAttack()
