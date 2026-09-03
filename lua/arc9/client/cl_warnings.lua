@@ -105,7 +105,7 @@ function ARC9.MakeIncompatibleWindow(tbl)
     neverAgain:DockMargin(ScreenScaleMulti(48), ScreenScaleMulti(2), ScreenScaleMulti(48), ScreenScaleMulti(2))
 
     neverAgain.OnMousePressed = function(spaa, kc)
-        if CurTime() > startTime + 10 then
+        --if CurTime() > startTime + 10 then
             local simpleTbl = {}
 
             for _, v in pairs(tbl) do
@@ -117,7 +117,7 @@ function ARC9.MakeIncompatibleWindow(tbl)
             window:Remove()
             chat.AddText(Color(255, 0, 0), ARC9:GetPhrase("incompatible.never.confirm"))
             surface.PlaySound("buttons/lever1.wav")
-        end
+        --end
     end
 
     neverAgain.Paint = function(spaa, w, h)
