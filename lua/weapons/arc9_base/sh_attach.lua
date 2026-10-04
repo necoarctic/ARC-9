@@ -93,7 +93,7 @@ SWEP.LastAmmo = ""
 
 local function updatehookp(self, base)
     if IsValid(self) then
-        self.PrintName = self:RunHook("HookP_NameChange", base.PrintName)
+        self.PrintName = self:RunHook("HookP_NameChange", ARC9:UseTrueNames() and base.TrueName or base.PrintName)
         self.Description = self:RunHook("HookP_DescriptionChange", base.Description)
         self.Class = self:RunHook("HookP_ClassChange", base.Class)
     end

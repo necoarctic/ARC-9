@@ -305,8 +305,14 @@ local function enterfolder(self, scroll, slottbl, fname)
         if strpath != "!favorites" and ((!atttbl.Folder and #self.BottomBarPath > 0) or (atttbl.Folder and atttbl.Folder != strpath)) then continue end
 
         if strpath == "!favorites" and !ARC9.Favorites[att.att] then continue end
-
-        local attname = ARC9:GetPhraseForAtt(att.att, "CompactName") or ARC9:GetPhraseForAtt(att.att, "PrintName") or ARC9:GetPhraseForAtt(att.att, "ShortName") or ""
+		
+		local truenamec = ( ARC9:UseTrueNames() and ARC9:GetPhraseForAtt(att.att, "TrueCompactName") )
+		local truename = ( ARC9:UseTrueNames() and ARC9:GetPhraseForAtt(att.att, "TrueName") )
+		
+        local attname = ARC9:GetPhraseForAtt(att.att, truenamec and "TrueCompactName" or "CompactName")
+		or ARC9:GetPhraseForAtt(att.att, truename and "TrueName" or "PrintName")
+		or ARC9:GetPhraseForAtt(att.att, "ShortName")
+		or ""
 
         local attbtn2 = vgui.Create("ARC9AttButton", scroll)
         attbtn2.Weapon = self
@@ -580,11 +586,14 @@ function SWEP:CreateHUD_AttInfo()
     self:ClearAttInfoBar()
 
     if !atttbl then return end
+	
+	
+	local truename = ( ARC9:UseTrueNames() and ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "TrueName") )
 
     local infopanel = vgui.Create("DPanel", lowerpanel)
     infopanel:SetSize(lowerpanel:GetWide(), ARC9ScreenScale(70))
     infopanel:SetPos(0, ARC9ScreenScale(75.5))
-    infopanel.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "PrintName") or atttbl.PrintName
+    infopanel.title = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, truename and "TrueName" or "PrintName") or atttbl.PrintName
     infopanel.Paint = function(self2, w, h)
         if !IsValid(self) then return end
         -- surface.SetFont("ARC9_10")
@@ -601,27 +610,18 @@ function SWEP:CreateHUD_AttInfo()
     descscroller:SetSize(lowerpanel:GetWide() / 2 - ARC9ScreenScale(5), infopanel:GetTall() - ARC9ScreenScale(16))
     descscroller:SetPos(ARC9ScreenScale(4), ARC9ScreenScale(14))
 
-    local multiline = {}
-    local desc = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "Description") or atttbl.Description
+	local truedesc = ( ARC9:UseTrueNames() and ARC9:GetPhraseForAtt(self.AttInfoBarAtt, "TrueDescription") )
+    local desc = ARC9:GetPhraseForAtt(self.AttInfoBarAtt, truedesc and "TrueDescription" or "Description") or atttbl.Description
 
     if atttbl.AdvancedCamoSupport and !self.AdvancedCamoCache then
         desc = desc .. (ARC9:GetPhrase("customize.camoslot.nosupport") or "")
         if self.EFTErgo then desc = desc .. (ARC9:GetPhrase("customize.camoslot.eftextra") or "") end
     end
-
-    multiline = ARC9MultiLineText(desc, descscroller:GetWide() - (ARC9ScreenScale(3.5)), "ARC9_9_Slim")
-
-    for i, text in ipairs(multiline) do
-        local desc_line = vgui.Create("DPanel", descscroller)
-        desc_line:SetSize(descscroller:GetWide(), ARC9ScreenScale(9))
-        desc_line:Dock(TOP)
-        desc_line.Paint = function(self2, w, h)
-            -- surface.SetFont("ARC9_9_Slim")
-            -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            -- surface.SetTextPos(ARC9ScreenScale(2), 0)
-            -- surface.DrawText(text)
-            markup.Parse("<font=ARC9_9_Slim>" .. text):Draw(ARC9ScreenScale(2), 0, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-        end
+	
+	descscroller.title = desc
+    descscroller.Paint = function(self2, w, h)
+        if !IsValid(self) then return end
+        markup.Parse( "<font=ARC9_9_Slim>" .. desc, descscroller:GetWide() - ARC9ScreenScale(3.5) ):Draw(ARC9ScreenScale(2), ARC9ScreenScale(0), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
     end
 
     local slot = self.AttInfoBarAttSlot

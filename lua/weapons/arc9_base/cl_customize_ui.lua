@@ -876,6 +876,12 @@ function SWEP:CreateCustomizeHUD()
                         atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
                         atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
 
+						if ARC9:UseTrueNames() then
+							atttxt = ( ARC9:GetPhraseForAtt(ms_slot.Installed, "TrueCompactName") or ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName") )
+							or ( ARC9:GetPhraseForAtt(ms_slot.Installed, "TrueName") or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") )
+							or ""
+						end
+
                         surface.SetMaterial(atttbl.Icon or mat_3dslot)
                         surface.SetDrawColor(ARC9.GetHUDColor("fg"))
                         render.SuppressEngineLighting(true)

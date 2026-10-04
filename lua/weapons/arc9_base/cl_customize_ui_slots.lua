@@ -81,6 +81,11 @@ function SWEP:CreateHUD_Slots(scroll)
         if ms_slot.Installed then
             atttxt = ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName")
             atttxt = atttxt or ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName") or ""
+			
+			if ARC9:UseTrueNames() then
+				atttxt = ( ARC9:GetPhraseForAtt(ms_slot.Installed, "TrueCompactName") or ARC9:GetPhraseForAtt(ms_slot.Installed, "CompactName") )
+			end
+			
             slotbtn:SetIcon(atttbl.Icon)
             -- slotbtn:SetTooltip(ARC9:GetPhraseForAtt(ms_slot.Installed, "PrintName").."\n\nLMB - Customisation\nRMB - Remove attachment")
         else

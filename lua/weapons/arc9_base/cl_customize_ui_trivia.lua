@@ -37,20 +37,25 @@ function SWEP:CreateHUD_Trivia()
         surface.DrawText(ARC9:GetPhrase(self2.title) or self2.title)
     end
 
-    local descmultiline = {}
-	descstring = ARC9:GetPhrase(self.Description) or self.Description
+	local truedesc = ( ARC9:UseTrueNames() and ARC9:GetPhrase(self.TrueDescription) )
+	local descstring = ARC9:GetPhrase( truedesc and self.TrueDescription or self.Description ) or self.Description
+
+	-- local desc_line = vgui.Create("DPanel", desc)
+	-- desc_line:SetSize(desc:GetWide(), ARC9ScreenScale(8))
+	-- desc_line:Dock(TOP)
+	-- desc_line.Paint = function(self2, w, h)
+        -- if !IsValid(self) then return end
+        -- markup.Parse( "<font=ARC9_8>" .. descstring, desc_line:GetWide() - ARC9ScreenScale(1) ):Draw(ARC9ScreenScale(2), ARC9ScreenScale(0), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+    -- end
+
     descmultiline = ARC9MultiLineText(descstring, desc:GetWide() - ARC9ScreenScale(1), "ARC9_8")
     for i, text in ipairs(descmultiline) do
         local desc_line = vgui.Create("DPanel", desc)
         desc_line:SetSize(desc:GetWide(), ARC9ScreenScale(8))
         desc_line:Dock(TOP)
         desc_line.Paint = function(self2, w, h)
-            if !IsValid(self) then return end
-				markup.Parse("<font=ARC9_8>" .. text):Draw(ARC9ScreenScale(2), 0, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-            -- surface.SetFont("ARC9_8")
-            -- surface.SetTextColor(ARC9.GetHUDColor("fg"))
-            -- surface.SetTextPos(ARC9ScreenScale(2), 0)
-            -- surface.DrawText(text)
+        if !IsValid(self) then return end
+			markup.Parse("<font=ARC9_8>" .. text):Draw(ARC9ScreenScale(2), 0, TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
         end
     end
 
