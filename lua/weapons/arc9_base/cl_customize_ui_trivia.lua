@@ -37,8 +37,7 @@ function SWEP:CreateHUD_Trivia()
         surface.DrawText(ARC9:GetPhrase(self2.title) or self2.title)
     end
 
-	local truedesc = ( ARC9:UseTrueNames() and ARC9:GetPhrase(self.TrueDescription) )
-	local descstring = ARC9:GetPhrase( truedesc and self.TrueDescription or self.Description ) or self.Description
+	local descstring = ARC9:GetPhrase( (ARC9:UseTrueNames() and self.TrueDescription) or self.Description ) or self.Description
 
 	-- local desc_line = vgui.Create("DPanel", desc)
 	-- desc_line:SetSize(desc:GetWide(), ARC9ScreenScale(8))
