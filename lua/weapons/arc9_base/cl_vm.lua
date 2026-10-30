@@ -27,6 +27,7 @@ local lastblurtime = 0
 local lastcust = false
 
 local fuckopengl = system.IsLinux() or system.IsOSX()
+local dx11 = render.GetDXLevel() >= 110
 
 local rt_cheapblur = GetRenderTargetEx("arc9_halfblur", scrw / divisor, scrh / divisor,
     RT_SIZE_LITERAL,
@@ -46,6 +47,8 @@ local mat_cheapblurresult = CreateMaterial("arc9_mat_halfblur", "UnlitGeneric", 
 
 
 local function DrawCheapBlur(intensity, self)
+    if dx11 then return end
+
     if !fuckopengl and intensity > 0 and system.HasFocus() then
         lastblurtime = FrameNumber()
         lastcust = self:GetCustomize()

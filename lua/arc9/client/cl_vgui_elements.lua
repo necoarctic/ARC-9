@@ -156,7 +156,7 @@ function ARC9AttButton:Paint(w, h)
     local textcolor = self.Color
     local markercolor = self.Color
     local icon = self.Icon or ARC9TopButton.MatIdle
-    local text = self.ButtonText
+    local text = self.ButtonText or "<?>"
     local colorclicked = ARC9.GetHUDColor("hi")
     local colorgrey = ARC9.GetHUDColor("unowned")
     local mat = self.MatIdle
