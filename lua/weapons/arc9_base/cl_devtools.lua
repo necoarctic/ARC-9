@@ -9,6 +9,9 @@ SWEP.devlockeddrag = false
 function SWEP:DevStuffMenu()
     print("Developers developers developers developers developers developers developers developers developers developers developers developers developers ")
 
+
+    if IsValid(self.DevFrame) then self.DevFrame:Remove() self.DevFrame = nil end
+
     local DevFrame = vgui.Create("DFrame")
     DevFrame:SetPos(ScrW() - 1015, ScrH() - 315)
     DevFrame:SetSize(1000, 300)
@@ -17,6 +20,7 @@ function SWEP:DevStuffMenu()
     DevFrame:SetDraggable(true)
     DevFrame:ShowCloseButton(true)
     DevFrame:MakePopup()
+    DevFrame:SetKeyboardInputEnabled(false)
 
     self.DevFrame = DevFrame
 
@@ -166,14 +170,21 @@ local devplaybackmult = 1
 local devplaybackcycle = 0
 
 function SWEP:DevStuffAnims()
+    
+    if IsValid(self.DevFrame) then self.DevFrame:Remove() self.DevFrame = nil end
+
     local DevFrame = vgui.Create("DFrame")
     DevFrame:SetPos(ScrW()/2-(ScrW()-200)/2, 50)
     DevFrame:SetSize(ScrW()-200, 300)
-    DevFrame:SetTitle("ARC9 Animation table editor - works only in singleplayer in pause menu")
+    DevFrame:SetTitle("ARC9 Animation table editor - Singleplayer only; <bind / \"cancelselect; pause\"> ; then call as <arc9_dev_toggleanimsmenu; cancelselect> ; press / multiple times to make anim play. Fack rubat for making escape take priority over everything.")
     DevFrame:SetVisible(true)
     DevFrame:SetDraggable(true)
     DevFrame:ShowCloseButton(true)
     DevFrame:MakePopup()
+    DevFrame:SetKeyboardInputEnabled(false)
+
+
+    self.DevFrame = DevFrame
 
 
     ----
