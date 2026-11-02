@@ -1,4 +1,6 @@
 
+local slomoconvar = GetConVar("arc9_breath_slowmo")
+
 function SWEP:Deploy()
     local owner = self:GetOwner()
 
@@ -206,7 +208,7 @@ function SWEP:Holster(wep)
 
         self:ClientHolster()
 
-        if game.SinglePlayer() then
+        if game.SinglePlayer() and slomoconvar:GetBool() then
             game.SetTimeScale(1)
         end
 
