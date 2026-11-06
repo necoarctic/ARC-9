@@ -163,10 +163,10 @@ function ARC9.MakeIncompatibleWindow(tbl)
     accept:DockMargin(ScreenScaleMulti(48), ScreenScaleMulti(2), ScreenScaleMulti(48), ScreenScaleMulti(2))
 
     accept.OnMousePressed = function(spaa, kc)
-        if CurTime() > startTime + 5 then
+        --if CurTime() > startTime + 5 then
             window:Close()
             window:Remove()
-        end
+        --end
     end
 
     accept.Paint = function(spaa, w, h)
