@@ -521,7 +521,8 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
 
     inrt = ARC9.RTScopeRender
 
-    if !isDepthPass then self:DrawTranslucentPass() end
+    -- if !isDepthPass then self:DrawTranslucentPass() end
+    self:DrawTranslucentPass(false, isDepthPass)
 
 	if !isDepthPass then
     	local newmzpcfs = {}

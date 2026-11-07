@@ -237,13 +237,22 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
     end
 end
 
-function SWEP:DrawTranslucentPass(wm) -- translucent pass, fuck source and gmod
+local depthmat = CreateMaterial("arc9_depthwrite_mat", "DepthWrite", { 
+    ["$basetexture"] = "color/white", 
+    ["$nocull"] = 1,
+    ["$color_depth"] = 1;
+})
+
+function SWEP:DrawTranslucentPass(wm, isDepthPass) -- translucent pass, fuck source and gmod
     if !wm then
         local updatebitch = true
         if self.VModel then
             for _, model in ipairs(self.VModel) do
                 if model.istranslucent and !model.hidden and IsValid(model) then
                     if self.CustomizeDelta > 0 then cam.IgnoreZ(true) end
+                        
+                    if isDepthPass then render.MaterialOverride( depthmat ) model:DrawModel() render.MaterialOverride() return end
+                    
                     if updatebitch then render.UpdatePowerOfTwoTexture() updatebitch = false end
 
                     model:DrawModel()
