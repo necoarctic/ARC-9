@@ -18,7 +18,7 @@ local function checknvg(wpn) -- this func a bit different than what in cl_laser
     if lp.quadnodsonlight or lp:GetNWBool("nvg_on", false) then return true end -- arctic nvgs and mw nvgs
     if lp.EZarmor and lp.EZarmor.effects and lp.EZarmor.effects.nightVision then return true end -- jmod
     local sight = wpn:GetSight()
-    if sight and wpn:GetSightAmount() > 0.8 and !wpn.Peeking and sight.atttbl and sight.atttbl.RTScopeNightVision and ARC9.RTScopeRender then return true end
+    if sight and wpn:GetSightAmount() > 0.8 and !wpn.Peeking and sight.atttbl and sight.atttbl.RTScopeNightVision then return true end
 
     return false
 end
