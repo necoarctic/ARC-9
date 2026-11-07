@@ -70,7 +70,7 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
 
     if wm then
         if !custompos then
-            if !isDepthPass and lod == 0 and mdl and IsValid(mdl[1]) then
+            if !isDepthPass and lod < 1 and mdl and IsValid(mdl[1]) then
                 mdl[1]:SetMaterial(swepGetProcessedValue(self, "Material", true))
                 
                 if !self.VMMaterialAmount and mdl[1]:GetMaterials() then 
