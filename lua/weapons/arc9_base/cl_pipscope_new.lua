@@ -555,7 +555,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
 
             globalscalie = globalscalie * (atttbl.ScopeScreenRatio or 0.5)
 
-            globalscalie = globalscalie - (scrw/scrh - 16/9) -- woops
+            globalscalie = globalscalie * math.Clamp((16 / 9) / (scrw / scrh), 0.5, 1)
             
             local reticle = sight.Reticle or atttbl.RTScopeReticle
             local color = atttbl.RTScopeColor or color_white
@@ -784,10 +784,6 @@ if ARC9.Dev(2) then
         -- end
     end)
 end
-
--- Track convar changes for the cheapscopes text display
-local cheapscopes_last_change_time = CurTime()
-local cheapscopes_last_value = GetConVar("arc9_cheapscopes"):GetBool()
 
 
 -- improves framerate ⬇️ ✅
