@@ -191,8 +191,8 @@ mat_optic_surface:SetTexture("$basetexture", "vgui/black")
 local mat_cheap = Material("effects/arc9/rt_cheap")
 local mat_cheap_sharpen = Material("effects/arc9/rt_cheap_sharpen")
 
-local mat_shadow = Material("arc9/shadow3.png", "mips smooth")
-local mat_shadow_2 = Material("arc9/shadow2.png", "mips smooth")
+local mat_shadow = Material("arc9/shadow3")
+local mat_shadow_2 = Material("arc9/shadow2")
 local mat_ahmad = Material("arc9/ahmad.png", "mips smooth")
 local mat_black = CreateMaterial("arc9_real_black_mat", "UnlitGeneric", { ["$basetexture"] = "vgui/black", ["$ignorez"] = 1 }) -- vgui/black some reason turns transparent sometimes
 
