@@ -70,7 +70,7 @@ function ARC9.MakeIncompatibleWindow(tbl)
     window:SetTitle("")
     window:SetDraggable(false)
     window:SetVisible(true)
-    window:ShowCloseButton(false)
+    --window:ShowCloseButton(false)
     window:MakePopup()
 
     window.Paint = function(self, w, h)
