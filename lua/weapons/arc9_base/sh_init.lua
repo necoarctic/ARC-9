@@ -59,12 +59,26 @@ function SWEP:Initialize()
 
     local bottomless = self:GetProcessedValue("BottomlessClip", true)
     local clip = bottomless and self:GetProcessedValue("AmmoPerShot") or self.LastClipSize
-    self.Primary.DefaultClip = self.ForceDefaultClip or (clip + (bottomless and 0 or (self:GetProcessedValue("ChamberSize") or 0)))
-    -- self.Primary.DefaultClip = clip * math.max(1, self:GetProcessedValue("SupplyLimit") + (bottomless and 0 or 1))
+    local forced = self.ForceDefaultClip
+    local defaultClip
 
-    if self.Primary.DefaultClip == 1 then -- This specific value seems to be hard-coded to not give any ammo?
-        self:SetClip1(1)
-        self.Primary.DefaultClip = 0
+    if forced ~= nil then
+        defaultClip = math.max(0, math.floor(tonumber(forced) or 0))
+    else
+        defaultClip = clip + (bottomless and 0 or (self:GetProcessedValue("ChamberSize") or 0))
+    end
+
+    self.Primary.DefaultClip = defaultClip
+
+    local startingMag = defaultClip
+
+    if forced == nil then
+        if defaultClip == 1 then
+            startingMag = 1
+            self.Primary.DefaultClip = 0
+        elseif self.ClipSize > 0 then
+            startingMag = math.max(1, defaultClip)
+        end
     end
 
     if self:GetValue("UBGL") then
@@ -72,10 +86,11 @@ function SWEP:Initialize()
         self.Secondary.DefaultClip = self:GetValue("UBGLClipSize") * math.max(1, self:GetValue("SecondarySupplyLimit") + 1)
     end
 
-    self:SetClip1(self.ClipSize > 0 and math.max(1, self.Primary.DefaultClip) or self.Primary.DefaultClip)
+    self:SetClip1(startingMag)
     self:SetClip2(self.Secondary.DefaultClip)
 
-    self:SetLastLoadedRounds(self.LastClipSize)
+    self:SetLoadedRounds(startingMag)
+    self:SetLastLoadedRounds(startingMag)
     
     timer.Simple(0.4, function()
         if IsValid(self) then

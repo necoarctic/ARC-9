@@ -338,7 +338,8 @@ SWEP.ClipSize = 25 -- Self-explanatory.
 SWEP.SupplyLimit = 5 -- Amount of magazines of ammo this gun can take from an ARC9 supply crate.
 SWEP.SecondarySupplyLimit = 2 -- Amount of reserve UBGL magazines you can take.
 
-SWEP.ForceDefaultClip = nil -- Set to force a default amount of ammo this gun can have. Otherwise, this is controlled by console variables.
+SWEP.ForceDefaultClip = nil -- nil = default start, but a number = exact starting mag (0 = empty, for example)
+SWEP.ForceDefaultAmmo = nil -- nil = arc9_mult_defaultammo reserve grant; number = exact reserve, but 0 = none
 
 SWEP.AmmoPerShot = 1 -- Ammo to use per shot
 SWEP.InfiniteAmmo = false -- Weapon does not take from reserve ammo
