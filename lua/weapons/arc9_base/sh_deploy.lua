@@ -125,8 +125,12 @@ function SWEP:InitialDefaultClip()
     if engine.ActiveGamemode() == "darkrp" then return end -- DarkRP is god's second biggest mistake after gmod
 
     if self:GetOwner() and self:GetOwner():IsPlayer() then
-        if self.ForceDefaultAmmo then
-            self:GetOwner():GiveAmmo(self.ForceDefaultAmmo, ammmmmo)
+        if self.ForceDefaultAmmo ~= nil then
+            local amt = math.max(0, math.floor(tonumber(self.ForceDefaultAmmo) or 0))
+
+            if amt > 0 then
+                self:GetOwner():GiveAmmo(amt, ammmmmo)
+            end
         else
             self:GetOwner():GiveAmmo(math.Round(self:GetValue("ClipSize")) * GetConVar("arc9_mult_defaultammo"):GetInt(), ammmmmo)
         end
