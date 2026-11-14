@@ -87,6 +87,8 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
     -- parsing all thousands of icons of atts might technically take more time otherwise
     if CLIENT and (atttbl.StickerMaterial or atttbl.CustomCamoTexture) then atttbl.Icon = FixVertexLitMaterial(atttbl.Icon) end
 
+    if atttbl.CustomCamoTexture or atttbl.CharmModel then atttbl.Free = true end -- free camos & charms
+
     -- for stat, val in ipairs(atttbl) do
     --     local stat2 = string.Replace(stat, "Override", "")
     --     atttbl[stat2] = val

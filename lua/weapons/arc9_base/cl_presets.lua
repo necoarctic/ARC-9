@@ -166,11 +166,16 @@ function SWEP:GetPresetData(preset)
     return name, count
 end
 
+local maxatts = GetConVar("arc9_atts_max")
+
 function SWEP:GetAttCountFromTable(tbl)
     local count = 0
     for i, k in pairs(tbl) do
         if k.Installed then
-            count = count + 1
+            local atbl = ARC9.GetAttTable(k.Installed)
+            if atbl and !atbl.Hidden and (maxatts:GetInt() >= 16 or !atbl.Free) then
+                count = count + 1
+            end
         end
 
         if k.SubAttachments then

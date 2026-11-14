@@ -568,6 +568,8 @@ function SWEP:CreateHUD_Bottom()
     end
 end
 
+local maxatts = GetConVar("arc9_atts_max")
+
 SWEP.AttInfoBar = nil
 SWEP.AttInfoBarAtt = nil
 
@@ -616,6 +618,10 @@ function SWEP:CreateHUD_AttInfo()
     if atttbl.AdvancedCamoSupport and !self.AdvancedCamoCache then
         desc = desc .. (ARC9:GetPhrase("customize.camoslot.nosupport") or "")
         if self.EFTErgo then desc = desc .. (ARC9:GetPhrase("customize.camoslot.eftextra") or "") end
+    end
+
+    if atttbl.Free and !atttbl.CustomCamoTexture and !atttbl.StickerMaterial and !atttbl.CharmModel and (maxatts:GetInt() < 16) then
+        desc = desc .. (ARC9:GetPhrase("customize.free") or "")
     end
 	
 	descscroller.title = desc

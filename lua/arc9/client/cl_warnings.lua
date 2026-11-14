@@ -57,6 +57,8 @@ ARC9.IncompatibleAddons = {
     ["3494727681"] = "Breaks scopes picture",
     -- Sound Muffling Effect
     ["3529402381"] = "Causes issues with gunfire audio.",
+    -- Re-Light - Dynamic Lights
+    ["3754051046"] = "Breaks c_hands, hands show up in customization menu and grips stop working",
 }
 
 local ScreenScaleMulti = ARC9.ScreenScale

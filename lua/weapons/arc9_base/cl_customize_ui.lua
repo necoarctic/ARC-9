@@ -1361,6 +1361,8 @@ function SWEP:DrawCustomizeHUD()
     end
 end
 
+local maxatts = GetConVar("arc9_atts_max")
+
 function SWEP:CreateHUD_RHP()
     local bg = self.CustomizeHUD
     if !IsValid(self) then return end
@@ -1586,7 +1588,17 @@ function SWEP:CreateHUD_RHP()
         local custtabbtn = vgui.Create("DButton", lowerpanel)
         --
         surface.SetFont("ARC9_12")
-        local titlewidth = surface.GetTextSize(ARC9:GetPhrase(btn.title)) + ARC9ScreenScale(12.5)
+        local realtitle = ARC9:GetPhrase(btn.title)
+
+        if btn.customize then
+            local max = maxatts:GetInt()
+            if max < 16 then
+                realtitle = string.format("%s – %s / %s", realtitle, self:CountAttachments(), max)
+                custtabbtn.maxatted = max
+            end
+        end
+
+        local titlewidth = surface.GetTextSize(realtitle) + ARC9ScreenScale(12.5)
         --
 
         if btn.inspect then
@@ -1598,7 +1610,7 @@ function SWEP:CreateHUD_RHP()
         end
 
         custtabbtn:SetSize(titlewidth, ARC9ScreenScale(14.5))
-        custtabbtn.title = ARC9:GetPhrase(btn.title)
+        custtabbtn.title = realtitle
         custtabbtn.page = i - 1
         custtabbtn.func = btn.func
         custtabbtn:SetText("")
@@ -1641,12 +1653,17 @@ function SWEP:CreateHUD_RHP()
             surface.DrawRect(0, h - ARC9ScreenScale(1.5), w, h)
 
             surface.SetFont("ARC9_12")
-            local tw = surface.GetTextSize(self2.title)
+            local titol = self2.title
+            if self2.maxatted then
+                titol = string.format("%s – %s / %s", ARC9:GetPhrase(btn.title), self:CountAttachments(nil, nil, true), self2.maxatted)
+            end
+                
+            local tw = surface.GetTextSize(titol)
 
             surface.SetTextColor(buttontextcolor)
             -- surface.SetTextPos((w - tw) / 2, -ARC9ScreenScale(0.75))
             surface.SetTextPos((w - tw) / 2, 0)
-            surface.DrawText(self2.title)
+            surface.DrawText(titol)
         end
         custtabbtn.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
         custtabbtn.DoClick = function(self2)

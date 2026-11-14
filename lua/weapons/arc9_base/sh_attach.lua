@@ -659,17 +659,26 @@ function SWEP:CanDetach(addr)
     return true
 end
 
-function SWEP:CountAttachments(countatt)
+function SWEP:CountAttachments(countatt, includingfree, fast)
+    if fast and self.LastAmountOfAtts then return self.LastAmountOfAtts end
+    
     local qty = 0
 
     for _, att in ipairs(self:GetAttachmentList()) do
         if !countatt then
-            qty = qty + 1
+            local atbl = ARC9.GetAttTable(att)
+            if includingfree or (atbl and !atbl.Free) then
+                qty = qty + 1
+            end
         else
             if countatt == att then
                 qty = qty + 1
             end
         end
+    end
+    
+    if !countatt and !includingfree and qty != self.LastAmountOfAtts then
+        self.LastAmountOfAtts = qty
     end
 
     return qty

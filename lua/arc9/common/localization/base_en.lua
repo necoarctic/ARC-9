@@ -191,6 +191,8 @@ L["customize.camoslot.canpaint"] = "\n\nThis attachment can be <color=255,224,86
 L["customize.camoslot.nosupport"] = "\n\nThis attachment can be <color=255,224,86>individually camouflaged</color>, but the weapon <color=255,106,0>lacks support for it</color>."
 L["customize.camoslot.eftextra"] = "\nUse the <color=114,255,86>Camo Support</color> attachment from <color=255,106,0>EFT Extras</color> to apply individual camouflages."
 
+L["customize.free"] = "\n\n<color=114,255,86>Free Attachment</color> — doesn't count towards the limit."
+
 L["folder.back"] = "Back"
 L["folder.deselect"] = "Deselect"
 L["folder.favorites"] = "Favorites"
