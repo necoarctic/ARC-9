@@ -1,16 +1,7 @@
-# VMT Camos, Camo Overlays and Customize Tabs
-
-This document covers three related systems:
-
-1. **VMT camos**: a camo attachment can point at a `.vmt` instead of a bare texture.
-2. **Overlay camos**: a camo VMT is drawn as a real material over the weapon, so every VMT parameter works.
-3. **Camo options and customize tabs**: players can tweak overlay camos (colour, sliders, toggles) in a **CAMO** tab. That tab is built on a general framework you can reuse for your own tabs.
-
-All three sit on top of the existing camo system. Camos that only set `ATT.CustomCamoTexture` to a VTF behave exactly as before.
-
----
-
-## 1. VMT camos
+# Your one way stop to make camos!!1!!!
+unless you're darsu and reading this to make arc9 cool then hai darsuu
+I swear rest is normal speak trust me <3
+## VMT camos
 
 ### Usage
 
@@ -67,7 +58,7 @@ If the VMT can't be loaded or has no valid `$basetexture`, a line starting with 
 
 ---
 
-## 2. Overlay camos
+## Overlay camos
 
 An overlay camo draws its VMT as a real material in a second pass over the weapon. **Every VMT parameter works**, including `$selfillum`, `$translucent`/`$alpha`, `$additive`, phong, envmaps, `$basetexturetransform` and **material proxies** (scrolling, animated textures, ...).
 
@@ -128,7 +119,7 @@ It is skipped in shadow/depth passes, on models drawn in ARC9's translucent pass
 
 ---
 
-## 3. Camo options (player customisation)
+## Camo options (player customisation)
 
 Overlay camos can expose settings that players change in a **CAMO** tab in the customize menu. The tab appears next to PERSONALIZE while such a camo is equipped.
 
@@ -215,7 +206,7 @@ Don't expose a variable that a proxy **writes** every frame, such as `$basetextu
 
 ---
 
-## 4. Customize tab framework
+## Customize tab framework
 
 The CAMO tab is one registration in a general system. Any addon can add tabs to the ARC9 customize menu.
 
@@ -294,7 +285,7 @@ Built-in types:
 
 ---
 
-## 5. API reference
+## API reference
 
 ### Camo options (`arc9/client/cl_camo_options.lua`)
 
