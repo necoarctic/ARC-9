@@ -555,10 +555,10 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
     local sigt, sa, notactivemask
     local activedof = !fuckopengl and !ARC9.IntelGPUDetected and arc9_fx_adsblur_new:GetBool()
 
-    if activedof then
+    if activedof or ARC9.ForceDoFMask then
         sigt = self:GetSight()
         sa = self:GetSightAmount()
-        notactivemask = !(sigt.atttbl and (sigt.atttbl.RTScope or sigt.atttbl.RTScopeNew_BlurTexture))
+        notactivemask = !(sigt.atttbl and (sigt.atttbl.RTScope or sigt.atttbl.RTScopeNew_BlurTexture)) or (sa < 0.7)
     end
 
     self.RenderingHolosight = false
@@ -572,13 +572,13 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
             end
         end
 
-        if activedof then
+        if activedof or ARC9.ForceDoFMask then
             self:RenderDoFMask(notactivemask)
         end
     end
     cam.End3D()
 
-    if activedof then
+    if activedof and !ARC9.NoDoF then
         if arc9_fx_adsblur_always:GetBool() then sa = 1 * (1 - self.CustomizeDelta) end
 
         if sa > 0 then
