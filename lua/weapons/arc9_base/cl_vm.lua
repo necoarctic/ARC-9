@@ -410,6 +410,8 @@ function SWEP:DoFSetParams(strength)
 end
 
 function SWEP:RenderDoF()
+    if dx11 then return end
+
     render.UpdateScreenEffectTexture()
     render.SetMaterial(arc9_fx_adsblur_bleeding:GetBool() and mat_dof2 or mat_dof)
     render.DrawScreenQuad()
