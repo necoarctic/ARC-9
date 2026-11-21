@@ -1,6 +1,20 @@
+ARC9.CamoProxyMaterials = ARC9.CamoProxyMaterials or {}
+
+function ARC9.NormalizeMaterialName(name)
+    name = string.lower(string.Replace(name or "", "\\", "/"))
+    name = string.gsub(name, "^materials/", "")
+    name = string.gsub(name, "%.vmt$", "")
+    return name
+end
+
+local function registerCamoMaterial(mat)
+    ARC9.CamoProxyMaterials[ARC9.NormalizeMaterialName(mat:GetName())] = true
+end
+
 matproxy.Add({
     name = "CustomCamo",
     init = function( self, mat, values )
+        registerCamoMaterial(mat)
         -- Store the name of the variable we want to set
         self.DetailResult = values.camotexture
         self.ScaleResult = values.camoscale
@@ -108,6 +122,7 @@ matproxy.Add({
 matproxy.Add({
     name = "Arc9CustomCamoAdvanced",
     init = function( self, mat, values )
+        registerCamoMaterial(mat)
         -- Store the name of the variable we want to set
         self.DetailResult = values.camotexture or ""
         self.PhongResult = values.phonk or ""

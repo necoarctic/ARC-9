@@ -620,7 +620,7 @@ function SWEP:CreateHUD_AttInfo()
         if self.EFTErgo then desc = desc .. (ARC9:GetPhrase("customize.camoslot.eftextra") or "") end
     end
 
-    if atttbl.Free and !atttbl.CustomCamoTexture and !atttbl.StickerMaterial and !atttbl.CharmModel and (maxatts:GetInt() < 16) then
+    if atttbl.Free and !atttbl.CustomCamoTexture and !atttbl.CustomCamoOverlay and !atttbl.StickerMaterial and !atttbl.CharmModel and (maxatts:GetInt() < 16) then
         desc = desc .. (ARC9:GetPhrase("customize.free") or "")
     end
 	

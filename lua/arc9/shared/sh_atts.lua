@@ -28,6 +28,72 @@ local function FixVertexLitMaterial(mat) -- from DImage code
 	return mat
 end
 
+local camoVMTParams = {
+    ["$arc9_camoscale"] = "CustomCamoScale",
+    ["$arc9_camorotate"] = "CustomCamoRotate",
+    ["$arc9_camoblendmode"] = "CustomCamoBlendMode",
+    ["$arc9_camoblendfactor"] = "CustomBlendFactor",
+    ["$arc9_camophongmult"] = "CustomCamoPhongMult",
+}
+
+local function ResolveCamoMaterial(atttbl, shortname)
+    local tex = atttbl.CustomCamoTexture
+    if !atttbl.CustomCamoMaterial and isstring(tex) and string.EndsWith(string.lower(tex), ".vmt") then
+        atttbl.CustomCamoMaterial = tex
+        atttbl.CustomCamoTexture = nil
+    end
+
+    local matpath = atttbl.CustomCamoMaterial
+    if !isstring(matpath) then return end
+
+    matpath = string.gsub(matpath, "^materials/", "")
+    matpath = string.gsub(matpath, "%.[vV][mM][tT]$", "")
+
+    atttbl.CustomCamoTexture = atttbl.CustomCamoTexture or matpath
+
+    if SERVER then
+        if atttbl.CustomCamoOverlay then atttbl.Free = true end
+        return
+    end
+
+    local mat = Material(matpath)
+    if !mat or mat:IsError() then
+        print("[ARC9] Camo material \"" .. matpath .. "\" for attachment \"" .. tostring(shortname) .. "\" could not be loaded")
+        return
+    end
+
+    local basetex = mat:GetTexture("$basetexture")
+    if basetex and basetex:IsError() then basetex = nil end
+
+    if atttbl.CustomCamoOverlay or (mat:GetInt("$arc9_camooverlay") or 0) != 0 then
+        atttbl.CustomCamoOverlay = matpath
+        atttbl.CustomCamoTexture = nil
+        atttbl.Free = true
+    else
+        if !basetex then
+            print("[ARC9] Camo material \"" .. matpath .. "\" for attachment \"" .. tostring(shortname) .. "\" has no valid $basetexture")
+            return
+        end
+
+        atttbl.CustomCamoTexture = basetex:GetName()
+
+        for param, field in pairs(camoVMTParams) do
+            if atttbl[field] == nil then
+                local val = mat:GetFloat(param)
+                if val then atttbl[field] = val end
+            end
+        end
+    end
+
+    if !atttbl.Icon and basetex then
+        atttbl.Icon = CreateMaterial("arc9_camoicon_" .. tostring(shortname), "UnlitGeneric", {
+            ["$basetexture"] = basetex:GetName(),
+            ["$vertexcolor"] = 1,
+            ["$vertexalpha"] = 1,
+        })
+    end
+end
+
 ARC9.AttachmentPatches = {
     ["doi_optic_"] = {
         RTScopeNew_ShadowScale = 45,
@@ -81,11 +147,14 @@ function ARC9.LoadAttachment(atttbl, shortname, id)
 
     atttbl.ShortName = shortname
     atttbl.ID = id or ARC9.Attachments_Count
+
+    ResolveCamoMaterial(atttbl, shortname)
+
     atttbl.Icon = atttbl.Icon or defaulticon
 
     -- only checking stickers and camos cuz rest of icons are usually normal and use png
     -- parsing all thousands of icons of atts might technically take more time otherwise
-    if CLIENT and (atttbl.StickerMaterial or atttbl.CustomCamoTexture) then atttbl.Icon = FixVertexLitMaterial(atttbl.Icon) end
+    if CLIENT and (atttbl.StickerMaterial or atttbl.CustomCamoTexture or atttbl.CustomCamoOverlay) then atttbl.Icon = FixVertexLitMaterial(atttbl.Icon) end
 
     if atttbl.CustomCamoTexture or atttbl.CharmModel then atttbl.Free = true end -- free camos & charms
 

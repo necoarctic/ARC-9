@@ -6,6 +6,81 @@ local emptytab = {}
 local swepGetProcessedValue = SWEP.GetProcessedValue
 local renderRenderFlashlights = render.RenderFlashlights
 
+local camoOverlayNoDraw = CreateMaterial("arc9_camooverlay_nodraw", "UnlitGeneric", {
+    ["$basetexture"] = "color/white",
+    ["$no_draw"] = 1,
+    ["$translucent"] = 1,
+    ["$alpha"] = 0,
+})
+local camoOverlayMats = {}
+
+local function getCamoOverlayMaterial(path)
+    local mat = camoOverlayMats[path]
+    if !mat then
+        mat = Material(path)
+        camoOverlayMats[path] = mat
+    end
+    return mat
+end
+
+local function getCamoOverlayIndices(model, src)
+    local ct = CurTime()
+    if model.CamoOverlayNextCheck and model.CamoOverlayNextCheck > ct then return model.CamoOverlayIndices end
+    model.CamoOverlayNextCheck = ct + 1
+
+    local proxied = ARC9.CamoProxyMaterials
+    local mats = src:GetMaterials()
+    local basemat = src:GetMaterial()
+    local indices, any = {}, false
+
+    if proxied and mats then
+        for i = 1, #mats do
+            local sub = src:GetSubMaterial(i - 1)
+            local name = (sub != "" and sub) or (basemat != "" and basemat) or mats[i]
+            local hit = proxied[ARC9.NormalizeMaterialName(name)] or false
+            indices[i] = hit
+            if hit then any = true end
+        end
+    end
+
+    model.CamoOverlayIndices = any and indices or false
+    return model.CamoOverlayIndices
+end
+
+local function syncCamoOverlayMirror(mirror, src)
+    local srcmodel = src:GetModel()
+    if mirror:GetModel() != srcmodel then
+        mirror:SetModel(srcmodel)
+        mirror.CamoOverlayNextCheck = nil
+    end
+
+    local skin = src:GetSkin()
+    if mirror:GetSkin() != skin then mirror:SetSkin(skin) end
+
+    for b = 0, src:GetNumBodyGroups() - 1 do
+        local v = src:GetBodygroup(b)
+        if mirror:GetBodygroup(b) != v then mirror:SetBodygroup(b, v) end
+    end
+end
+
+local function drawCamoOverlay(model, overlaymat, src)
+    local indices = getCamoOverlayIndices(model, src or model)
+    if !indices then return end
+
+    local count = #indices
+    for i = 1, count do
+        render.MaterialOverrideByIndex(i - 1, indices[i] and overlaymat or camoOverlayNoDraw)
+    end
+
+    render.OverrideDepthEnable(true, false)
+    model:DrawModel()
+    render.OverrideDepthEnable(false, false)
+
+    for i = 1, count do
+        render.MaterialOverrideByIndex(i - 1, nil)
+    end
+end
+
 local function getscopebound(self, scopeent)
     local vm = self:GetVM()
     if !IsValid(scopeent) or !IsValid(vm) or !self:GetInSights() then return nil end
@@ -114,6 +189,9 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
             customBlendFactor = swepGetProcessedValue(self, "CustomBlendFactor", true)
         end
 
+        local camoOverlayPath = !isDepthPass and swepGetProcessedValue(self, "CustomCamoOverlay", true)
+        local camoOverlay = isstring(camoOverlayPath) and getCamoOverlayMaterial(camoOverlayPath)
+
         local activesightadress = self:GetActiveSightSlotTable().Address
         local getpos = self:GetPos()
         local presetcam = ARC9.PresetCam
@@ -123,6 +201,16 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
             local model = mdl[i]
             if model.IsAnimationProxy then continue end
             if !IsValid(model) then self:KillModel() return end
+
+            if model.CamoOverlayMirror then
+                local src = model:GetParent()
+                if camoOverlay and IsValid(src) then
+                    syncCamoOverlayMirror(model, src)
+                    model:SetupBones()
+                    drawCamoOverlay(model, camoOverlay, src)
+                end
+                continue
+            end
 
             local slottbl = model.slottbl
             local atttbl = self:GetFinalAttTable(slottbl)
@@ -225,6 +313,10 @@ function SWEP:DrawCustomModel(wm, custompos, customang, flags)
                     if !model.DrawModelFlashlightFunc then model.DrawModelFlashlightFunc = function() model:DrawModel() end end -- caching to prevent gc spike
 
                     renderRenderFlashlights(model.DrawModelFlashlightFunc)
+                end
+
+                if camoOverlay and !model.istranslucent then
+                    drawCamoOverlay(model, camoOverlay)
                 end
             end
 

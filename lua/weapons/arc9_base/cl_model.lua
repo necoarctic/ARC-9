@@ -471,6 +471,28 @@ function SWEP:SetupModel(wm, lod, cm)
     if !wm and owner != LocalPlayer() then return end
     if lod > 0 then return end
 
+    if !wm and IsValid(basemodel) and swepGetProcessedValue(self, "CustomCamoOverlay", true) then
+        local mirror = ClientsideModel(self.ViewModel or basemodel:GetModel())
+
+        if IsValid(mirror) then
+            mirror:SetNoDraw(true)
+            mirror:AddEffects(EF_BONEMERGE)
+            mirror:SetParent(basemodel)
+            mirror.atttbl = {}
+            mirror.slottbl = {}
+            mirror.weapon = self
+            mirror.CamoOverlayMirror = true
+
+            table.insert(ARC9.CSModelPile, {
+                Model = mirror,
+                Weapon = self,
+                Version = self.ModelVersion
+            })
+
+            table.insert(mdl, mirror)
+        end
+    end
+
     local eles = self:GetAttachmentElements()
 
     for _, ele in ipairs(eles) do
