@@ -9,6 +9,7 @@ local arc9_scope_g = GetConVar("arc9_scope_g")
 local arc9_scope_b = GetConVar("arc9_scope_b")
 
 local fuckopengl = system.IsLinux() or system.IsOSX()
+local dx11 = render.GetDXLevel() >= 110
 
 local scrw, scrh = ScrW(), ScrH()
 
@@ -241,7 +242,7 @@ function SWEP:RenderRT(cheap, magnification)
             renderedpicture = self:RenderRTExpensive(atttbl, magnification)
         end
         
-        local pixely = !fuckopengl and atttbl.RTScopeNew_Pixelation
+        local pixely = !fuckopengl and !dx11 and atttbl.RTScopeNew_Pixelation
         if pixely then
             mat_pixel_lense:SetFloat("$c0_x", pixely)
             mat_pixel_lense:SetTexture("$basetexture", renderedpicture)
@@ -381,7 +382,7 @@ function SWEP:RenderRTExpensive(atttbl, magnification)
             self:DrawLockOnHUD(true)
         cam.End3D()
 
-        if !fuckopengl and arc9_fx_rt_fxaa:GetBool() then
+        if !fuckopengl and !dx11 and arc9_fx_rt_fxaa:GetBool() then
             render.UpdateScreenEffectTexture()
             render.CopyRenderTargetToTexture(render.GetScreenEffectTexture())
             render.SetMaterial(fxaa_mat)
@@ -511,7 +512,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     model.RTScopeDrawingRN = active
 
     if active and self:ShouldDoScope() then
-        local shaderenabled = !fuckopengl and (!atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool() or (atttbl.RTScopeNew_FPSLock and !atttbl.RTScopeNew_Pixelation))
+        local shaderenabled = !fuckopengl and !dx11 and (!atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool() or (atttbl.RTScopeNew_FPSLock and !atttbl.RTScopeNew_Pixelation))
 
         -- if  then
             self.RenderingRTScope = true
