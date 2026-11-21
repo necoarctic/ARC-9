@@ -1363,6 +1363,167 @@ end
 
 local maxatts = GetConVar("arc9_atts_max")
 
+function SWEP:BuildCustomizeTabButtons()
+    local lowerpanel = self.CustomizeHUD and self.CustomizeHUD.lowerpanel
+    if !IsValid(lowerpanel) then return end
+
+    for _, btnpanel in ipairs(self.CustomizeTabButtonPanels or {}) do
+        if IsValid(btnpanel) then btnpanel:Remove() end
+    end
+    self.CustomizeTabButtonPanels = {}
+
+    local scrw = ScrW()
+
+    local inspectalpha = function(self2, panel, minusnum)
+        if self.CustomizeButtons[self.CustomizeTab + 1].inspect then
+            if self2:IsHovered() or (self.CustomizeAlphaBuffer or 0) > CurTime() then
+                panel:SetAlpha(math.min(panel:GetAlpha() + 25, 255))
+            else
+                panel:SetAlpha(math.max(panel:GetAlpha() - minusnum, 0))
+            end
+        end
+    end
+
+    local barlength = -ARC9ScreenScale(1.5)
+    local cornercut = ARC9ScreenScale(3.5)
+    local inspecttextwidth = 0
+
+    for i, btn in pairs(self.CustomizeButtons) do
+        local custtabbtn = vgui.Create("DButton", lowerpanel)
+        table.insert(self.CustomizeTabButtonPanels, custtabbtn)
+        --
+        surface.SetFont("ARC9_12")
+        local realtitle = ARC9:GetPhrase(btn.title)
+
+        if btn.customize then
+            local max = maxatts:GetInt()
+            if max < 16 then
+                realtitle = string.format("%s – %s / %s", realtitle, self:CountAttachments(), max)
+                custtabbtn.maxatted = max
+            end
+        end
+
+        local titlewidth = surface.GetTextSize(realtitle) + ARC9ScreenScale(12.5)
+        --
+
+        if btn.inspect then
+            custtabbtn:SetPos(scrw - ARC9ScreenScale(38) - deadzonex:GetInt()*2 - titlewidth, 0)
+            inspecttextwidth = titlewidth
+        else
+            barlength = barlength + titlewidth + ARC9ScreenScale(1.5)
+            custtabbtn:SetPos(barlength - titlewidth, 0)
+        end
+
+        custtabbtn:SetSize(titlewidth, ARC9ScreenScale(14.5))
+        custtabbtn.title = realtitle
+        custtabbtn.page = i - 1
+        custtabbtn.func = btn.func
+        custtabbtn:SetText("")
+
+
+        custtabbtn.Paint = function(self2, w, h)
+            if !IsValid(self) then return end
+
+            local mainbuttoncolor = ARC9.GetHUDColor("bg")
+            local barbuttoncolor = ARC9.GetHUDColor("bg")
+            local buttontextcolor = ARC9.GetHUDColor("fg")
+
+            if self.CustomizeTab == self2.page then
+                mainbuttoncolor = ARC9.GetHUDColor("hi")
+                barbuttoncolor = ARC9.GetHUDColor("hi")
+                buttontextcolor = ARC9.GetHUDColor("shadow")
+            end
+
+            if self2:IsHovered() then
+                barbuttoncolor = ARC9.GetHUDColor("hi")
+                if self.CustomizeTab != self2.page then self.CustomizeHints["customize.hint.select"] = "customize.hint.open" end
+            end
+
+            surface.SetDrawColor(mainbuttoncolor)
+            draw.NoTexture()
+
+            local hcutted = ARC9ScreenScale(11.5)
+
+            if btn.cutcorner == 1 then
+                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = w, y = 0}, {x = w, y = hcutted}})
+            elseif btn.cutcorner == 2 then
+                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = 0}, {x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w, y = hcutted}})
+            elseif btn.cutcorner == 3 then
+                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w, y = hcutted}})
+            else
+                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = 0}, {x = w, y = 0}, {x = w, y = hcutted}})
+            end
+
+            surface.SetDrawColor(barbuttoncolor)
+            surface.DrawRect(0, h - ARC9ScreenScale(1.5), w, h)
+
+            surface.SetFont("ARC9_12")
+            local titol = self2.title
+            if self2.maxatted then
+                titol = string.format("%s – %s / %s", ARC9:GetPhrase(btn.title), self:CountAttachments(nil, nil, true), self2.maxatted)
+            end
+                
+            local tw = surface.GetTextSize(titol)
+
+            surface.SetTextColor(buttontextcolor)
+            -- surface.SetTextPos((w - tw) / 2, -ARC9ScreenScale(0.75))
+            surface.SetTextPos((w - tw) / 2, 0)
+            surface.DrawText(titol)
+        end
+        custtabbtn.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
+        custtabbtn.DoClick = function(self2)
+            self.LastCustomizeTab = self.CustomizeTab
+            self.CustomizeTab = self2.page
+            self2.func(self, self2.page)
+            surface.PlaySound(tabsound)
+        end
+        custtabbtn.OnCursorEntered = function(self2)
+            surface.PlaySound(hoversound)
+        end
+        -- custtabbtn.DoRightClick = function(self2)
+        --     self.CustomizeTab = 0
+        --     self:ClearTabPanel()
+        -- end
+
+
+        lowerpanel.Paint = function(self2, w, h)
+            surface.SetDrawColor(ARC9.GetHUDColor("bg"))
+
+            surface.DrawRect(barlength + ARC9ScreenScale(1.5), ARC9ScreenScale(12.75), w - barlength - inspecttextwidth - ARC9ScreenScale(3.2), ARC9ScreenScale(1.75)) -- bar spacer
+
+            draw.NoTexture()
+
+            if self2.Extended then
+                surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ARC9ScreenScale(15.5+60)}, {x = w*0.5-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.5-ARC9ScreenScale(0.75), y = h}})
+
+                surface.DrawRect(0, ARC9ScreenScale(15.5+60-2.5), w*0.5-ARC9ScreenScale(0.5), ARC9ScreenScale(1.5))
+
+                surface.DrawRect(0, ARC9ScreenScale(15.5), w, ARC9ScreenScale(60-3.5))
+
+                surface.SetDrawColor(self2.HasPros and ARC9.GetHUDColor("bg_pro") or ARC9.GetHUDColor("bg"))
+                surface.DrawPoly({{x = w*0.5+ARC9ScreenScale(0.75), y = h}, {x = w*0.5+ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.75-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.75-ARC9ScreenScale(0.75), y = h}})
+
+                surface.SetDrawColor(self2.HasPros and ARC9.GetHUDColor("pro") or ARC9.GetHUDColor("bg"))
+                surface.DrawRect(w*0.5+ARC9ScreenScale(0.75), ARC9ScreenScale(15.5+60-2.5), w*0.25-ARC9ScreenScale(1), ARC9ScreenScale(1.5))
+
+                surface.SetDrawColor(self2.HasCons and ARC9.GetHUDColor("bg_con") or ARC9.GetHUDColor("bg"))
+                surface.DrawPoly({{x = w*0.75+ARC9ScreenScale(0.75), y = h}, {x = w*0.75+ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w, y = ARC9ScreenScale(15.5+60)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+
+                surface.SetDrawColor(self2.HasCons and ARC9.GetHUDColor("con") or ARC9.GetHUDColor("bg"))
+                surface.DrawRect(w*0.75+ARC9ScreenScale(1), ARC9ScreenScale(15.5+60-2.5), w*0.25, ARC9ScreenScale(1.5))
+            else
+                surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ARC9ScreenScale(15.5)}, {x = w, y = ARC9ScreenScale(15.5)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
+            end
+
+            -- thingy at bottom
+            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
+            surface.DrawPoly({{x = cornercut, y = h}, {x = 0, y = h-cornercut}, {x = cornercut, y = h-cornercut*.5}})
+            surface.DrawPoly({{x = w, y = h-cornercut}, {x = w-cornercut, y = h}, {x = w-cornercut, y = h-cornercut*.5}})
+            surface.DrawPoly({{x = cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h}, {x = cornercut, y = h}, })
+        end
+    end
+end
+
 function SWEP:CreateHUD_RHP()
     local bg = self.CustomizeHUD
     if !IsValid(self) then return end
@@ -1580,143 +1741,8 @@ function SWEP:CreateHUD_RHP()
     end
 
 
-    local barlength = -ARC9ScreenScale(1.5)
-    local cornercut = ARC9ScreenScale(3.5)
-    local inspecttextwidth = 0
-
-    for i, btn in pairs(self.CustomizeButtons) do
-        local custtabbtn = vgui.Create("DButton", lowerpanel)
-        --
-        surface.SetFont("ARC9_12")
-        local realtitle = ARC9:GetPhrase(btn.title)
-
-        if btn.customize then
-            local max = maxatts:GetInt()
-            if max < 16 then
-                realtitle = string.format("%s – %s / %s", realtitle, self:CountAttachments(), max)
-                custtabbtn.maxatted = max
-            end
-        end
-
-        local titlewidth = surface.GetTextSize(realtitle) + ARC9ScreenScale(12.5)
-        --
-
-        if btn.inspect then
-            custtabbtn:SetPos(scrw - ARC9ScreenScale(38) - deadzonex:GetInt()*2 - titlewidth, 0)
-            inspecttextwidth = titlewidth
-        else
-            barlength = barlength + titlewidth + ARC9ScreenScale(1.5)
-            custtabbtn:SetPos(barlength - titlewidth, 0)
-        end
-
-        custtabbtn:SetSize(titlewidth, ARC9ScreenScale(14.5))
-        custtabbtn.title = realtitle
-        custtabbtn.page = i - 1
-        custtabbtn.func = btn.func
-        custtabbtn:SetText("")
-
-
-        custtabbtn.Paint = function(self2, w, h)
-            if !IsValid(self) then return end
-
-            local mainbuttoncolor = ARC9.GetHUDColor("bg")
-            local barbuttoncolor = ARC9.GetHUDColor("bg")
-            local buttontextcolor = ARC9.GetHUDColor("fg")
-
-            if self.CustomizeTab == self2.page then
-                mainbuttoncolor = ARC9.GetHUDColor("hi")
-                barbuttoncolor = ARC9.GetHUDColor("hi")
-                buttontextcolor = ARC9.GetHUDColor("shadow")
-            end
-
-            if self2:IsHovered() then
-                barbuttoncolor = ARC9.GetHUDColor("hi")
-                if self.CustomizeTab != self2.page then self.CustomizeHints["customize.hint.select"] = "customize.hint.open" end
-            end
-
-            surface.SetDrawColor(mainbuttoncolor)
-            draw.NoTexture()
-
-            local hcutted = ARC9ScreenScale(11.5)
-
-            if btn.cutcorner == 1 then
-                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = w, y = 0}, {x = w, y = hcutted}})
-            elseif btn.cutcorner == 2 then
-                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = 0}, {x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w, y = hcutted}})
-            elseif btn.cutcorner == 3 then
-                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = cornercut}, {x = cornercut, y = 0}, {x = w-cornercut, y = 0}, {x = w, y = cornercut}, {x = w, y = hcutted}})
-            else
-                surface.DrawPoly({{x = 0, y = hcutted}, {x = 0, y = 0}, {x = w, y = 0}, {x = w, y = hcutted}})
-            end
-
-            surface.SetDrawColor(barbuttoncolor)
-            surface.DrawRect(0, h - ARC9ScreenScale(1.5), w, h)
-
-            surface.SetFont("ARC9_12")
-            local titol = self2.title
-            if self2.maxatted then
-                titol = string.format("%s – %s / %s", ARC9:GetPhrase(btn.title), self:CountAttachments(nil, nil, true), self2.maxatted)
-            end
-                
-            local tw = surface.GetTextSize(titol)
-
-            surface.SetTextColor(buttontextcolor)
-            -- surface.SetTextPos((w - tw) / 2, -ARC9ScreenScale(0.75))
-            surface.SetTextPos((w - tw) / 2, 0)
-            surface.DrawText(titol)
-        end
-        custtabbtn.Think = function(self2) if !IsValid(self) then return end inspectalpha(self2, self.CustomizeHUD.lowerpanel, 3) end
-        custtabbtn.DoClick = function(self2)
-            self.LastCustomizeTab = self.CustomizeTab
-            self.CustomizeTab = self2.page
-            self2.func(self, self2.page)
-            surface.PlaySound(tabsound)
-        end
-        custtabbtn.OnCursorEntered = function(self2)
-            surface.PlaySound(hoversound)
-        end
-        -- custtabbtn.DoRightClick = function(self2)
-        --     self.CustomizeTab = 0
-        --     self:ClearTabPanel()
-        -- end
-
-
-        lowerpanel.Paint = function(self2, w, h)
-            surface.SetDrawColor(ARC9.GetHUDColor("bg"))
-
-            surface.DrawRect(barlength + ARC9ScreenScale(1.5), ARC9ScreenScale(12.75), w - barlength - inspecttextwidth - ARC9ScreenScale(3.2), ARC9ScreenScale(1.75)) -- bar spacer
-
-            draw.NoTexture()
-
-            if self2.Extended then
-                surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ARC9ScreenScale(15.5+60)}, {x = w*0.5-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.5-ARC9ScreenScale(0.75), y = h}})
-
-                surface.DrawRect(0, ARC9ScreenScale(15.5+60-2.5), w*0.5-ARC9ScreenScale(0.5), ARC9ScreenScale(1.5))
-
-                surface.DrawRect(0, ARC9ScreenScale(15.5), w, ARC9ScreenScale(60-3.5))
-
-                surface.SetDrawColor(self2.HasPros and ARC9.GetHUDColor("bg_pro") or ARC9.GetHUDColor("bg"))
-                surface.DrawPoly({{x = w*0.5+ARC9ScreenScale(0.75), y = h}, {x = w*0.5+ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.75-ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w*0.75-ARC9ScreenScale(0.75), y = h}})
-
-                surface.SetDrawColor(self2.HasPros and ARC9.GetHUDColor("pro") or ARC9.GetHUDColor("bg"))
-                surface.DrawRect(w*0.5+ARC9ScreenScale(0.75), ARC9ScreenScale(15.5+60-2.5), w*0.25-ARC9ScreenScale(1), ARC9ScreenScale(1.5))
-
-                surface.SetDrawColor(self2.HasCons and ARC9.GetHUDColor("bg_con") or ARC9.GetHUDColor("bg"))
-                surface.DrawPoly({{x = w*0.75+ARC9ScreenScale(0.75), y = h}, {x = w*0.75+ARC9ScreenScale(0.75), y = ARC9ScreenScale(15.5+60)}, {x = w, y = ARC9ScreenScale(15.5+60)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
-
-                surface.SetDrawColor(self2.HasCons and ARC9.GetHUDColor("con") or ARC9.GetHUDColor("bg"))
-                surface.DrawRect(w*0.75+ARC9ScreenScale(1), ARC9ScreenScale(15.5+60-2.5), w*0.25, ARC9ScreenScale(1.5))
-            else
-                surface.DrawPoly({{x = cornercut, y = h},{x = 0, y = h-cornercut}, {x = 0, y = ARC9ScreenScale(15.5)}, {x = w, y = ARC9ScreenScale(15.5)}, {x = w, y = h-cornercut}, {x = w-cornercut, y = h}})
-            end
-
-            -- thingy at bottom
-            surface.SetDrawColor(ARC9.GetHUDColor("hi"))
-            surface.DrawPoly({{x = cornercut, y = h}, {x = 0, y = h-cornercut}, {x = cornercut, y = h-cornercut*.5}})
-            surface.DrawPoly({{x = w, y = h-cornercut}, {x = w-cornercut, y = h}, {x = w-cornercut, y = h-cornercut*.5}})
-            surface.DrawPoly({{x = cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h-cornercut*.5}, {x = w-cornercut, y = h}, {x = cornercut, y = h}, })
-        end
-    end
+    if self.SyncCustomizeTabs then self:SyncCustomizeTabs() end
+    self:BuildCustomizeTabButtons()
 
     self.CustomizeButtons[self.CustomizeTab + 1].func(self)
 

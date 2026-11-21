@@ -85,6 +85,8 @@ local function ResolveCamoMaterial(atttbl, shortname)
         end
     end
 
+    if atttbl.CustomCamoOverlay and ARC9.RegisterCamoOptions then ARC9.RegisterCamoOptions(atttbl) end
+
     if !atttbl.Icon and basetex then
         atttbl.Icon = CreateMaterial("arc9_camoicon_" .. tostring(shortname), "UnlitGeneric", {
             ["$basetexture"] = basetex:GetName(),

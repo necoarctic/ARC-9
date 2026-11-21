@@ -838,6 +838,7 @@ function ARC9ColorPanel:Init()
 
     hexentry.OnEnter = function(self2)
         local txt = self2:GetText():gsub("#", ""):upper()
+        if #txt == 3 then txt = txt:gsub(".", "%0%0") end
         if #txt == 6 or #txt == 8 then
             local r = tonumber(txt:sub(1, 2), 16)
             local g = tonumber(txt:sub(3, 4), 16)
@@ -1039,7 +1040,8 @@ function ARC9ColorButton:DoClick()
         newel:EnableAlpha()
     end
 
-    newel:SetPos(self:LocalToScreen(self:GetX() - ARC9ScreenScale(103), self:GetY() - ARC9ScreenScale(48)))
+    local px, py = self:LocalToScreen(self:GetX() - ARC9ScreenScale(103), self:GetY() - ARC9ScreenScale(48))
+    newel:SetPos(math.Clamp(px, 0, ScrW() - newel:GetWide()), math.Clamp(py, 0, ScrH() - newel:GetTall()))
     newel:UpdateColor(self.rgbcolor)
     newel:ShowCloseButton(false)
 
@@ -1050,12 +1052,29 @@ function ARC9ColorButton:DoClick()
         if not IsValid(self2.ParentButton) then
             bg:Remove()
             newel:Remove()
+            return
+        end
+
+        if self.OnColorChanging and IsValid(newel) then
+            local c = newel.ResultColor
+            if !self2.LastColor or self2.LastColor.r != c.r or self2.LastColor.g != c.g or self2.LastColor.b != c.b then
+                self2.LastColor = Color(c.r, c.g, c.b)
+                self:OnColorChanging(self2.LastColor)
+            end
         end
     end
 
     bg.OnMousePressed = function(self2, keycode)
         if newel.Alpha then
             newel.ResultColor.a = newel.Alpha
+        end
+
+        if self.OnColorPicked then
+            self.rgbcolor = newel.ResultColor
+            self:OnColorPicked(self.rgbcolor)
+            newel:Remove()
+            bg:Remove()
+            return
         end
 
         if LocalPlayer():IsAdmin() and ARC9.ShouldNetworkConVar(LocalPlayer(), self.m_strConVar) then

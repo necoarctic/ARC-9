@@ -142,6 +142,7 @@ function SWEP:PostModify(toggleonly)
             self:SetupModel(true)
             self:SetupModel(false)
             self:SavePreset()
+            if self.RefreshCustomizeTabs then self:RefreshCustomizeTabs() end
         else
             timer.Simple(0, function() self:KillFlashlights() end)
             self:CreateFlashlights()
