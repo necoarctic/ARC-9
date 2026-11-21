@@ -1,4 +1,6 @@
-local ARC9ScreenScale = ARC9.ScreenScale
+local function ARC9ScreenScale(size)
+    return ARC9.ScreenScale(size)
+end
 local hoversound = "arc9/newui/uimouse_hover.ogg"
 local clicksound = "arc9/newui/uimouse_click.ogg"
 

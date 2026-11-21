@@ -314,7 +314,7 @@ Built-in types:
 
 | Method | Description |
 |---|---|
-| `SWEP:SyncCustomizeTabs()` | adds/removes registered tabs in `self.CustomizeButtons`. Returns `changed, activeTabRemoved` |
+| `SWEP:SyncCustomizeTabs()` | adds/removes registered tabs in `self.CustomizeButtons`. Applies any pending stat-cache invalidation first, so conditions see the current attachments. Returns `changed, activeTabRemoved` |
 | `SWEP:RefreshCustomizeTabs()` | syncs and rebuilds the tab bar while the menu is open (called from `PostModify`) |
 | `SWEP:OpenRegisteredTab(id, keepsize)` | opens a registered tab |
 | `SWEP:BuildCustomizeTabButtons()` | (re)creates the tab buttons from `self.CustomizeButtons` |

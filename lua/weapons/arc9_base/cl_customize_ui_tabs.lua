@@ -30,6 +30,7 @@ end
 
 function SWEP:SyncCustomizeTabs()
     if !ARC9.GetCustomizeTabs then return false end
+    if self.WantToInvalidateCache then self:DoInvalidateCache() end
 
     local buttons = self.CustomizeButtons
     local activebtn = buttons[self.CustomizeTab + 1]
@@ -94,6 +95,12 @@ function SWEP:OpenRegisteredTab(id, keepsize)
     local def = ARC9.CustomizeTabs and ARC9.CustomizeTabs[id]
     local lowerpanel = self.CustomizeHUD and self.CustomizeHUD.lowerpanel
     if !def or !IsValid(lowerpanel) then return end
+
+    if self.WantToInvalidateCache then self:DoInvalidateCache() end
+    if !tabWanted(self, def) then
+        self:RefreshCustomizeTabs()
+        return
+    end
 
     self:ClearTabPanel()
 
