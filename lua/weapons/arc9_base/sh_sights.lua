@@ -205,8 +205,7 @@ function SWEP:BuildMultiSight()
             table.insert(tbl, self:GetProcessedValue("IronSights"))
         end
         tbl[1].BaseSight = true
-        table.Add(tbl, self.MultiSightTable)
-        self.MultiSightTable = tbl
+        table.Add(self.MultiSightTable, tbl)
     end
 
     if keepmodularirons then

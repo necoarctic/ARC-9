@@ -26,11 +26,11 @@ function EFFECT:Init(data)
     else
         mdl = lp:GetViewModel()
 
-        if ent:ShouldTPIK() then
-            self.VMContext = false
-        else
+        -- if ent:ShouldTPIK() then
+        --     self.VMContext = false
+        -- else
             table.insert(ent.ActiveEffects, self)
-        end
+        -- end
     end
 
     if !IsValid(ent) then self:Remove() return end
