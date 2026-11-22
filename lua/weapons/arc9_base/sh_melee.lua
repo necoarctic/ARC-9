@@ -241,7 +241,7 @@ function SWEP:ThinkMelee()
 
     if !(m1 or m2 or marc) and !self:GetInMeleeAttack() then return end
 
-    if !self.ShootWhileSprint and self:GetIsSprinting() then return end
+    if !self:GetProcessedValue("ShootWhileSprint", true) and self:GetIsSprinting() then return end
 
     if self:GetBipod() then return end
 
