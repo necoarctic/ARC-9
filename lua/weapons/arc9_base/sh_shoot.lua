@@ -281,8 +281,8 @@ function SWEP:PrimaryAttack()
 
     if self:GetCustomize() then return end
 
-    if swepGetProcessedValue(self,"Bash", true) and owner:KeyDown(IN_USE) and !self:GetInSights() then
-        if self:GetIsSprinting() and !self.ShootWhileSprint then return end
+    if swepGetProcessedValue(self, "Bash", true) and owner:KeyDown(IN_USE) and !self:GetInSights() then
+        if self:GetIsSprinting() and !swepGetProcessedValue(self, "ShootWhileSprint", true) then return end
         self:MeleeAttack()
         self:SetNeedTriggerPress(true)
         return
