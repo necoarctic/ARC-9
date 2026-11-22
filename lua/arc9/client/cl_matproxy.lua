@@ -268,7 +268,7 @@ matproxy.Add( {
 matproxy.Add({
     name = "arc9_scope_alpha",
     init = function(self, mat, values)
-        self.ResultTo = values.resultvar
+        -- self.ResultTo = values.resultvar
 
 		local color = {1, 1, 1} 
 
@@ -278,6 +278,8 @@ matproxy.Add({
 
 		self.min = values.min or 0
 		self.max = values.max or 1
+		self.minfresnel = values.minfresnel or 0
+		self.maxfresnel = values.maxfresnel or 0.17
 		self.color = Vector(color[1], color[2], color[3])
     end,
     bind = function(self, mat, ent)
@@ -287,7 +289,8 @@ matproxy.Add({
             local weapon = ply:GetActiveWeapon()
 
             if IsValid(weapon) and weapon.ARC9 then
-                local amt = 1 - weapon:GetSightAmount() * 0.25
+                local sa = weapon:GetSightAmount()
+                local amt = 1 - sa * 0.25
                 
                 if !IsValid(ent) then return end
                 local getpos = entityGetPos(ent)
@@ -299,6 +302,8 @@ matproxy.Add({
                 end
                 ent.m_Arc9EnvMapTint = lerp(10 * RealFrameTime(), ent.m_Arc9EnvMapTint || 0, lastValue)
                 mat:SetVector("$envmaptint", self.color * lerp(ent.m_Arc9EnvMapTint * amt, self.min, self.max))
+                
+                mat:SetFloat("$envmapfresnel", lerp(sa, self.maxfresnel, self.minfresnel))
             end
             
         end
