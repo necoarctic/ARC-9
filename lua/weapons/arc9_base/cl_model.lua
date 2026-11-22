@@ -432,7 +432,7 @@ function SWEP:SetupModel(wm, lod, cm)
         else
             csmodel.slottbl = {
                 WMBase = true,
-                Pos = self.WorldModelOffset.Pos or Vector(0, 0, 0),
+                Pos = self.WorldModelOffset.DroppedPos or self.WorldModelOffset.Pos or Vector(0, 0, 0),
                 Ang = self.WorldModelOffset.Ang or Angle(-5, 0, 180)
             }
         end
