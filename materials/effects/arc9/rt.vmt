@@ -1,6 +1,6 @@
 "Refract"
 {
-	"$basetexture" "_rt_FullFrameFB"
+	"$basetexture" "vgui/black" // _rt_FullFrameFB
 	$refracttint "[1 1 1]"
 	$refractamount 0
 	$nowritez "0"
