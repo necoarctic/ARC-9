@@ -281,7 +281,7 @@ function SWEP:PrimaryAttack()
 
     if self:GetCustomize() then return end
 
-    local bashsprintfuck = swepGetProcessedValue(self, "BashWhileSprint", true) and self:GetIsSprinting() or owner:KeyDown(IN_USE)
+    local bashsprintfuck = swepGetProcessedValue(self, "BashWhileSprint", true) and self:GetSprintAmount() > 0.1 or owner:KeyDown(IN_USE)
 
     if swepGetProcessedValue(self, "Bash", true) and bashsprintfuck and !self:GetInSights() then
         if self:GetIsSprinting() and !swepGetProcessedValue(self, "ShootWhileSprint", true) then return end
