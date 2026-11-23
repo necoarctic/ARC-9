@@ -90,18 +90,20 @@ function SWEP:PlaySoundTable(soundtable, mult)
 
         local thatfunc = function()
             if v.s then
+                local volem = v.v_sighted and Lerp(self:GetSightAmount(), v.v or 1, v.v_sighted) or (v.v or 1) 
                 local soundtab = {
                     name = "soundtable",
                     sound = self:RandomChoice(v.s or ""),
                     level = v.l or 75,
                     pitch = v.p or 100,
-                    volume = v.v or 1,
+                    volume = volem,
                     channel = v.c or CHAN_AUTO,
                     dsp = v.dsp,
                     flags = v.fl,
                 }
 
                 self:PlayTranslatedSound(soundtab)
+                if volem > 1 then self:PlayTranslatedSound(soundtab) end -- louder bitch
             end
 
             if v.ind then

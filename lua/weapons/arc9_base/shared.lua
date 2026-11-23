@@ -903,6 +903,8 @@ SWEP.BreathRunOutSound = "arc9/breath_runout.ogg"
 
 SWEP.TriggerDownSound = ""
 SWEP.TriggerUpSound = ""
+SWEP.TriggerSoundVolume = nil -- 0 - 1
+SWEP.TriggerSoundSightVolume = nil -- 0 - 1
 
 -------------------------- EFFECTS
 

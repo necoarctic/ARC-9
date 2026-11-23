@@ -54,6 +54,8 @@ function SWEP:DryFire()
 
     dryfireSoundTab.channel = ARC9.CHAN_FIDDLE
     dryfireSoundTab.sound = self:RandomChoice(swepGetProcessedValue(self, "DryFireSound", true))
+    dryfireSoundTab.volume = self.TriggerSoundSightVolume and Lerp(self:GetSightAmount(), self.TriggerSoundVolume, self.TriggerSoundSightVolume) or 1
+
     self:PlayTranslatedSound(dryfireSoundTab)
 
     self:SetNthShot(nthShot + 1)

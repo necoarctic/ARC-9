@@ -11,6 +11,8 @@ function SWEP:ThinkTriggerSounds()
     if processedValue(self,"Throwable", true) then return end
     if processedValue(self,"PrimaryBash", true) then return end
 
+    local volem = self.TriggerSoundSightVolume and Lerp(self:GetSightAmount(), self.TriggerSoundVolume, self.TriggerSoundSightVolume) or 1
+
     if owner:KeyReleased(IN_ATTACK) then
 
 		if self.RecentMelee then 
@@ -20,7 +22,8 @@ function SWEP:ThinkTriggerSounds()
         local soundtab = {
             name = "triggerup",
             sound = self:RandomChoice(self.TriggerUpSound),
-            channel = ARC9.CHAN_TRIGGER+7
+            channel = ARC9.CHAN_TRIGGER+7,
+            volume = volem,
         }
 
         self:PlayTranslatedSound(soundtab)
@@ -30,7 +33,8 @@ function SWEP:ThinkTriggerSounds()
         local soundtab = {
             name = "triggerdown",
             sound = self:RandomChoice(self.TriggerDownSound),
-            channel = ARC9.CHAN_TRIGGER+7
+            channel = ARC9.CHAN_TRIGGER+7,
+            volume = volem,
         }
 
         self:PlayTranslatedSound(soundtab)
