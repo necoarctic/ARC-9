@@ -590,3 +590,10 @@ function SWEP:PostDrawViewModel(vm, weapon, ply, flags)
         end
     end
 end
+
+function SWEP:CheckPPs()
+    if !SERVER and IsValid(self) and !self.HasSightsPoseparam then
+        if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
+        if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
+    end
+end

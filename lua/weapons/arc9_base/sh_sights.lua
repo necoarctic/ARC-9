@@ -44,6 +44,8 @@ function SWEP:EnterSights()
         end
     end
 
+    self:CallOnClient("CheckPPs")
+
     self:SetShouldHoldType()
 end
 
@@ -356,9 +358,7 @@ do
         end
 
         if self.HasSightsPoseparam then
-            if CLIENT then
-                entitySetPoseParameter(self:GetVM(), "sights", amt)
-            end
+            if CLIENT then entitySetPoseParameter(self:GetVM(), "sights", amt) end
             entitySetPoseParameter(self:GetVM(), "sights", math.max(swepDt.SightAmount, swepGetBipodAmount(self)))
         end
     end

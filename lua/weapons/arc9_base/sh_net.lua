@@ -134,10 +134,7 @@ function SWEP:ReceiveWeapon()
         self:SetupModel(false)
         self:RefreshCustomizeMenu()
         
-        if !self.HasSightsPoseparam then -- fuck you
-            if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
-            if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
-        end
+        self:CheckPPs()
     else
         self:DoInvalidateCache()
         self:PruneAttachments()

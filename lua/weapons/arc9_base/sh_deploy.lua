@@ -81,9 +81,6 @@ function SWEP:Deploy()
 
     self:RunHook("Hook_Deploy")
 
-    if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
-    if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
-
 	-- self.FMHintTimeP = self.FMHintTime or "N/A"
 	
 	-- self.FMHintTime = CurTime()
@@ -103,10 +100,7 @@ function SWEP:ClientDeploy()
         self:CallOnClient("ClientDeploy")
     end
 
-    if IsValid(self) then
-        if self:LookupPoseParameter("sights") != -1 then self.HasSightsPoseparam = true end
-        if self:LookupPoseParameter("firemode") != -1 then self.HasFiremodePoseparam = true end
-    end
+    self:CheckPPs()
     
     self:DoFSetParams(0)
 
