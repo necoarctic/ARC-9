@@ -63,8 +63,8 @@ local mat_legacy_reticle = CreateMaterial( "arc9_mat_optic_legacy_reticle", "Unl
     ["$vertexcolor"] = 1
 } )
 
-local mat_shader_lense = Material("arc9/lense_shader")
-local mat_pixel_lense = Material("arc9/pixelation_shader")
+local mat_shader_lense = dx11 and Material("arc9/lense_shader_dx12") or Material("arc9/lense_shader")
+local mat_pixel_lense = dx11 and Material("arc9/pixelation_shader_dx12") or Material("arc9/pixelation_shader")
 
 -- Shader precalculations on cpu sideeeee
 
@@ -242,10 +242,11 @@ function SWEP:RenderRT(cheap, magnification)
             renderedpicture = self:RenderRTExpensive(atttbl, magnification)
         end
         
-        local pixely = !fuckopengl and !dx11 and atttbl.RTScopeNew_Pixelation
+        local pixely = !fuckopengl and atttbl.RTScopeNew_Pixelation
         if pixely then
             mat_pixel_lense:SetFloat("$c0_x", pixely)
-            mat_pixel_lense:SetTexture("$basetexture", renderedpicture)
+            -- mat_pixel_lense:SetTexture("$basetexture", renderedpicture)
+            mat_pixel_lense:SetTexture("$basetexture", render.GetScreenEffectTexture())
             render.PushRenderTarget( renderedpicture )
                 render.SetMaterial( mat_pixel_lense )
                 render.DrawScreenQuad()
@@ -512,7 +513,7 @@ function SWEP:DrawRTReticle(model, atttbl, nonatt, cheap)
     model.RTScopeDrawingRN = active
 
     if active and self:ShouldDoScope() then
-        local shaderenabled = !fuckopengl and !dx11 and (!atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool() or (atttbl.RTScopeNew_FPSLock and !atttbl.RTScopeNew_Pixelation))
+        local shaderenabled = !fuckopengl and (!atttbl.RTScopeNew_DisableShader and arc9_fx_rt_shader:GetBool() or (atttbl.RTScopeNew_FPSLock and !atttbl.RTScopeNew_Pixelation))
 
         -- if  then
             self.RenderingRTScope = true

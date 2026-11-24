@@ -47,13 +47,13 @@ local mat_cheapblurresult = CreateMaterial("arc9_mat_halfblur", "UnlitGeneric", 
 
 
 local function DrawCheapBlur(intensity, self)
-    if dx11 then return end
+    -- if dx11 then return end
 
     if !fuckopengl and intensity > 0 and system.HasFocus() then
         lastblurtime = FrameNumber()
         lastcust = self:GetCustomize()
 
-        -- if GetConVar("meow"):GetBool() then
+        if !dx11 then
             render.UpdateScreenEffectTexture()
             render.SetToneMappingScaleLinear(tune_nohdr) -- Turns off hdr
             render.PushRenderTarget(rt_cheapblur)
@@ -71,9 +71,9 @@ local function DrawCheapBlur(intensity, self)
             render.SetMaterial(mat_cheapblurresult)
             render.DrawScreenQuad()
             -- render.DrawScreenQuadEx( 100, 700, scrw/3, scrh/3 )
-        -- else
-        --     DrawBokehDOF(intensity * 5, 1, 0)
-        -- end
+        else
+            DrawBokehDOF(intensity, 1, 0)
+        end
     end
 end
 
@@ -351,8 +351,8 @@ function SWEP:ViewModelDrawn(ent, flags)
     if !inrt then self.ActiveEffects = newfx end
 end
 
-local mat_dof = Material( "effects/arc9/vm_dof" )
-local mat_dof2 = Material( "effects/arc9/vm_dof2" )
+local mat_dof = dx11 and Material("effects/arc9/vm_dof_dx12") or Material( "effects/arc9/vm_dof" )
+local mat_dof2 = dx11 and Material("effects/arc9/vm_dof2_dx12") or Material( "effects/arc9/vm_dof2" )
 local mat_dof_debug = Material( "effects/arc9/vm_dof_debug" )
 local mat_white = Material( "effects/arc9/whiteunlit" )
 local mat_black = Material( "effects/arc9/blackunlit" )
@@ -410,7 +410,7 @@ function SWEP:DoFSetParams(strength)
 end
 
 function SWEP:RenderDoF()
-    if dx11 then return end
+    -- if dx11 then return end
 
     render.UpdateScreenEffectTexture()
     render.SetMaterial(arc9_fx_adsblur_bleeding:GetBool() and mat_dof2 or mat_dof)
