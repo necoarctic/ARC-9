@@ -195,6 +195,16 @@ function SWEP:DrawLasers(wm, behav)
                 end
             end
 
+            if self.LaserCorrectIdle then
+                local up, right, forward = lasang:Up(), lasang:Right(), lasang:Forward()
+                local fukang = self.LaserCorrectIdle
+                fukang = fukang * (1 - (math.max(self.CustomizeDelta, self:GetSightAmount())))
+
+                lasang:RotateAroundAxis(up, -fukang.p)
+                lasang:RotateAroundAxis(right, fukang.r)
+                lasang:RotateAroundAxis(forward, -fukang.y)
+            end
+
 			local color = atttbl.LaserColor or lasercolorred
 			local colorplayer = !owner:IsNPC() and owner:GetWeaponColor():ToColor()
 
