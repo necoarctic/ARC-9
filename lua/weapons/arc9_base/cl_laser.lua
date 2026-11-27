@@ -195,14 +195,26 @@ function SWEP:DrawLasers(wm, behav)
                 end
             end
 
-            if self.LaserCorrectIdle then
-                local up, right, forward = lasang:Up(), lasang:Right(), lasang:Forward()
-                local fukang = self.LaserCorrectIdle
-                fukang = fukang * (1 - (math.max(self.CustomizeDelta, self:GetSightAmount())))
+            local LaserCorrectIdle = self.LaserCorrectIdle
 
-                lasang:RotateAroundAxis(up, -fukang.p)
-                lasang:RotateAroundAxis(right, fukang.r)
-                lasang:RotateAroundAxis(forward, -fukang.y)
+            if LaserCorrectIdle and owner == LocalPlayer() then
+                LaserCorrectIdle = LaserCorrectIdle * (1 - (math.max(self.CustomizeDelta, self:GetSightAmount())))
+
+                local vm = self:GetVM()
+                local bone = slottbl.Bone
+
+                if bone and IsValid(vm) then
+                    local boneindex = vm:LookupBone(bone)
+                    local bonemat = vm:GetBoneMatrix(boneindex)
+                    if bonemat then
+                        local bang = bonemat:GetAngles()
+
+                        local up, right, forward = bang:Up(), bang:Right(), bang:Forward()
+                        lasang:RotateAroundAxis(forward, -LaserCorrectIdle.p)
+                        lasang:RotateAroundAxis(right, LaserCorrectIdle.y)
+                        lasang:RotateAroundAxis(up, LaserCorrectIdle.r)
+                    end
+                end
             end
 
 			local color = atttbl.LaserColor or lasercolorred
