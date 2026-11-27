@@ -1,4 +1,10 @@
 
+local triggrbons = {
+    -- ["ValveBiped.Bip01_R_Finger1"]  = true,
+    ["ValveBiped.Bip01_R_Finger11"] = true,
+    ["ValveBiped.Bip01_R_Finger12"] = true,
+}
+
 local Lerp = Lerp
 local LerpVector = LerpVector
 
@@ -127,14 +133,20 @@ function SWEP:DoRHIK(wm)
     if IsValid(rhik_model) then
         rhik_model:SetupBones()
 
+        local rh_delta1 = math.min(rh_delta, 1)
+        local trigger_delta = rh_delta1 * (1 - math.Clamp(rh_delta - 1, 0, 1))
+
         for _, bone in ipairs(ARC9.RHIKBones) do
             local vm_bone = vm:LookupBone(bone)
             local target_bone = rhik_model:LookupBone(bone)
             if !vm_bone or !target_bone then continue end
             local vm_bone_matrix = vm:GetBoneMatrix(vm_bone)
             local target_bone_matrix = rhik_model:GetBoneMatrix(target_bone)
-            local lerped_pos = LerpVector(rh_delta, vm_bone_matrix:GetTranslation(), target_bone_matrix:GetTranslation())
-            local lerped_ang = LerpAngle(rh_delta, vm_bone_matrix:GetAngles(), target_bone_matrix:GetAngles())
+            
+            local rh_delta2 = triggrbons[bone] and trigger_delta or rh_delta1
+
+            local lerped_pos = LerpVector(rh_delta2, vm_bone_matrix:GetTranslation(), target_bone_matrix:GetTranslation())
+            local lerped_ang = LerpAngle(rh_delta2, vm_bone_matrix:GetAngles(), target_bone_matrix:GetAngles())
             local newtransform = Matrix()
             newtransform:SetTranslation(lerped_pos)
             newtransform:SetAngles(lerped_ang)
